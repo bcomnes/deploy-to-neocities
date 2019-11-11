@@ -1,0 +1,13 @@
+name: 'Deploy to Neocities'
+description: 'Github Action to deplpoy a folder to Neocities.org'
+branding:
+  icon: cat
+  color: yellow
+inputs:
+  api-token:  # api token for site to deploy to
+    description: 'Neocities API token for site to deploy to'
+    required: true
+outputs: # none
+runs:
+  using: 'node12'
+  main: 'dist/bundle.js'
