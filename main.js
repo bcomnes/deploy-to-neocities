@@ -5,3 +5,5 @@ export {
 }
 
 console.log(thing)
+
+console.log(process)
