@@ -1,9 +1,4 @@
 // ESM syntax is supported.
-const thing = { foo: 'bar' }
-export {
-  thing
-}
+import { NeocitiesAPIClient } from './lib/client.js';
 
-console.log(thing)
-
-console.log(process)
+export { NeocitiesAPIClient };

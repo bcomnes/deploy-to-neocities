@@ -1,0 +1,29 @@
+name: Example usage
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: sudo apt-get install xvfb
+    - name: npm install, build, and test
+      run: |
+        npm i
+        xvfb-run --auto-servernum node example.js
+      env:
+        CI: true
+    - name: Cleanup xvfb pidx
+      uses: bcomnes/cleanup-xvfb@v1
+

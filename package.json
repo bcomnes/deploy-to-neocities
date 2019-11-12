@@ -7,8 +7,8 @@
   "private": true,
   "scripts": {
     "test": "run-s test:*",
-    "test:deps": "dependency-check . --no-dev --no-peer",
-    "test:standard": "standard",
+    "test-skip:deps": "dependency-check . --no-dev --no-peer",
+    "test:standard": "semistandard",
     "test:tape": "tape -r esm test.js",
     "prepare": "run-s build",
     "clean": "rimraf dist && mkdirp dist",
@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/bcomnes/deploy-to-neocities#readme",
   "devDependencies": {
+    "builtin-modules": "^3.1.0",
     "dependency-check": "^4.1.0",
     "esm": "^3.2.25",
     "mkdirp": "^0.5.1",
@@ -35,12 +36,19 @@
     "rollup": "^1.26.5",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "standard": "^13.1.0",
+    "semistandard": "^14.2.0",
     "tape": "^4.11.0",
     "tape-promise": "^4.0.0"
   },
   "dependencies": {
     "@actions/core": "^1.2.0",
-    "@actions/github": "^1.1.0"
+    "@actions/github": "^1.1.0",
+    "nanoassert": "^2.0.0",
+    "qs": "^6.9.1"
+  },
+  "semistandard": {
+    "ignore": [
+      "dist"
+    ]
   }
 }

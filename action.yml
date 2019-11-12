@@ -10,4 +10,4 @@ inputs:
 outputs: # none
 runs:
   using: 'node12'
-  main: 'dist/bundle.js'
+  main: 'dist/bundle.cjs.js'
