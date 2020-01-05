@@ -33,10 +33,10 @@ tap.test('can get info about site', async t => {
   const client = new NeocitiesAPIClient(token)
 
   const info = await client.info()
-  console.log(info)
+  // console.log(info)
   t.equal(info.result, 'success', 'info requesst successfull')
   const list = await client.list()
-  console.log(list)
+  // console.log(list)
   t.equal(list.result, 'success', 'list result successfull')
 })
 
@@ -70,13 +70,13 @@ tap.test('can upload and delete files', async t => {
     }
   ])
 
-  console.log(uploadResults)
+  // console.log(uploadResults)
   t.equal(uploadResults.result, 'success', 'list result successfull')
 
   const deleteResults = await client.delete([
     'toot.gif',
     'img/tootzzz.png'
   ])
-  console.log(deleteResults)
+  // console.log(deleteResults)
   t.equal(deleteResults.result, 'success', 'list result successfull')
 })

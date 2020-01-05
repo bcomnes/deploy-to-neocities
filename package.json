@@ -34,9 +34,11 @@
   "dependencies": {
     "@actions/core": "^1.2.0",
     "@actions/github": "^1.1.0",
+    "async-folder-walker": "^2.0.0",
     "fetch-errors": "^1.0.1",
     "form-data": "^3.0.0",
     "nanoassert": "^2.0.0",
+    "pump": "^3.0.0",
     "qs": "^6.9.1"
   },
   "standard": {
