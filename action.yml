@@ -7,7 +7,15 @@ inputs:
   api-token:  # api token for site to deploy to
     description: 'Neocities API token for site to deploy to'
     required: true
+  distDir:
+    description: 'Local folder to deploy to neocities'
+    default: 'public'
+    required: true
+  cleanup:
+    description: Delete orphaned files on neocities that don't exist in distDir
+    default: false
+    required: true
 outputs: # none
 runs:
   using: 'node12'
-  main: 'dist/bundle.cjs.js'
+  main: 'index.js'
