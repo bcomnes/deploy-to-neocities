@@ -1,6 +1,6 @@
 const core = require('@actions/core')
 // const github = require('@actions/github')
-// const Neocities = require('async-neocities')
+const Neocities = require('async-neocities-tmp')
 const path = require('path')
 const exec = require('child_process').exec
 
