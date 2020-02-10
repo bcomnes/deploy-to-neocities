@@ -10,7 +10,7 @@
     "test:standard": "standard",
     "test:tape": "tap",
     "clean": "rimraf dist && mkdirp dist",
-    "build": "echo 'build step'"
+    "build": "mkdir public && cp package.json public/test.json"
   },
   "repository": {
     "type": "git",
