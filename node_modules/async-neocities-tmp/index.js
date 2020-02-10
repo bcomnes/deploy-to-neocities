@@ -3,7 +3,6 @@ const fetch = require('node-fetch')
 const { URL } = require('url')
 const qs = require('qs')
 const os = require('os')
-const path = require('path')
 const { createReadStream } = require('fs')
 const FormData = require('form-data')
 const { handleResponse } = require('fetch-errors')
@@ -100,9 +99,11 @@ class NeocitiesAPIClient {
    */
   upload (files) {
     const formEntries = files.map(({ name, path }) => {
+      const streamCtor = (next) => next(createReadStream(path))
+      streamCtor.path = path
       return {
         name,
-        value: createReadStream(path)
+        value: streamCtor
       }
     })
 

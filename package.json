@@ -32,7 +32,7 @@
   "dependencies": {
     "@actions/core": "1.2.2",
     "@actions/github": "2.1.0",
-    "async-neocities-tmp": "0.0.8"
+    "async-neocities-tmp": "0.0.9"
   },
   "standard": {
     "ignore": [
