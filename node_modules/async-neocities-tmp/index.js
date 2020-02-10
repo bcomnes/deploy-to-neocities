@@ -153,16 +153,21 @@ class NeocitiesAPIClient {
       statsCb: () => {},
       ...opts
     }
-
+    const getRemoteFiles = this.list()
     const [localFiles, remoteFiles] = Promise.all([
       afw.allFiles(path.join(folder), { shaper: f => f }),
-      this.list()
+      getRemoteFiles
     ])
 
     const { filesToUpload, filesToDelete, filesSkipped } = await neocitiesLocalDiff(remoteFiles, localFiles)
     opts.statsCb({ filesToUpload, filesToDelete, filesSkipped })
-    const work = [this.upload(filesToUpload)]
-    if (opts.cleanup) work.push(this.delete(filesToDelete))
+    const work = []
+    const uploadJob = this.upload(filesToUpload)
+    work.push(uploadJob)
+    if (opts.cleanup) {
+      const deleteJob = this.delete(filesToDelete)
+      work.push(deleteJob)
+    }
 
     await work
 
