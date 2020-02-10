@@ -5,9 +5,8 @@ const path = require('path')
 const exec = require('child_process').exec
 
 async function doDeploy () {
-  // `who-to-greet` input defined in action metadata file
   const token = core.getInput('api-token')
-  const distDir = core.getInput('dist-dir')
+  const distDir = path.join(process.cwd(), core.getInput('dist-dir'))
   const cleanup = core.getInput('cleanup')
 
   const time = (new Date()).toTimeString()
@@ -15,21 +14,10 @@ async function doDeploy () {
 
   const client = new Neocities(token)
 
-  console.log(process.cwd())
-  console.log(path.join(process.cwd(), distDir))
-
-  return new Promise((resolve, reject) => {
-    exec('ls -la', (error, stdout, stderr) => {
-      console.log(stdout)
-      console.log(stderr)
-      if (error !== null) {
-        console.log(`exec error: ${error}`)
-      }
-      resolve()
-    })
+  return client.deploy(distDir, {
+    cleanup,
+    statusCb: console.log
   })
-
-  // return client.deploy()
 }
 
 doDeploy().then(() => {}).catch(err => {
