@@ -21,5 +21,6 @@ async function doDeploy () {
 }
 
 doDeploy().then(() => {}).catch(err => {
+  console.error(err)
   core.setFailed(err.message)
 })
