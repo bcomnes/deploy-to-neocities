@@ -32,6 +32,6 @@ async function doDeploy () {
   // return client.deploy()
 }
 
-doDeploy.then(() => {}).catch(err => {
+doDeploy().then(() => {}).catch(err => {
   core.setFailed(err.message)
 })
