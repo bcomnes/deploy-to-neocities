@@ -162,8 +162,9 @@ class NeocitiesAPIClient {
 
     const { filesToUpload, filesToDelete, filesSkipped } = await neocitiesLocalDiff(remoteFiles.files, localFiles)
     opts.statsCb({ filesToUpload, filesToDelete, filesSkipped })
-    const work = [this.upload(filesToUpload)]
-    if (opts.cleanup) { work.push(this.delete(filesToDelete)) }
+    const work = []
+    if (filesToUpload.length > 0) work.push(this.upload(filesToUpload))
+    if (opts.cleanup && filesToDelete.length > 0) { work.push(this.delete(filesToDelete)) }
 
     await Promise.all(work)
 
