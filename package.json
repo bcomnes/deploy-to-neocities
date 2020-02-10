@@ -9,7 +9,8 @@
     "test-skip:deps": "dependency-check . --no-dev --no-peer",
     "test:standard": "standard",
     "test:tape": "tap",
-    "clean": "rimraf dist && mkdirp dist"
+    "clean": "rimraf dist && mkdirp dist",
+    "build": "echo 'build step'"
   },
   "repository": {
     "type": "git",
