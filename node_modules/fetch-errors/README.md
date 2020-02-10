@@ -1,6 +1,5 @@
 # fetch-errors
 [![Actions Status](https://github.com/bcomnes/fetch-errors/workflows/tests/badge.svg)](https://github.com/bcomnes/fetch-errors/actions)
-[![Exports](https://img.shields.io/badge/exports-esm-blue)](https://github.com/standard-things/esm)
 
 Error subclasses for Text and JSON `fetch` response bodies, and a `handleResponse` fuction to handle fetch responses cleanly.
 
@@ -11,12 +10,12 @@ npm install fetch-errors
 ## Usage
 
 ``` js
-import {
+const {
   HTTPError,
   TextHTTPError,
   JSONHTTPError,
   handleResponse
-} from 'fetch-errors';
+} = require('fetch-errors');
 
 window.fetch('https://api.github.com/users/bcomnes/repos')
   .then(handleResponse)
