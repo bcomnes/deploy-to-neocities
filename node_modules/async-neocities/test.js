@@ -83,4 +83,52 @@ if (!fakeToken) {
     // console.log(deleteResults)
     t.equal(deleteResults.result, 'success', 'list result successfull')
   })
+
+  tap.test('can deploy folders', async t => {
+    const client = new NeocitiesAPIClient(token)
+
+    // const statsCb = (stats) => {
+    //   let logLine = `${stats.stage} ${stats.status} ${stats.timer.elapsed}`
+    //   Object.entries(stats.tasks).forEach(([key, val]) => {
+    //     logLine += ` ${key}: ${JSON.stringify(val)}`
+    //   })
+    //   console.log(logLine)
+    // }
+
+    const deployStats = await client.deploy(
+      resolve(__dirname, 'fixtures'),
+      {
+        // statsCb,
+        cleanup: false
+      }
+    )
+
+    t.ok(deployStats)
+
+    // console.dir(deployStats, { depth: 99, colors: true })
+
+    const redeployStats = await client.deploy(
+      resolve(__dirname, 'fixtures'),
+      {
+        // statsCb,
+        cleanup: false
+      }
+    )
+
+    t.ok(redeployStats)
+
+    // console.dir(redeployStats, { depth: 99, colors: true })
+
+    const cleanupStats = await client.deploy(
+      resolve(__dirname, 'fixtures/empty'),
+      {
+        // statsCb,
+        cleanup: true
+      }
+    )
+
+    t.ok(cleanupStats)
+
+    // console.dir(cleanupStats, { depth: 99, colors: true })
+  })
 }

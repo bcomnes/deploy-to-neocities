@@ -2,3 +2,4 @@ sandbox.js
 .nyc_output
 config.json
 public
+node_modules

@@ -9,6 +9,11 @@
     "test-skip:deps": "dependency-check . --no-dev --no-peer",
     "test:standard": "standard",
     "test:tape": "tap",
+    "release": "git push --follow-tags && gh-release",
+    "version": "run-s version:*",
+    "version:1-changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING:' && git add CHANGELOG.md",
+    "version:2-cleandeps": "rm -rf node_modules && npm i --only=prod && git add node_modules --force",
+    "postversion": "npm i",
     "clean": "rimraf dist && mkdirp dist",
     "build": "mkdir public && cp package.json public/test.json"
   },
@@ -27,12 +32,16 @@
     "dependency-check": "^4.1.0",
     "npm-run-all": "^4.1.5",
     "standard": "^14.3.1",
-    "tap": "^14.10.5"
+    "gh-release": "^3.5.0",
+    "tap": "^14.10.5",
+    "auto-changelog": "^1.16.2"
   },
   "dependencies": {
     "@actions/core": "1.2.2",
     "@actions/github": "2.1.0",
-    "async-neocities": "0.0.10"
+    "async-neocities": "1.0.0",
+    "pretty-bytes": "^5.3.0",
+    "pretty-time": "^1.1.0"
   },
   "standard": {
     "ignore": [
