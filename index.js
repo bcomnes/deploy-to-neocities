@@ -2,7 +2,7 @@ const core = require('@actions/core')
 // const github = require('@actions/github')
 const Neocities = require('async-neocities')
 const path = require('path')
-const prettyTime = require('pretty-time')
+const ms = require('ms')
 const assert = require('nanoassert')
 
 async function doDeploy () {
@@ -19,7 +19,7 @@ async function doDeploy () {
     statsCb: Neocities.statsHandler()
   })
 
-  console.log(`Deployed to Neocities in ${prettyTime([0, stats.time])}:`)
+  console.log(`Deployed to Neocities in ${ms(stats.time)}:`)
   console.log(`    Uploaded ${stats.filesToUpload.length} files`)
   console.log(`    ${cleanup ? 'Deleted' : 'Orphaned'} ${stats.filesToDelete.length} files`)
   console.log(`    Skipped ${stats.filesSkipped.length} files`)
