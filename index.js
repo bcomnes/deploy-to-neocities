@@ -66,7 +66,7 @@ function statsHandler (opts = {}) {
             console.log(`Done diffing local and remote files in ${prettyTime([0, stats.timer.elapsed])}`)
             console.log(`${diffing.uploadCount} files to upload`)
             console.log(`${diffing.deleteCount} ` + (opts.cleanup ? 'files to delete' : 'orphaned files'))
-            console.log(`${diffing.skipCoount} files to skip`)
+            console.log(`${diffing.skipCount} files to skip`)
             core.endGroup()
             break
           }
