@@ -39,7 +39,7 @@
   "dependencies": {
     "@actions/core": "1.2.2",
     "@actions/github": "2.1.0",
-    "async-neocities": "1.1.1",
+    "async-neocities": "1.1.2",
     "pretty-time": "1.1.0"
   },
   "standard": {
