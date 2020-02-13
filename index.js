@@ -14,10 +14,10 @@ async function doDeploy () {
 
   const client = new Neocities(token)
 
-  const stats = await core.group('Deploying to neocities', client.deploy(distDir, {
+  const stats = await client.deploy(distDir, {
     cleanup,
     statsCb: Neocities.statsHandler()
-  }))
+  })
 
   console.log(`Deployed to Neocities in ${prettyTime([0, stats.time])}:`)
   console.log(`    Uploaded ${stats.filesToUpload.length} files`)
@@ -26,5 +26,6 @@ async function doDeploy () {
 }
 
 doDeploy().catch(err => {
+  console.error(err)
   core.setFailed(err.message)
 })
