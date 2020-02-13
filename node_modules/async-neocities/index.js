@@ -57,7 +57,7 @@ class NeocitiesAPIClient {
     return fetch(url, opts)
   }
 
-  static statsHanler (...args) { return statsHandler(...args) }
+  static statsHandler (...args) { return statsHandler(...args) }
 
   /**
    * Create an async-neocities api client.
