@@ -41,7 +41,10 @@ function statsHandler (opts = {}) {
         logProgress(lastStats)
       }
     } else {
-      if (progressInterval) clearInterval(progressInterval)
+      if (progressInterval) {
+        clearInterval(progressInterval)
+        logProgress(lastStats)
+      }
     }
   }
 
