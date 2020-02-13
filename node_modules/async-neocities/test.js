@@ -3,6 +3,7 @@ const tap = require('tap')
 const { readFileSync } = require('fs')
 const { resolve } = require('path')
 const NeocitiesAPIClient = require('.')
+const statsHanlder = require('./lib/stats-handler')
 
 let token = process.env.NEOCITIES_API_TOKEN
 let fakeToken = false
@@ -87,18 +88,10 @@ if (!fakeToken) {
   tap.test('can deploy folders', async t => {
     const client = new NeocitiesAPIClient(token)
 
-    const statsCb = (stats) => {
-      let logLine = `${stats.stage} ${stats.status} ${stats.timer.elapsed}`
-      Object.entries(stats.tasks).forEach(([key, val]) => {
-        logLine += ` ${key}: ${JSON.stringify(val)}`
-      })
-      console.log(logLine)
-    }
-
     const deployStats = await client.deploy(
       resolve(__dirname, 'fixtures'),
       {
-        statsCb,
+        statsCb: statsHanlder(),
         cleanup: false
       }
     )
@@ -110,7 +103,7 @@ if (!fakeToken) {
     const redeployStats = await client.deploy(
       resolve(__dirname, 'fixtures'),
       {
-        statsCb,
+        statsCb: statsHanlder(),
         cleanup: false
       }
     )
@@ -122,7 +115,7 @@ if (!fakeToken) {
     const cleanupStats = await client.deploy(
       resolve(__dirname, 'fixtures/empty'),
       {
-        statsCb,
+        statsCb: statsHanlder(),
         cleanup: true
       }
     )

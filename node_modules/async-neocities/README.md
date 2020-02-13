@@ -185,11 +185,11 @@ Deploy a path to a `directory`, efficiently only uploading missing and changed f
 ```js
 {
   cleanup: false // delete orphaned files on neocities that are not in the `directory`
-  statsCb: () => {} // WIP progress API
+  statsCb: (stats) => {}
 }
 ```
 
-The return value of this method is subject to change.
+For an example of a stats handler, see [lib/stats-handler.js]('./lib/stats-handler.js').
 
 ### `client.get(endpoint, [quieries], [opts])`
 
