@@ -6,9 +6,9 @@ const prettyTime = require('pretty-time')
 const prettyBytes = require('pretty-bytes')
 
 async function doDeploy () {
-  const token = core.getInput('api-token')
-  const distDir = path.join(process.cwd(), core.getInput('dist-dir'))
-  const cleanup = core.getInput('cleanup')
+  const token = core.getInput('apiToken')
+  const distDir = path.join(process.cwd(), core.getInput('distDir'))
+  const cleanup = JSON.parse(core.getInput('cleanup'))
   console.log(typeof cleanup)
 
   const client = new Neocities(token)
