@@ -277,7 +277,7 @@ class NeocitiesAPIClient {
       for await (const file of iterator) {
         localFiles.push(file)
         localScan.numberOfFiles += 1
-        localScan.totalSize += file.stat.blksize
+        localScan.totalSize += file.stat.size
         sendInspectionUpdate(PROGRESS)
       }
       return localFiles
@@ -291,7 +291,7 @@ class NeocitiesAPIClient {
     // Inspection stage finalizer
     const [localFiles, remoteFiles] = await Promise.all([
       localScanJob,
-      this.list().then(res => res.files)
+      remoteScanJob.then(res => res.files)
     ])
     inspectionStats.timer.stop()
     sendInspectionUpdate(STOP)
@@ -315,6 +315,7 @@ class NeocitiesAPIClient {
 
     const { tasks: { diffing } } = diffingStats
     const { filesToUpload, filesToDelete, filesSkipped } = await neocitiesLocalDiff(remoteFiles, localFiles)
+
     diffingStats.timer.stop()
     diffingStats.status = STOP
     diffing.uploadCount = filesToUpload.length
@@ -353,7 +354,7 @@ class NeocitiesAPIClient {
         },
         skippedFiles: {
           count: filesSkipped.length,
-          size: filesSkipped.reduce((accum, file) => accum + file.stat.blksize, 0)
+          size: filesSkipped.reduce((accum, file) => accum + file.stat.size, 0)
         }
       }
     }

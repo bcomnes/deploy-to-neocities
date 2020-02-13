@@ -87,18 +87,18 @@ if (!fakeToken) {
   tap.test('can deploy folders', async t => {
     const client = new NeocitiesAPIClient(token)
 
-    // const statsCb = (stats) => {
-    //   let logLine = `${stats.stage} ${stats.status} ${stats.timer.elapsed}`
-    //   Object.entries(stats.tasks).forEach(([key, val]) => {
-    //     logLine += ` ${key}: ${JSON.stringify(val)}`
-    //   })
-    //   console.log(logLine)
-    // }
+    const statsCb = (stats) => {
+      let logLine = `${stats.stage} ${stats.status} ${stats.timer.elapsed}`
+      Object.entries(stats.tasks).forEach(([key, val]) => {
+        logLine += ` ${key}: ${JSON.stringify(val)}`
+      })
+      console.log(logLine)
+    }
 
     const deployStats = await client.deploy(
       resolve(__dirname, 'fixtures'),
       {
-        // statsCb,
+        statsCb,
         cleanup: false
       }
     )
@@ -110,7 +110,7 @@ if (!fakeToken) {
     const redeployStats = await client.deploy(
       resolve(__dirname, 'fixtures'),
       {
-        // statsCb,
+        statsCb,
         cleanup: false
       }
     )
@@ -122,7 +122,7 @@ if (!fakeToken) {
     const cleanupStats = await client.deploy(
       resolve(__dirname, 'fixtures/empty'),
       {
-        // statsCb,
+        statsCb,
         cleanup: true
       }
     )
