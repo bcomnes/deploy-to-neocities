@@ -1,7 +1,6 @@
 # deploy-to-neocities
 
-[![Actions Status](https://github.com/bcomnes/deploy-to-neocities/workflows/tests/badge.svg)](https://github.com/bcomnes/deploy-to-neocities/actions) [![Greenkeeper badge](https://badges.greenkeeper.io/bcomnes/deploy-to-neocities.svg)](https://greenkeeper.io/)
-
+[![Actions Status](https://github.com/bcomnes/deploy-to-neocities/workflows/tests/badge.svg)](https://github.com/bcomnes/deploy-to-neocities/actions)
 
 ## See also
 
