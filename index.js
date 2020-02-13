@@ -10,7 +10,6 @@ async function doDeploy () {
   const distDir = path.join(process.cwd(), core.getInput('distDir'))
   const cleanup = JSON.parse(core.getInput('cleanup'))
   assert(typeof cleanup === 'boolean', 'Cleanup input must be a boolean "true" or "false"')
-  console.log(typeof cleanup)
 
   const client = new Neocities(token)
 
