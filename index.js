@@ -9,6 +9,7 @@ async function doDeploy () {
   const token = core.getInput('api-token')
   const distDir = path.join(process.cwd(), core.getInput('dist-dir'))
   const cleanup = core.getInput('cleanup')
+  console.log(typeof cleanup)
 
   const client = new Neocities(token)
 
@@ -30,8 +31,9 @@ function statsHandler (opts = {}) {
       case 'inspecting': {
         switch (stats.status) {
           case 'start': {
-            core.startGroup('Inspecting')
-            console.log(`Inspecting local (${opts.distDir}) and remote files...`)
+            core.startGroup('Inspecting files')
+            console.log('Inspecting local and remote files...')
+            console.log(`Dist directory: ${opts.distDir})`)
             break
           }
           case 'progress': {
@@ -63,7 +65,7 @@ function statsHandler (opts = {}) {
             const { tasks: { diffing } } = stats
             console.log(`Done diffing local and remote files in ${prettyTime([0, stats.timer.elapsed])}`)
             console.log(`${diffing.uploadCount} files to upload`)
-            console.log(`${diffing.deleteCount} ` + opts.cleanup ? 'files to delete' : 'orphaned files')
+            console.log(`${diffing.deleteCount} ` + (opts.cleanup ? 'files to delete' : 'orphaned files'))
             console.log(`${diffing.skipCoount} files to skip`)
             core.endGroup()
             break
@@ -75,7 +77,7 @@ function statsHandler (opts = {}) {
         switch (stats.status) {
           case 'start': {
             core.startGroup('Applying diff')
-            console.log('Uploading changes' + opts.cleanup ? ' and deleting orphaned files...' : '...')
+            console.log('Uploading changes' + (opts.cleanup ? ' and deleting orphaned files...' : '...'))
             break
           }
           case 'progress': {
@@ -83,7 +85,7 @@ function statsHandler (opts = {}) {
           }
           case 'stop': {
             const { tasks: { uploadFiles, deleteFiles, skippedFiles } } = stats
-            console.log('Done uploading changes' + opts.cleanup ? ' and deleting orphaned files' : '' + ` in ${prettyTime([0, stats.timer.elapsed])}`)
+            console.log('Done uploading changes' + (opts.cleanup ? ' and deleting orphaned files' : '') + ` in ${prettyTime([0, stats.timer.elapsed])}`)
             console.log(`Average upload speed: ${prettyBytes(uploadFiles.speed)}/s`)
             if (opts.cleanup) console.log(`Average delete speed: ${prettyBytes(deleteFiles.speed)}/s`)
             console.log(`Skipped ${skippedFiles.count} files (${prettyBytes(skippedFiles.size)})`)
