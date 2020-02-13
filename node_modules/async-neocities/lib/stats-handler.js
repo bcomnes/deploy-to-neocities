@@ -35,7 +35,7 @@ function statsHandler (opts = {}) {
 
   function progressHandler (stats) {
     Object.assign(lastStats, stats)
-    if (!stats.complete || stats.progress < 1) {
+    if (!stats.complete && stats.progress < 1) {
       if (!progressInterval) {
         progressInterval = setInterval(logProgress, 500, lastStats)
         logProgress(lastStats)
