@@ -3,101 +3,28 @@ const core = require('@actions/core')
 const Neocities = require('async-neocities')
 const path = require('path')
 const prettyTime = require('pretty-time')
-const prettyBytes = require('pretty-bytes')
+const assert = require('nanoassert')
 
 async function doDeploy () {
   const token = core.getInput('apiToken')
   const distDir = path.join(process.cwd(), core.getInput('distDir'))
   const cleanup = JSON.parse(core.getInput('cleanup'))
+  assert(typeof cleanup === 'boolean', 'Cleanup input must be a boolean "true" or "false"')
   console.log(typeof cleanup)
 
   const client = new Neocities(token)
 
-  const finalStats = await client.deploy(distDir, {
+  const stats = await core.group('Deploying to neocities', client.deploy(distDir, {
     cleanup,
-    statsCb: statsHandler({ cleanup, distDir })
-  })
+    statsCb: Neocities.statsHandler()
+  }))
 
-  return finalStats
+  console.log(`Deployed to Neocities in ${prettyTime([0, stats.time])}:`)
+  console.log(`    Uploaded ${stats.filesToUpload.length} files`)
+  console.log(`    ${cleanup ? 'Deleted' : 'Orphaned'} ${stats.filesToDelete.length} files`)
+  console.log(`    Skipped ${stats.filesSkipped.length} files`)
 }
 
-doDeploy().then((finalStats) => {}).catch(err => {
+doDeploy().catch(err => {
   core.setFailed(err.message)
 })
-
-function statsHandler (opts = {}) {
-  return (stats) => {
-    switch (stats.stage) {
-      case 'inspecting': {
-        switch (stats.status) {
-          case 'start': {
-            core.startGroup('Inspecting files')
-            console.log('Inspecting local and remote files...')
-            console.log(`Dist directory: ${opts.distDir})`)
-            break
-          }
-          case 'progress': {
-            break
-          }
-          case 'stop': {
-            console.log(`Done inspecting local and remote files in ${prettyTime([0, stats.timer.elapsed])}`)
-            const { tasks: { localScan, remoteScan } } = stats
-            console.log(`Scanned ${localScan.numberOfFiles} local files (${prettyBytes(localScan.totalSize)}) in ${prettyTime([0, localScan.timer.elapsed])}`)
-            console.log(`Scanned ${remoteScan.numberOfFiles} remote files (${prettyBytes(remoteScan.totalSize)}) in ${prettyTime([0, remoteScan.timer.elapsed])}`)
-            core.endGroup()
-            break
-          }
-        }
-        break
-      }
-      case 'diffing': {
-        switch (stats.status) {
-          case 'start': {
-            core.startGroup('Diffing files')
-            console.log('Diffing local and remote files...')
-            break
-          }
-          case 'progress': {
-            // No progress on diffing
-            break
-          }
-          case 'stop': {
-            const { tasks: { diffing } } = stats
-            console.log(`Done diffing local and remote files in ${prettyTime([0, stats.timer.elapsed])}`)
-            console.log(`${diffing.uploadCount} files to upload`)
-            console.log(`${diffing.deleteCount} ` + (opts.cleanup ? 'files to delete' : 'orphaned files'))
-            console.log(`${diffing.skipCount} files to skip`)
-            core.endGroup()
-            break
-          }
-        }
-        break
-      }
-      case 'applying': {
-        switch (stats.status) {
-          case 'start': {
-            core.startGroup('Applying diff')
-            console.log('Uploading changes' + (opts.cleanup ? ' and deleting orphaned files...' : '...'))
-            break
-          }
-          case 'progress': {
-            break
-          }
-          case 'stop': {
-            const { tasks: { uploadFiles, deleteFiles, skippedFiles } } = stats
-            console.log('Done uploading changes' + (opts.cleanup ? ' and deleting orphaned files' : '') + ` in ${prettyTime([0, stats.timer.elapsed])}`)
-            console.log(`Average upload speed: ${prettyBytes(uploadFiles.speed)}/s`)
-            if (opts.cleanup) console.log(`Average delete speed: ${prettyBytes(deleteFiles.speed)}/s`)
-            console.log(`Skipped ${skippedFiles.count} files (${prettyBytes(skippedFiles.size)})`)
-            core.endGroup()
-            break
-          }
-        }
-        break
-      }
-      default: {
-        console.log(stats)
-      }
-    }
-  }
-}
