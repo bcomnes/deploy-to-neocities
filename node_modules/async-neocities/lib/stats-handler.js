@@ -49,7 +49,7 @@ function statsHandler (opts = {}) {
   }
 
   function logProgress (stats) {
-    let logLine = `Stage ${stats.stage}: ${stats.progress * 100}%`
+    let logLine = `Stage ${stats.stage}: ${(stats.progress * 100).toFixed(2)}%`
     if (stats.bytesWritten != null && stats.totalBytes != null) {
       logLine = logLine + ` (${prettyBytes(stats.bytesWritten)} / ${prettyBytes(stats.totalBytes)})`
     }
