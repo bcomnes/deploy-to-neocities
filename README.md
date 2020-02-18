@@ -15,9 +15,9 @@ Get your sites API token and set a [secret][sec] called `NEOCITIES_API_TOKEN`.  
 https://neocities.org/settings/{{sitename}}#api_key
 ```
 
-During your workflow, generate the files you want to deploy to [Neocities][nc] into a `distDir` directory.  You can use any tools that can be installed or brought into the Github actions environment.
+During your workflow, generate the files you want to deploy to [Neocities][nc] into a `dist_dir` directory.  You can use any tools that can be installed or brought into the Github actions environment.
 
-This `dist_dir` should be specified as the `distDir` input.  Once the build is complete, the `deploy-to-neocities` action will efficiently upload all new and all changed files to Neocities.  Any files on Neocities that don't exist in the `distDir` are considdered 'orphaned' files.  To destrucively remove these 'orphaned' files, set the `cleanup` input to `true`.
+This `dist_dir` should be specified as the `dist_dir` input.  Once the build is complete, the `deploy-to-neocities` action will efficiently upload all new and all changed files to Neocities.  Any files on Neocities that don't exist in the `dist_dir` are considdered 'orphaned' files.  To destrucively remove these 'orphaned' files, set the `cleanup` input to `true`.
 
 You most likely only want to run this on the `master` branch so that only changes commited to `master` result in website updates.
 
