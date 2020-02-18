@@ -74,16 +74,18 @@ None.
 
 - Neocities CDN uses a pure [anycast](https://en.wikipedia.org/wiki/Anycast) network providing efficient content serving no matter where your visitors are located around the world.
 - Anycast doesn't require special DNS records to achieve geolocation routing characteristics.  Simple `A` and `AAAA` records are all you need.
-- Neocities owns its own [ARIN](https://en.wikipedia.org/wiki/American_Registry_for_Internet_Numbers) IP block and has its own [BGP](https://en.wikipedia.org/wiki/Border_Gateway_Protocol) peering agreements, eliminating entire layers of bureaucracy between your content and the rest of the Internet typical of all major Cloud providers.
+- Neocities owns its own [ARIN](https://en.wikipedia.org/wiki/American_Registry_for_Internet_Numbers) IP block and has its own [BGP](https://en.wikipedia.org/wiki/Border_Gateway_Protocol) peering agreements, eliminating entire layers of bureaucracy between your content and the rest of the Internet typical of all major cloud providers.
 - Far faster cold cache access than other popular static hosting services.  Perfect for personal websites, projects and other infrequently accessed documents.
 - Simple and understandable feature set.  You can hand upload and edit files along side built/deployed assets.
 - Fun, friendly, creative and organic community with an [interesting social network](https://neocities.org/browse).
 - Independent, sustainable and altruistic service run by [@kyledrake](https://github.com/kyledrake/) and word on the street is that the service is profitable.
-- Affordable and predictable pricing.  There is a generous free tier and you can get custom domains and additional sites for $5/mo.
+- [Affordable and predictable pricing](https://neocities.org/supporter).  There is a generous free tier and you can get custom domains and additional sites for $5/mo.
 - Offers simple, Google-free site analytics.
 - Makes accepting tips a breeze.
 - Bring your own CI environment, or don't.
 - Cute cat logo.
+- [Support the distributed web](https://neocities.org/distributed-web). Built in IPFS support.
+- [Beginner friendly docs](https://neocities.org/tutorials) for learning how to make your own websites.
 
 ### What are some of the drawbacks compared to Netlify/Zeit?
 
