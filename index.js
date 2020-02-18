@@ -10,10 +10,7 @@ async function doDeploy () {
   const token = core.getInput('api_token')
   const distDir = path.join(process.cwd(), core.getInput('dist_dir'))
   const cleanup = JSON.parse(core.getInput('cleanup'))
-  console.log(cleanup)
-  console.log(typeof cleanup)
-  console.log(core.getInput('cleanup'))
-  console.log(typeof core.getInput('cleanup'))
+
   assert(typeof cleanup === 'boolean', 'Cleanup input must be a boolean "true" or "false"')
   const stat = await fsp.stat()
   assert(stat.isDirectory(), 'dist_dir must be a directory that exists')
