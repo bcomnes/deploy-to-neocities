@@ -4,7 +4,7 @@
 [![Actions Status](https://github.com/bcomnes/deploy-to-neocities/workflows/tests/badge.svg)](https://github.com/bcomnes/deploy-to-neocities/actions)
 [![Marketplace link](https://img.shields.io/badge/github%20marketplace-deploy--to--neocities-brightgreen)](https://github.com/marketplace/actions/deploy-to-neocities)
 
-<center><img src="logo.png"></center>
+<center><img src="static/logo.png"></center>
 
 Efficiently deploy a website to [Neocities][nc].
 
