@@ -13,8 +13,15 @@
     "version:1-changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING:' && git add CHANGELOG.md",
     "version:2-cleandeps": "mv node_modules tmp_modules && npm i --only=prod && git add node_modules --force",
     "postversion": "rm -rf node_modules && mv tmp_modules node_modules",
-    "clean": "rimraf dist && mkdirp dist",
-    "build": "mkdir public && cp package.json public/test.json"
+    "clean": "rimraf public && mkdirp public",
+    "build": "npm run clean && run-p build:*",
+    "build:md": "sitedown . -b public -l layout.html",
+    "build:static": "cpx 'static/*' public",
+    "start": "npm run watch",
+    "watch": "npm run clean && run-p watch:*",
+    "watch:js": "budo --dir public --live --open",
+    "watch:md": "npm run build:md -- -w",
+    "watch:static": "npm run build:static -- --watch"
   },
   "repository": {
     "type": "git",
@@ -29,6 +36,8 @@
   "homepage": "https://github.com/bcomnes/deploy-to-neocities#readme",
   "devDependencies": {
     "auto-changelog": "^1.16.2",
+    "budo": "^11.6.3",
+    "cpx2": "^2.0.0",
     "dependency-check": "^4.1.0",
     "gh-release": "^3.5.0",
     "npm-run-all": "^4.1.5",
@@ -38,11 +47,7 @@
     "@actions/core": "1.2.2",
     "async-neocities": "1.1.6",
     "ms": "^2.1.2",
-    "nanoassert": "^2.0.0"
-  },
-  "standard": {
-    "ignore": [
-      "dist"
-    ]
+    "nanoassert": "^2.0.0",
+    "sitedown": "^4.0.0"
   }
 }

@@ -1,6 +1,8 @@
 # deploy-to-neocities
 
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/bcomnes/deploy-to-neocities)](https://github.com/bcomnes/deploy-to-neocities)
 [![Actions Status](https://github.com/bcomnes/deploy-to-neocities/workflows/tests/badge.svg)](https://github.com/bcomnes/deploy-to-neocities/actions)
+[![Marketplace link](https://img.shields.io/badge/github%20marketplace-deploy--to--neocities-brightgreen)](https://github.com/marketplace/actions/deploy-to-neocities)
 
 <center><img src="logo.png"></center>
 
@@ -42,6 +44,9 @@ jobs:
         dist_dir: public
 ```
 
+- 💻 [Example YML](.github/workflows/neocities.yml)
+- 🌎 [Example Deploy](https://deploy-to-neocities.neocities.org)
+
 Create a workflow `.yml` file in your repositories `.github/workflows` directory. An [example workflow](#example-workflow) is available below. For more information, reference the GitHub Help Documentation for [Creating a workflow file](https://help.github.com/en/articles/configuring-a-workflow#creating-a-workflow-file).
 
 Get your sites API token and set a [secret][sec] called `NEOCITIES_API_TOKEN`.  Set the `api_token` input on your `deploy-to-neocities` action to `NEOCITIES_API_TOKEN`.
@@ -54,7 +59,7 @@ During your workflow, generate the files you want to deploy to [Neocities][nc] i
 
 Once the build is complete, `deploy-to-neocities` will efficiently upload all new and all changed files to Neocities.  Any files on Neocities that don't exist in the `dist_dir` are considered 'orphaned' files.  To destructively remove these 'orphaned' files, set the `cleanup` input to `true`.
 
-You most likely only want to run this on the `master` branch so that only changes committed to `master` result in website updates.
+You most likely only want to run this on the `master` branch so that only changes committed to `master` result in website updates.  Running a test build that does not deploy on all branches and PRs can help catch changes that will break the build.
 
 ### Inputs
 
