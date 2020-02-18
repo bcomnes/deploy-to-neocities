@@ -6,26 +6,12 @@
 
 Efficiently deploy a website to [Neocities][nc].
 
-### Pre-requisites
-Create a workflow `.yml` file in your repositories `.github/workflows` directory. An [example workflow](#example-workflow) is available below. For more information, reference the GitHub Help Documentation for [Creating a workflow file](https://help.github.com/en/articles/configuring-a-workflow#creating-a-workflow-file).
-
-Get your sites API token and set a [secret][sec] called `NEOCITIES_API_TOKEN`.  Set the `api_token` input on your `deploy-to-neocities` action to `NEOCITIES_API_TOKEN`.
-
-```
-https://neocities.org/settings/{{sitename}}#api_key
-```
-
-During your workflow, generate the files you want to deploy to [Neocities][nc] into a `dist_dir` directory.  You can use any tools that can be installed or brought into the Github actions environment.
-
-This `dist_dir` should be specified as the `dist_dir` input.  Once the build is complete, the `deploy-to-neocities` action will efficiently upload all new and all changed files to Neocities.  Any files on Neocities that don't exist in the `dist_dir` are considdered 'orphaned' files.  To destrucively remove these 'orphaned' files, set the `cleanup` input to `true`.
-
-You most likely only want to run this on the `master` branch so that only changes commited to `master` result in website updates.
-
-### Example workflow
+## Usage
 
 ```yaml
-name: Deploy to neociteis
+name: Deploy to neocities
 
+# only run on changes to master
 on:
   push:
     branches:
@@ -37,6 +23,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    # Set up any tools and build steps here
+    # This example uses a Node.js toolchain to build a site
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
@@ -45,6 +33,7 @@ jobs:
       run: |
         npm i
         npm run build
+    # When the dist_dir is ready, deploy it to neocities
     - name: Deploy to neocities
       uses: bcomnes/deploy-to-neocities@v1
       with:
@@ -53,21 +42,64 @@ jobs:
         dist_dir: public
 ```
 
+Create a workflow `.yml` file in your repositories `.github/workflows` directory. An [example workflow](#example-workflow) is available below. For more information, reference the GitHub Help Documentation for [Creating a workflow file](https://help.github.com/en/articles/configuring-a-workflow#creating-a-workflow-file).
+
+Get your sites API token and set a [secret][sec] called `NEOCITIES_API_TOKEN`.  Set the `api_token` input on your `deploy-to-neocities` action to `NEOCITIES_API_TOKEN`.
+
+```
+https://neocities.org/settings/{{sitename}}#api_key
+```
+
+During your workflow, generate the files you want to deploy to [Neocities][nc] into a `dist_dir` directory.  You can use any tools that can be installed or brought into the Github actions environment.
+
+Once the build is complete, `deploy-to-neocities` will efficiently upload all new and all changed files to Neocities.  Any files on Neocities that don't exist in the `dist_dir` are considered 'orphaned' files.  To destructively remove these 'orphaned' files, set the `cleanup` input to `true`.
+
+You most likely only want to run this on the `master` branch so that only changes committed to `master` result in website updates.
+
 ### Inputs
 
-- `api_token` (**REQUIRED**): The api token for your [Neocities][nc] website to deploy to.
+- `api_token` (**REQUIRED**): The API token for your [Neocities][nc] website to deploy to.
 - `dist_dir`: The directory to deploy to [Neocities][nc]. Default: `public`.
-- `cleanup`:  Boolean string (`true` or `false`).  If `true`, `deploy-to-neocities` will destructively delete files found on [Neocoties][nc] not found in your `dist_dir`.  Default: `false`.
+- `cleanup`:  Boolean string (`true` or `false`).  If `true`, `deploy-to-neocities` will destructively delete files found on [Neocities][nc] not found in your `dist_dir`.  Default: `false`.
 
 ### Outputs
 
 None.
 
+## FAQ
+
+### Why should I deploy to Neocities?
+
+[Neocities][nc] offers a bunch of nice properties:
+
+- Neocities CDN uses a pure [anycast](https://en.wikipedia.org/wiki/Anycast) network providing efficient content serving no matter where your visitors are located around the world.
+- Anycast doesn't require special DNS records to achieve geolocation routing characteristics.  Simple `A` and `AAAA` records are all you need.
+- Neocities owns its own [ARIN](https://en.wikipedia.org/wiki/American_Registry_for_Internet_Numbers) IP block and has its own [BGP](https://en.wikipedia.org/wiki/Border_Gateway_Protocol) peering agreements, eliminating entire layers of bureaucracy between your content and the rest of the Internet typical of all major Cloud providers.
+- Far faster cold cache access than other popular static hosting services.  Perfect for personal websites, projects and other infrequently accessed documents.
+- Simple and understandable feature set.  You can hand upload and edit files along side built/deployed assets.
+- Fun, friendly, creative and organic community with an [interesting social network](https://neocities.org/browse).
+- Independent, sustainable and altruistic service run by [@kyledrake](https://github.com/kyledrake/) and word on the street is that the service is profitable.
+- Affordable and predictable pricing.  There is a generous free tier and you can get custom domains and additional sites for $5/mo.
+- Offers simple, Google-free site analytics.
+- Makes accepting tips a breeze.
+- Bring your own CI environment, or don't.
+- Cute cat logo.
+
+### What are some of the drawbacks compared to Netlify/Zeit?
+
+- Not appropriate for hyper traffic commercial sites most likely.
+- No concept of a Deploy or atomicity when changing files.
+- Most features of these services are not included. Neocities is just static file hosting and a few basic features around that.
+- Doesn't offer support.
+- No deploy previews.
+- No Github Deploys API support (yet).
+
+
 ## See also
 
 - [async-neocities](https://ghub.io/async-neocities): diffing engine used for action.
 - [Neocities API Docs](https://neocities.org/api)
-- [neocities/neocities-node](https://github.com/neocities/neocities-node): Node api
+- [neocities/neocities-node](https://github.com/neocities/neocities-node): Official Node API
 
 [qs]: https://ghub.io/qs
 [nf]: https://ghub.io/node-fetch
