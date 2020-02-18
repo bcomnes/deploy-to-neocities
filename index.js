@@ -4,12 +4,16 @@ const Neocities = require('async-neocities')
 const path = require('path')
 const ms = require('ms')
 const assert = require('nanoassert')
+const fsp = require('fs').promises
 
 async function doDeploy () {
   const token = core.getInput('api_token')
   const distDir = path.join(process.cwd(), core.getInput('dist_dir'))
-  const cleanup = JSON.parse(core.getInput('cleanup'))
+  const cleanup = core.getInput('cleanup')
+
   assert(typeof cleanup === 'boolean', 'Cleanup input must be a boolean "true" or "false"')
+  const stat = await fsp.stat()
+  assert(stat.isDirectory(), 'dist_dir must be a directory that exists')
 
   const client = new Neocities(token)
 
