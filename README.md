@@ -6,7 +6,7 @@
 
 <center><img src="static/logo.png"></center>
 
-Efficiently deploy a website to [Neocities][nc].
+Efficiently deploy a website to [Neocities][nc] using [Github actions](https://github.com/features/actions).
 
 ## Usage
 
