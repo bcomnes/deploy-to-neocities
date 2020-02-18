@@ -21,6 +21,38 @@ This `dist_dir` should be specified as the `distDir` input.  Once the build is c
 
 You most likely only want to run this on the `master` branch so that only changes commited to `master` result in website updates.
 
+### Example workflow
+
+```yaml
+name: Deploy to neociteis
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: Install deps and build
+      run: |
+        npm i
+        npm run build
+    - name: Deploy to neocities
+      uses: bcomnes/deploy-to-neocities@v1
+      with:
+        api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
+        cleanup: false
+        dist_dir: public
+```
+
 ### Inputs
 
 - `api_token` (**REQUIRED**): The api token for your [Neocities][nc] website to deploy to.
