@@ -1,6 +1,6 @@
 {
   "name": "deploy-to-neocities",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Github Action to deplpoy a folder to Neocities.org",
   "main": "index.js",
   "private": true,
