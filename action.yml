@@ -1,10 +1,10 @@
 name: 'Deploy to Neocities'
-description: 'Github Action to deplpoy a folder to Neocities.org'
+description: 'Efficiently deplpoy a folder to Neocities.org'
 branding:
-  icon: cat
-  color: yellow
+  icon: aperture
+  color: orange
 inputs:
-  apiToken:  # api token for site to deploy to
+  api_token:  # api token for site to deploy to
     description: 'Neocities API token for site to deploy to'
     required: true
   distDir:

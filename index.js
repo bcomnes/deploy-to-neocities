@@ -6,8 +6,8 @@ const ms = require('ms')
 const assert = require('nanoassert')
 
 async function doDeploy () {
-  const token = core.getInput('apiToken')
-  const distDir = path.join(process.cwd(), core.getInput('distDir'))
+  const token = core.getInput('api_token')
+  const distDir = path.join(process.cwd(), core.getInput('dist_dir'))
   const cleanup = JSON.parse(core.getInput('cleanup'))
   assert(typeof cleanup === 'boolean', 'Cleanup input must be a boolean "true" or "false"')
 
