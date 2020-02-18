@@ -12,7 +12,7 @@ async function doDeploy () {
   const cleanup = JSON.parse(core.getInput('cleanup'))
 
   assert(typeof cleanup === 'boolean', 'Cleanup input must be a boolean "true" or "false"')
-  const stat = await fsp.stat()
+  const stat = await fsp.stat(distDir)
   assert(stat.isDirectory(), 'dist_dir must be a directory that exists')
 
   const client = new Neocities(token)
