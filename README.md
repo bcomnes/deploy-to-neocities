@@ -78,7 +78,7 @@ None.
 [Neocities][nc] offers a bunch of nice properties:
 
 - Neocities CDN uses a pure [anycast](https://en.wikipedia.org/wiki/Anycast) network providing efficient content serving no matter where your visitors are located around the world.
-- Anycast doesn't require special DNS records to achieve geolocation routing characteristics.  Simple `A` and `AAAA` records are all you need.
+- Anycast doesn't require special DNS records to achieve geolocation routing characteristics.  Simple `A` and `AAAA` records are all you need.  Bare names and all!
 - Neocities owns its own [ARIN](https://en.wikipedia.org/wiki/American_Registry_for_Internet_Numbers) IP block and has its own [BGP](https://en.wikipedia.org/wiki/Border_Gateway_Protocol) peering agreements, eliminating entire layers of bureaucracy between your content and the rest of the Internet typical of all major cloud providers.
 - Far faster cold cache access than other popular static hosting services.  Perfect for personal websites, projects and other infrequently accessed documents.
 - Simple and understandable feature set.  You can hand upload and edit files along side built/deployed assets.
@@ -89,6 +89,7 @@ None.
 - Offers simple, Google-free site analytics.
 - Makes accepting tips a breeze.
 - Bring your own CI environment, or don't.
+- Free https via [Lets Encrypt](https://blog.neocities.org/blog/2016/11/10/switching-to-default-ssl.html).
 - Cute cat logo.
 - [Support the distributed web](https://neocities.org/distributed-web). Built in IPFS support.
 - [Beginner friendly docs](https://neocities.org/tutorials) for learning how to make your own websites.
