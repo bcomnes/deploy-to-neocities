@@ -2,6 +2,7 @@
 
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/bcomnes/deploy-to-neocities)](https://github.com/bcomnes/deploy-to-neocities)
 [![Actions Status](https://github.com/bcomnes/deploy-to-neocities/workflows/tests/badge.svg)](https://github.com/bcomnes/deploy-to-neocities/actions)
+![Deploy to neocities](https://github.com/bcomnes/deploy-to-neocities/workflows/Deploy%20to%20neocities/badge.svg)
 [![Marketplace link](https://img.shields.io/badge/github%20marketplace-deploy--to--neocities-brightgreen)](https://github.com/marketplace/actions/deploy-to-neocities)
 
 <center><img src="static/logo.png"></center>
