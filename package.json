@@ -17,7 +17,7 @@
     "build": "npm run clean && run-p build:*",
     "build:md": "sitedown . -b public -l layout.html",
     "build:static": "cpx './**/*.{png,ico}' public",
-    "build:action": "rm -rf dist && n
+    "build:action": "rm -rf dist && ncc build index.js -o dist -s",
     "start": "npm run watch",
     "watch": "npm run clean && run-p watch:*",
     "watch:js": "budo --dir public --live --open",
