@@ -1,5 +1,5 @@
 name: 'Deploy to Neocities'
-description: 'Efficiently deplpoy a folder to Neocities.org'
+description: 'Efficiently deploy a folder to Neocities.org'
 branding:
   icon: aperture
   color: orange
