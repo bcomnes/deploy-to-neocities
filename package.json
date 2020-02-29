@@ -10,13 +10,14 @@
     "test:standard": "standard",
     "release": "git push --follow-tags && gh-release",
     "version": "run-s version:*",
-    "version:1-changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING:' && git add CHANGELOG.md",
-    "version:2-cleandeps": "mv node_modules tmp_modules && npm i --only=prod && git add node_modules --force",
+    "version:changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING:' && git add CHANGELOG.md",
+    "version:build": "npm run build:action && git add dist",
     "postversion": "rm -rf node_modules && mv tmp_modules node_modules",
     "clean": "rimraf public && mkdirp public",
     "build": "npm run clean && run-p build:*",
     "build:md": "sitedown . -b public -l layout.html",
     "build:static": "cpx './**/*.{png,ico}' public",
+    "build:action": "rm -rf dist && n
     "start": "npm run watch",
     "watch": "npm run clean && run-p watch:*",
     "watch:js": "budo --dir public --live --open",
@@ -42,7 +43,8 @@
     "gh-release": "^3.5.0",
     "npm-run-all": "^4.1.5",
     "standard": "^14.3.1",
-    "sitedown": "^4.0.0"
+    "sitedown": "^4.0.0",
+    "@zeit/ncc": "^0.21.1"
   },
   "dependencies": {
     "@actions/core": "1.2.2",
