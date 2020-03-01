@@ -38,7 +38,6 @@
     "build:md": "sitedown . -b public -l layout.html",
     "build:static": "cpx './**/*.{png,ico}' public",
     "clean": "rimraf public && mkdirp public",
-    "postversion": "rm -rf node_modules && mv tmp_modules node_modules",
     "release": "git push --follow-tags && gh-release",
     "start": "npm run watch",
     "test": "run-s test:*",
