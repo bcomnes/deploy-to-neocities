@@ -1,55 +1,60 @@
 {
   "name": "deploy-to-neocities",
-  "version": "1.0.7",
   "description": "Github Action to deplpoy a folder to Neocities.org",
-  "main": "index.js",
-  "private": true,
-  "scripts": {
-    "test": "run-s test:*",
-    "test:deps": "dependency-check . --no-dev --no-peer",
-    "test:standard": "standard",
-    "release": "git push --follow-tags && gh-release",
-    "version": "run-s version:*",
-    "version:changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING:' && git add CHANGELOG.md",
-    "version:build": "npm run build:action && git add dist",
-    "postversion": "rm -rf node_modules && mv tmp_modules node_modules",
-    "clean": "rimraf public && mkdirp public",
-    "build": "npm run clean && run-p build:*",
-    "build:md": "sitedown . -b public -l layout.html",
-    "build:static": "cpx './**/*.{png,ico}' public",
-    "build:action": "rm -rf dist && ncc build index.js -o dist -s",
-    "start": "npm run watch",
-    "watch": "npm run clean && run-p watch:*",
-    "watch:js": "budo --dir public --live --open",
-    "watch:md": "npm run build:md -- -w",
-    "watch:static": "npm run build:static -- --watch"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bcomnes/deploy-to-neocities.git"
-  },
-  "keywords": [],
+  "version": "1.0.7",
   "author": "Bret Comnes <bcomnes@gmail.com> (https://bret.io/)",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/bcomnes/deploy-to-neocities/issues"
-  },
-  "homepage": "https://github.com/bcomnes/deploy-to-neocities#readme",
-  "devDependencies": {
-    "auto-changelog": "^1.16.2",
-    "budo": "^11.6.3",
-    "cpx2": "^2.0.0",
-    "dependency-check": "^4.1.0",
-    "gh-release": "^3.5.0",
-    "npm-run-all": "^4.1.5",
-    "standard": "^14.3.1",
-    "sitedown": "^4.0.0",
-    "@zeit/ncc": "^0.21.1"
   },
   "dependencies": {
     "@actions/core": "1.2.2",
     "async-neocities": "1.1.6",
     "ms": "^2.1.2",
     "nanoassert": "^2.0.0"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.21.1",
+    "auto-changelog": "^1.16.2",
+    "budo": "^11.6.3",
+    "cpx2": "^2.0.0",
+    "dependency-check": "^4.1.0",
+    "gh-release": "^3.5.0",
+    "npm-run-all": "^4.1.5",
+    "sitedown": "^4.0.0",
+    "standard": "^14.3.1"
+  },
+  "homepage": "https://github.com/bcomnes/deploy-to-neocities#readme",
+  "keywords": [],
+  "license": "MIT",
+  "main": "index.js",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bcomnes/deploy-to-neocities.git"
+  },
+  "scripts": {
+    "build": "npm run clean && run-p build:*",
+    "build:action": "rm -rf dist && ncc build index.js -o dist -s",
+    "build:md": "sitedown . -b public -l layout.html",
+    "build:static": "cpx './**/*.{png,ico}' public",
+    "clean": "rimraf public && mkdirp public",
+    "postversion": "rm -rf node_modules && mv tmp_modules node_modules",
+    "release": "git push --follow-tags && gh-release",
+    "start": "npm run watch",
+    "test": "run-s test:*",
+    "test:deps": "dependency-check . --no-dev --no-peer",
+    "test:standard": "standard",
+    "version": "run-s version:*",
+    "version:build": "npm run build:action && git add dist",
+    "version:changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING:' && git add CHANGELOG.md",
+    "watch": "npm run clean && run-p watch:*",
+    "watch:js": "budo --dir public --live --open",
+    "watch:md": "npm run build:md -- -w",
+    "watch:static": "npm run build:static -- --watch"
+  },
+  "standard": {
+    "ignore": [
+      "dist"
+    ]
   }
 }
