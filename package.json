@@ -13,7 +13,7 @@
     "nanoassert": "^2.0.0"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.21.1",
+    "@zeit/ncc": "^0.22.0",
     "auto-changelog": "^1.16.2",
     "budo": "^11.6.3",
     "cpx2": "^2.0.0",
