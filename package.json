@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@zeit/ncc": "^0.21.1",
-    "auto-changelog": "^1.16.2",
+    "auto-changelog": "^2.0.0",
     "budo": "^11.6.3",
     "cpx2": "^2.0.0",
     "dependency-check": "^4.1.0",
