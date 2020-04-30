@@ -3,7 +3,7 @@ const core = require('@actions/core')
 const Neocities = require('async-neocities')
 const path = require('path')
 const ms = require('ms')
-const assert = require('webassert')
+const assert = require('webassert').default
 const fsp = require('fs').promises
 
 async function doDeploy () {
