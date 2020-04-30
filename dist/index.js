@@ -731,7 +731,7 @@ const core = __webpack_require__(470)
 const Neocities = __webpack_require__(248)
 const path = __webpack_require__(622)
 const ms = __webpack_require__(317)
-const assert = __webpack_require__(920)
+const assert = __webpack_require__(920).default
 const fsp = __webpack_require__(747).promises
 
 async function doDeploy () {
