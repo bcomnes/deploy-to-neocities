@@ -7,14 +7,14 @@
     "url": "https://github.com/bcomnes/deploy-to-neocities/issues"
   },
   "dependencies": {
-    "@actions/core": "1.2.3",
+    "@actions/core": "1.2.4",
     "async-neocities": "1.1.6",
     "ms": "^2.1.2",
     "nanoassert": "^2.0.0"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.21.1",
     "auto-changelog": "^2.0.0",
+    "@zeit/ncc": "^0.22.0",
     "budo": "^11.6.3",
     "cpx2": "^2.0.0",
     "dependency-check": "^4.1.0",
