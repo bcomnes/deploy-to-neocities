@@ -106,10 +106,10 @@ None.
 
 ## Sites using deploy-to-neocities
 
-- https://github.com/bcomnes/bret.io
-- https://github.com/ecomnes/elenacomnes.com
-- https://github.com/gumcast/gumcast-client
-- https://github.com/bcomnes/deploy-to-neocities/blob/master/.github/workflows/neocities.yml
+- https://github.com/bcomnes/bret.io ([bret.io](https://bret.io))
+- https://github.com/ecomnes/elenacomnes.com ([elenacomnes.comnes](https://elenacomnes.com))
+- https://github.com/gumcast/gumcast-client ([gumcast.com](https://gumcast.com))
+- https://github.com/bcomnes/deploy-to-neocities/blob/master/.github/workflows/neocities.yml ([deploy-to-neocities.neocities.org](https://deploy-to-neocities.neocities.org))
 - ...PR your site when you set it up!
 
 ## See also
