@@ -104,6 +104,13 @@ None.
 - No deploy previews.
 - No Github Deploys API support (yet).
 
+## Sites using deploy-to-neocities
+
+- https://github.com/bcomnes/bret.io
+- https://github.com/ecomnes/elenacomnes.com
+- https://github.com/gumcast/gumcast-client
+- https://github.com/bcomnes/deploy-to-neocities/blob/master/.github/workflows/neocities.yml
+- ...PR your site when you set it up!
 
 ## See also
 
