@@ -7,7 +7,7 @@
 
 <center><img src="static/logo.png"></center>
 
-Efficiently deploy a website to [Neocities][nc] using [Github actions](https://github.com/features/actions).
+Efficiently deploy a website to [Neocities][nc] using [Github actions](https://github.com/features/actions).  Uses content aware diffing to only update files that changed. 
 
 ## Usage
 
