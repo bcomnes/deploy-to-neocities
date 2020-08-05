@@ -15,7 +15,6 @@ inputs:
     description: Delete orphaned files on neocities that don't exist in distDir
     default: false
     required: true
-outputs: # none
 runs:
   using: 'node12'
   main: 'dist/index.js'
