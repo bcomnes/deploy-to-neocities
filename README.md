@@ -110,6 +110,7 @@ None.
 - https://github.com/ecomnes/elenacomnes.com ([elenacomnes.comnes](https://elenacomnes.com))
 - https://github.com/gumcast/gumcast-client ([gumcast.com](https://gumcast.com))
 - https://github.com/bcomnes/deploy-to-neocities/blob/master/.github/workflows/neocities.yml ([deploy-to-neocities.neocities.org](https://deploy-to-neocities.neocities.org))
+- [Zambonifofex/stories](https://github.com/Zambonifofex/stories) ([zamstories.neocities.org](https://zamstories.neocities.org))
 - ...PR your site when you set it up!
 
 ## See also
