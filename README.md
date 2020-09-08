@@ -118,6 +118,7 @@ None.
 - [async-neocities](https://ghub.io/async-neocities): diffing engine used for action.
 - [Neocities API Docs](https://neocities.org/api)
 - [neocities/neocities-node](https://github.com/neocities/neocities-node): Official Node API
+- [jonchang/deploy-neocities](https://github.com/jonchang/deploy-neocities): An alternative docker + official ruby client based action similar to this one.
 
 [qs]: https://ghub.io/qs
 [nf]: https://ghub.io/node-fetch
