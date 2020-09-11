@@ -4,3 +4,4 @@ config.json
 public
 node_modules
 tmp_modules
+package-lock.json
