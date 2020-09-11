@@ -38,7 +38,7 @@
     "build:md": "sitedown . -b public -l layout.html",
     "build:static": "cpx './**/*.{png,ico}' public",
     "clean": "rimraf public && mkdirp public",
-    "release": "git push --follow-tags && gh-release",
+    "release": "git push --follow-tags && gh-release -y",
     "start": "npm run watch",
     "test": "run-s test:*",
     "test:deps": "dependency-check . --no-dev --no-peer",
