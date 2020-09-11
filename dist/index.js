@@ -19,7 +19,13 @@ require('./sourcemap-register.js');module.exports =
 /******/ 		};
 /******/
 /******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		var threw = true;
+/******/ 		try {
+/******/ 			modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 			threw = false;
+/******/ 		} finally {
+/******/ 			if(threw) delete installedModules[moduleId];
+/******/ 		}
 /******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
@@ -895,6 +901,7 @@ function state(list, sortMethod)
 /***/ 149:
 /***/ (function(module, exports, __webpack_require__) {
 
+/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 /* eslint-disable node/no-deprecated-api */
 var buffer = __webpack_require__(293)
 var Buffer = buffer.Buffer
@@ -4471,7 +4478,7 @@ function escapeProperty(s) {
 /***/ 442:
 /***/ (function(module) {
 
-module.exports = {"_from":"async-neocities@1.1.6","_id":"async-neocities@1.1.6","_inBundle":false,"_integrity":"sha512-q5fTVttBaN9znGxqxxDAh/ks+bZngIJPu6zPS7nlbJLC9NnOhrcP5Mu0VntxgEBtAuaExyI6uH/C+CxKSW0LeQ==","_location":"/async-neocities","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"async-neocities@1.1.6","name":"async-neocities","escapedName":"async-neocities","rawSpec":"1.1.6","saveSpec":null,"fetchSpec":"1.1.6"},"_requiredBy":["/"],"_resolved":"https://registry.npmjs.org/async-neocities/-/async-neocities-1.1.6.tgz","_shasum":"405b45565ccbe9c4ea56e65552ae9c48c20a0309","_spec":"async-neocities@1.1.6","_where":"/Users/bret/repos/deploy-to-neocities","author":{"name":"Bret Comnes","email":"bcomnes@gmail.com","url":"https://bret.io"},"bugs":{"url":"https://github.com/bcomnes/async-neocities/issues"},"bundleDependencies":false,"dependencies":{"async-folder-walker":"^2.0.1","fetch-errors":"^2.0.1","form-data":"^3.0.0","nanoassert":"^2.0.0","node-fetch":"^2.6.0","pretty-bytes":"^5.3.0","pump":"^3.0.0","pumpify":"^2.0.1","qs":"^6.9.1","streamx":"^2.6.0"},"deprecated":false,"description":"WIP - nothing to see here","devDependencies":{"auto-changelog":"^1.16.2","dependency-check":"^4.1.0","gh-release":"^3.5.0","npm-run-all":"^4.1.5","standard":"^13.1.0","tap":"^14.10.2"},"homepage":"https://github.com/bcomnes/async-neocities","keywords":["neocities","async","api client","static hosting"],"license":"MIT","main":"index.js","name":"async-neocities","repository":{"type":"git","url":"git+https://github.com/bcomnes/async-neocities.git"},"scripts":{"prepublishOnly":"git push --follow-tags && gh-release","test":"run-s test:*","test:deps":"dependency-check . --no-dev --no-peer","test:standard":"standard","test:tape":"tap","version":"auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING:' && git add CHANGELOG.md"},"standard":{"ignore":["dist"]},"version":"1.1.6"};
+module.exports = {"_from":"async-neocities@1.1.6","_id":"async-neocities@1.1.6","_inBundle":false,"_integrity":"sha512-q5fTVttBaN9znGxqxxDAh/ks+bZngIJPu6zPS7nlbJLC9NnOhrcP5Mu0VntxgEBtAuaExyI6uH/C+CxKSW0LeQ==","_location":"/async-neocities","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"async-neocities@1.1.6","name":"async-neocities","escapedName":"async-neocities","rawSpec":"1.1.6","saveSpec":null,"fetchSpec":"1.1.6"},"_requiredBy":["/"],"_resolved":"https://registry.npmjs.org/async-neocities/-/async-neocities-1.1.6.tgz","_shasum":"405b45565ccbe9c4ea56e65552ae9c48c20a0309","_spec":"async-neocities@1.1.6","_where":"/home/runner/work/deploy-to-neocities/deploy-to-neocities","author":{"name":"Bret Comnes","email":"bcomnes@gmail.com","url":"https://bret.io"},"bugs":{"url":"https://github.com/bcomnes/async-neocities/issues"},"bundleDependencies":false,"dependencies":{"async-folder-walker":"^2.0.1","fetch-errors":"^2.0.1","form-data":"^3.0.0","nanoassert":"^2.0.0","node-fetch":"^2.6.0","pretty-bytes":"^5.3.0","pump":"^3.0.0","pumpify":"^2.0.1","qs":"^6.9.1","streamx":"^2.6.0"},"deprecated":false,"description":"WIP - nothing to see here","devDependencies":{"auto-changelog":"^1.16.2","dependency-check":"^4.1.0","gh-release":"^3.5.0","npm-run-all":"^4.1.5","standard":"^13.1.0","tap":"^14.10.2"},"homepage":"https://github.com/bcomnes/async-neocities","keywords":["neocities","async","api client","static hosting"],"license":"MIT","main":"index.js","name":"async-neocities","repository":{"type":"git","url":"git+https://github.com/bcomnes/async-neocities.git"},"scripts":{"prepublishOnly":"git push --follow-tags && gh-release","test":"run-s test:*","test:deps":"dependency-check . --no-dev --no-peer","test:standard":"standard","test:tape":"tap","version":"auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING:' && git add CHANGELOG.md"},"standard":{"ignore":["dist"]},"version":"1.1.6"};
 
 /***/ }),
 
@@ -5035,6 +5042,12 @@ function convertBody(buffer, headers) {
 	// html4
 	if (!res && str) {
 		res = /<meta[\s]+?http-equiv=(['"])content-type\1[\s]+?content=(['"])(.+?)\2/i.exec(str);
+		if (!res) {
+			res = /<meta[\s]+?content=(['"])(.+?)\1[\s]+?http-equiv=(['"])content-type\3/i.exec(str);
+			if (res) {
+				res.pop(); // drop last quote
+			}
+		}
 
 		if (res) {
 			res = /charset=(.*)/i.exec(res.pop());
@@ -6042,7 +6055,7 @@ function fetch(url, opts) {
 				// HTTP fetch step 5.5
 				switch (request.redirect) {
 					case 'error':
-						reject(new FetchError(`redirect mode is set to error: ${request.url}`, 'no-redirect'));
+						reject(new FetchError(`uri requested responds with a redirect, redirect mode is set to error: ${request.url}`, 'no-redirect'));
 						finalize();
 						return;
 					case 'manual':
@@ -6081,7 +6094,8 @@ function fetch(url, opts) {
 							method: request.method,
 							body: request.body,
 							signal: request.signal,
-							timeout: request.timeout
+							timeout: request.timeout,
+							size: request.size
 						};
 
 						// HTTP-redirect fetch step 9
@@ -7162,6 +7176,17 @@ var combine = function combine(a, b) {
     return [].concat(a, b);
 };
 
+var maybeMap = function maybeMap(val, fn) {
+    if (isArray(val)) {
+        var mapped = [];
+        for (var i = 0; i < val.length; i += 1) {
+            mapped.push(fn(val[i]));
+        }
+        return mapped;
+    }
+    return fn(val);
+};
+
 module.exports = {
     arrayToObject: arrayToObject,
     assign: assign,
@@ -7171,6 +7196,7 @@ module.exports = {
     encode: encode,
     isBuffer: isBuffer,
     isRegExp: isRegExp,
+    maybeMap: maybeMap,
     merge: merge
 };
 
@@ -7195,6 +7221,18 @@ const BYTE_UNITS = [
 	'YB'
 ];
 
+const BIBYTE_UNITS = [
+	'B',
+	'kiB',
+	'MiB',
+	'GiB',
+	'TiB',
+	'PiB',
+	'EiB',
+	'ZiB',
+	'YiB'
+];
+
 const BIT_UNITS = [
 	'b',
 	'kbit',
@@ -7205,6 +7243,18 @@ const BIT_UNITS = [
 	'Ebit',
 	'Zbit',
 	'Ybit'
+];
+
+const BIBIT_UNITS = [
+	'b',
+	'kibit',
+	'Mibit',
+	'Gibit',
+	'Tibit',
+	'Pibit',
+	'Eibit',
+	'Zibit',
+	'Yibit'
 ];
 
 /*
@@ -7229,8 +7279,10 @@ module.exports = (number, options) => {
 		throw new TypeError(`Expected a finite number, got ${typeof number}: ${number}`);
 	}
 
-	options = Object.assign({bits: false}, options);
-	const UNITS = options.bits ? BIT_UNITS : BYTE_UNITS;
+	options = Object.assign({bits: false, binary: false}, options);
+	const UNITS = options.bits ?
+		(options.binary ? BIBIT_UNITS : BIT_UNITS) :
+		(options.binary ? BIBYTE_UNITS : BYTE_UNITS);
 
 	if (options.signed && number === 0) {
 		return ' 0 ' + UNITS[0];
@@ -7248,9 +7300,9 @@ module.exports = (number, options) => {
 		return prefix + numberString + ' ' + UNITS[0];
 	}
 
-	const exponent = Math.min(Math.floor(Math.log10(number) / 3), UNITS.length - 1);
+	const exponent = Math.min(Math.floor(options.binary ? Math.log(number) / Math.log(1024) : Math.log10(number) / 3), UNITS.length - 1);
 	// eslint-disable-next-line unicorn/prefer-exponentiation-operator
-	number = Number((number / Math.pow(1000, exponent)).toPrecision(3));
+	number = Number((number / Math.pow(options.binary ? 1024 : 1000, exponent)).toPrecision(3));
 	const numberString = toLocaleString(number, options.locale);
 
 	const unit = UNITS[exponent];
@@ -7942,6 +7994,10 @@ class WritableState {
     this.afterWrite = afterWrite.bind(this)
   }
 
+  get ended () {
+    return (this.stream._duplexState & WRITE_DONE) !== 0
+  }
+
   push (data) {
     if (this.map !== null) data = this.map(data)
 
@@ -7968,7 +8024,8 @@ class WritableState {
   }
 
   end (data) {
-    if (data !== undefined && data !== null) this.push(data)
+    if (typeof data === 'function') this.stream.once('finish', data)
+    else if (data !== undefined && data !== null) this.push(data)
     this.stream._duplexState = (this.stream._duplexState | WRITE_FINISHING) & WRITE_NON_PRIMARY
   }
 
@@ -8042,6 +8099,10 @@ class ReadableState {
     this.afterRead = afterRead.bind(this)
   }
 
+  get ended () {
+    return (this.stream._duplexState & READ_DONE) !== 0
+  }
+
   pipe (pipeTo, cb) {
     if (this.pipeTo !== null) throw new Error('Can only pipe to one destination')
 
@@ -8064,7 +8125,8 @@ class ReadableState {
     }
 
     pipeTo.on('drain', afterDrain.bind(this))
-    this.stream.emit('pipe', pipeTo)
+    this.stream.emit('piping', pipeTo)
+    pipeTo.emit('pipe', this.stream)
   }
 
   push (data) {
@@ -8355,11 +8417,11 @@ class Stream extends EventEmitter {
   }
 
   get readable () {
-    return this._readableState !== null
+    return this._readableState !== null ? true : undefined
   }
 
   get writable () {
-    return this._writableState !== null
+    return this._writableState !== null ? true : undefined
   }
 
   get destroyed () {
@@ -8499,14 +8561,12 @@ class Readable extends Stream {
     const stream = this
 
     let error = null
-    let ended = false
-    let promiseResolve
-    let promiseReject
+    let promiseResolve = null
+    let promiseReject = null
 
     this.on('error', (err) => { error = err })
-    this.on('end', () => { ended = true })
-    this.on('close', () => call(error, null))
-    this.on('readable', () => call(null, stream.read()))
+    this.on('readable', onreadable)
+    this.on('close', onclose)
 
     return {
       [asyncIterator] () {
@@ -8517,20 +8577,43 @@ class Readable extends Stream {
           promiseResolve = resolve
           promiseReject = reject
           const data = stream.read()
-          if (data !== null) call(null, data)
+          if (data !== null) ondata(data)
+          else if ((stream._duplexState & DESTROYED) !== 0) ondata(null)
         })
       },
       return () {
-        stream.destroy()
+        return destroy(null)
+      },
+      throw (err) {
+        return destroy(err)
       }
     }
 
-    function call (err, data) {
+    function onreadable () {
+      if (promiseResolve !== null) ondata(stream.read())
+    }
+
+    function onclose () {
+      if (promiseResolve !== null) ondata(null)
+    }
+
+    function ondata (data) {
       if (promiseReject === null) return
-      if (err) promiseReject(err)
-      else if (data === null && !ended) promiseReject(STREAM_DESTROYED)
+      if (error) promiseReject(error)
+      else if (data === null && (stream._duplexState & READ_DONE) === 0) promiseReject(STREAM_DESTROYED)
       else promiseResolve({ value: data, done: data === null })
       promiseReject = promiseResolve = null
+    }
+
+    function destroy (err) {
+      stream.destroy(err)
+      return new Promise((resolve, reject) => {
+        if (stream._duplexState & DESTROYED) return resolve()
+        stream.once('close', function () {
+          if (err) reject(err)
+          else resolve({ value: undefined, done: true })
+        })
+      })
     }
   }
 }
@@ -8657,6 +8740,8 @@ class Transform extends Duplex {
   }
 }
 
+class PassThrough extends Transform {}
+
 function transformAfterFlush (err, data) {
   const cb = this._transformState.afterFinal
   if (err) return cb(err)
@@ -8686,7 +8771,9 @@ module.exports = {
   Writable,
   Readable,
   Duplex,
-  Transform
+  Transform,
+  // Export PassThrough for compatibility with Node.js core's stream module
+  PassThrough
 }
 
 
@@ -8850,17 +8937,6 @@ var parseArrayValue = function (val, options) {
     return val;
 };
 
-var maybeMap = function maybeMap(val, fn) {
-    if (isArray(val)) {
-        var mapped = [];
-        for (var i = 0; i < val.length; i += 1) {
-            mapped.push(fn(val[i]));
-        }
-        return mapped;
-    }
-    return fn(val);
-};
-
 // This is what browsers will submit when the ✓ character occurs in an
 // application/x-www-form-urlencoded body and the encoding of the page containing
 // the form is iso-8859-1, or when the submitted form has an accept-charset
@@ -8909,7 +8985,7 @@ var parseValues = function parseQueryStringValues(str, options) {
             val = options.strictNullHandling ? null : '';
         } else {
             key = options.decoder(part.slice(0, pos), defaults.decoder, charset, 'key');
-            val = maybeMap(
+            val = utils.maybeMap(
                 parseArrayValue(part.slice(pos + 1), options),
                 function (encodedVal) {
                     return options.decoder(encodedVal, defaults.decoder, charset, 'value');
@@ -9935,7 +10011,12 @@ var stringify = function stringify(
     } else if (obj instanceof Date) {
         obj = serializeDate(obj);
     } else if (generateArrayPrefix === 'comma' && isArray(obj)) {
-        obj = obj.join(',');
+        obj = utils.maybeMap(obj, function (value) {
+            if (value instanceof Date) {
+                return serializeDate(value);
+            }
+            return value;
+        }).join(',');
     }
 
     if (obj === null) {
@@ -9970,44 +10051,31 @@ var stringify = function stringify(
 
     for (var i = 0; i < objKeys.length; ++i) {
         var key = objKeys[i];
+        var value = obj[key];
 
-        if (skipNulls && obj[key] === null) {
+        if (skipNulls && value === null) {
             continue;
         }
 
-        if (isArray(obj)) {
-            pushToArray(values, stringify(
-                obj[key],
-                typeof generateArrayPrefix === 'function' ? generateArrayPrefix(prefix, key) : prefix,
-                generateArrayPrefix,
-                strictNullHandling,
-                skipNulls,
-                encoder,
-                filter,
-                sort,
-                allowDots,
-                serializeDate,
-                formatter,
-                encodeValuesOnly,
-                charset
-            ));
-        } else {
-            pushToArray(values, stringify(
-                obj[key],
-                prefix + (allowDots ? '.' + key : '[' + key + ']'),
-                generateArrayPrefix,
-                strictNullHandling,
-                skipNulls,
-                encoder,
-                filter,
-                sort,
-                allowDots,
-                serializeDate,
-                formatter,
-                encodeValuesOnly,
-                charset
-            ));
-        }
+        var keyPrefix = isArray(obj)
+            ? typeof generateArrayPrefix === 'function' ? generateArrayPrefix(prefix, key) : prefix
+            : prefix + (allowDots ? '.' + key : '[' + key + ']');
+
+        pushToArray(values, stringify(
+            value,
+            keyPrefix,
+            generateArrayPrefix,
+            strictNullHandling,
+            skipNulls,
+            encoder,
+            filter,
+            sort,
+            allowDots,
+            serializeDate,
+            formatter,
+            encodeValuesOnly,
+            charset
+        ));
     }
 
     return values;
