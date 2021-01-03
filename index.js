@@ -6,10 +6,12 @@ const ms = require('ms')
 const assert = require('webassert').default
 const fsp = require('fs').promises
 
+let cleanup
+
 async function doDeploy () {
   const token = core.getInput('api_token')
   const distDir = path.join(process.cwd(), core.getInput('dist_dir'))
-  const cleanup = JSON.parse(core.getInput('cleanup'))
+  cleanup = JSON.parse(core.getInput('cleanup'))
 
   assert(typeof cleanup === 'boolean', 'Cleanup input must be a boolean "true" or "false"')
   const stat = await fsp.stat(distDir)
@@ -30,5 +32,15 @@ async function doDeploy () {
 
 doDeploy().catch(err => {
   console.error(err)
+  if (err.stats) {
+    console.log('Files to upload: ')
+    console.dir(err.stats.filesToUpload, { colors: true, depth: 999 })
+
+    if (cleanup) {
+      console.log('Files to delete: ')
+      console.dir(err.stats.filesToDelete, { colors: true, depth: 999 })
+    }
+  }
+
   core.setFailed(err.message)
 })
