@@ -48,15 +48,17 @@ jobs:
 - 💻 [Example YML](.github/workflows/neocities.yml)
 - 🌎 [Example Deploy](https://deploy-to-neocities.neocities.org)
 
-Create a workflow `.yml` file in your repositories `.github/workflows` directory. An [example workflow](#example-workflow) is available below. For more information, reference the GitHub Help Documentation for [Creating a workflow file](https://help.github.com/en/articles/configuring-a-workflow#creating-a-workflow-file).
+Create a workflow `.yml` file in your repository's `.github/workflows` directory. An [example workflow](#example-workflow) is available above. For more information, reference the GitHub Help Documentation for [Creating a workflow file](https://help.github.com/en/articles/configuring-a-workflow#creating-a-workflow-file).
 
-Get your sites API token and set a [secret][sec] called `NEOCITIES_API_TOKEN`.  Set the `api_token` input on your `deploy-to-neocities` action to `NEOCITIES_API_TOKEN`.
+You'll need the API token for your site. Go to:
 
 ```
-https://neocities.org/settings/{{sitename}}#api_key
+https://neocities.org/settings/{{your-sitename}}#api_key
 ```
 
-During your workflow, generate the files you want to deploy to [Neocities][nc] into a `dist_dir` directory.  You can use any tools that can be installed or brought into the Github actions environment.
+Get your site's API token. In your GitHub repository, set a [secret][sec] called `NEOCITIES_API_TOKEN`.  Set the `api_token` input on your `deploy-to-neocities` action to `${{ secrets.NEOCITIES_API_TOKEN }}` as in the example above.
+
+During your workflow, generate the files you want to deploy to [Neocities][nc] into a directory. Set this as the `dist_dir` directory in your workflow (the default is `public`).  You can use any tools to generate your site that can be installed or brought into the Github actions environment.
 
 Once the build is complete, `deploy-to-neocities` will efficiently upload all new and all changed files to Neocities.  Any files on Neocities that don't exist in the `dist_dir` are considered 'orphaned' files.  To destructively remove these 'orphaned' files, set the `cleanup` input to `true`.
 
