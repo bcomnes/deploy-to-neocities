@@ -122,6 +122,10 @@ None.
 - [neocities/neocities-node](https://github.com/neocities/neocities-node): Official Node API
 - [jonchang/deploy-neocities](https://github.com/jonchang/deploy-neocities): An alternative docker + official ruby client based action similar to this one.
 
+## CHANGELOG
+
+See [changelog.md](CHANGELOG.md)
+
 [qs]: https://ghub.io/qs
 [nf]: https://ghub.io/node-fetch
 [fd]: https://ghub.io/form-data
