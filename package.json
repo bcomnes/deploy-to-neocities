@@ -9,7 +9,7 @@
   "dependencies": {
     "@actions/core": "1.2.6",
     "async-neocities": "1.1.7",
-    "ms": "2.1.2",
+    "ms": "2.1.3",
     "webassert": "3.0.2"
   },
   "devDependencies": {
