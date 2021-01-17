@@ -25,6 +25,6 @@ jobs:
       uses: bcomnes/deploy-to-neocities@master # dont use master in production
       with:
         api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
-        cleanup: false
+        cleanup: true
         dist_dir: public
         protected_files: 'dropbox/*'
