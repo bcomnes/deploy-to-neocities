@@ -45,7 +45,7 @@
     "test:standard": "standard",
     "version": "run-s version:*",
     "version:build": "npm run build:action && git add dist",
-    "version:changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING:' && git add CHANGELOG.md",
+    "version:changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md",
     "watch": "npm run clean && run-p watch:*",
     "watch:js": "budo --dir public --live --open",
     "watch:md": "npm run build:md -- -w",
