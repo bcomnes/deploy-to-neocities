@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "@actions/core": "1.2.6",
-    "async-neocities": "2.0.2",
+    "async-neocities": "2.1.1",
+    "minimatch": "^3.0.4",
     "ms": "2.1.3",
     "webassert": "3.0.2"
   },

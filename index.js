@@ -5,6 +5,7 @@ const path = require('path')
 const ms = require('ms')
 const assert = require('webassert').default
 const fsp = require('fs').promises
+const minimatch = require('minimatch')
 
 let cleanup
 
@@ -12,6 +13,7 @@ async function doDeploy () {
   const token = core.getInput('api_token')
   const distDir = path.join(process.cwd(), core.getInput('dist_dir'))
   cleanup = JSON.parse(core.getInput('cleanup'))
+  const protectedFilesGlob = core.getInput('protected_files')
 
   assert(typeof cleanup === 'boolean', 'Cleanup input must be a boolean "true" or "false"')
   const stat = await fsp.stat(distDir)
@@ -19,15 +21,23 @@ async function doDeploy () {
 
   const client = new Neocities(token)
 
-  const stats = await client.deploy(distDir, {
+  const deployOpts = {
     cleanup,
     statsCb: Neocities.statsHandler()
-  })
+  }
+
+  if (protectedFilesGlob) deployOpts.protectedFileFilter = minimatch.filter(protectedFilesGlob)
+
+  const stats = await client.deploy(distDir, deployOpts)
 
   console.log(`Deployed to Neocities in ${ms(stats.time)}:`)
   console.log(`    Uploaded ${stats.filesToUpload.length} files`)
   console.log(`    ${cleanup ? 'Deleted' : 'Orphaned'} ${stats.filesToDelete.length} files`)
   console.log(`    Skipped ${stats.filesSkipped.length} files`)
+  console.log(`    ${stats.protectedFiles.length} protected files:`)
+  if (stats.protectedFiles.length) {
+    console.log(stats.protectedFiles)
+  }
 }
 
 doDeploy().catch(err => {

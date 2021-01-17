@@ -15,6 +15,9 @@ inputs:
     description: Delete orphaned files on neocities that don't exist in distDir
     default: false
     required: true
+  protected_files:
+    description: A glob string that prevents matched files from ever being deleted.
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'

@@ -17,11 +17,9 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v2.1.4
       with:
-        node-version: 12
-    - name: Install deps and build
-      run: |
-        npm i
-        npm run build
+        node-version: 15
+    - run: npm i
+    - run: npm run build
     # When the dist_dir is ready, deploy it to neocities
     - name: Deploy to neocities
       uses: bcomnes/deploy-to-neocities@master # dont use master in production
@@ -29,3 +27,4 @@ jobs:
         api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
         cleanup: false
         dist_dir: public
+        protected_files: 'dropbox/*'
