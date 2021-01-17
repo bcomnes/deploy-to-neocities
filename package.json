@@ -37,7 +37,7 @@
     "build": "npm run clean && run-p build:*",
     "build:action": "rm -rf dist && ncc build index.js -o dist -s",
     "build:md": "sitedown . -b public -l layout.html",
-    "build:static": "cpx './**/*.{png,ico}' public",
+    "build:static": "cpx './!(node_modules)**/*.{png,ico}' public",
     "clean": "rimraf public && mkdirp public",
     "release": "git push --follow-tags && gh-release -y",
     "start": "npm run watch",
