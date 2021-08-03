@@ -109,12 +109,27 @@ None.
 
 ## Sites using deploy-to-neocities
 
+(Some may be NSFW)
+
 - https://github.com/bcomnes/bret.io ([bret.io](https://bret.io))
 - https://github.com/ecomnes/elenacomnes.com ([elenacomnes.comnes](https://elenacomnes.com))
 - https://github.com/gumcast/gumcast-client ([gumcast.com](https://gumcast.com))
 - https://github.com/bcomnes/deploy-to-neocities/blob/master/.github/workflows/neocities.yml ([deploy-to-neocities.neocities.org](https://deploy-to-neocities.neocities.org))
 - [Zambonifofex/stories](https://github.com/Zambonifofex/stories) ([zamstories.neocities.org](https://zamstories.neocities.org))
 - [Your Neofeed](https://github.com/victoriadrake/neocities-neofeed), (っ◔◡◔)っ a personal timeline for Neocities and GitHub Pages.
+- https://punkedwerewolf.net
+- https://speakscribe.com
+- https://geno7.neocities.org
+- https://github.com/M1ssM0ss/deploy-to-neocities-template
+- https://nelson.neocities.org
+- https://flamedfury.com
+- https://keb.neocities.org
+- https://missmoss.neocities.org
+- https://fuckingwebmaster.net
+- https://rarebit.neocities.org
+- https://cavacado.neocities.org
+- https://wanderinginn.neocities.org
+- https://andri.dk/blog/2021/deploy-static-websites-anywhere
 - ...PR your site when you set it up!
 
 ## See also
