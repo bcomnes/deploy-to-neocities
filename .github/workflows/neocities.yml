@@ -15,7 +15,7 @@ jobs:
     # Set up any tools and build steps here
     # This example uses a Node.js toolchain to build a site
     - name: Use Node.js
-      uses: actions/setup-node@v2.4.1
+      uses: actions/setup-node@v2.5.0
       with:
         node-version: 15
     - run: npm i
