@@ -130,6 +130,7 @@ None.
 - https://cavacado.neocities.org
 - https://wanderinginn.neocities.org
 - https://andri.dk/blog/2021/deploy-static-websites-anywhere
+- https://github.com/PersonMeetup/frontiercorps ([frontiercorps.neocities.org](https://frontiercorps.neocities.org/))
 - ...PR your site when you set it up!
 
 ## See also
