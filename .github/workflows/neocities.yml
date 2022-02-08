@@ -5,19 +5,23 @@ on:
   push:
     branches:
       - master
+      
+env:
+  FORCE_COLOR: 2
+  node_version: lts/*
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2.4.0
+    - uses: actions/checkout@v2
     # Set up any tools and build steps here
     # This example uses a Node.js toolchain to build a site
     - name: Use Node.js
-      uses: actions/setup-node@v2.5.1
+      uses: actions/setup-node@v2
       with:
-        node-version: 15
+        node-version: ${{ env.node_version }}
     - run: npm i
     - run: npm run build
     # When the dist_dir is ready, deploy it to neocities
