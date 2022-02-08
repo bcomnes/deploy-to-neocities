@@ -20,6 +20,10 @@ on:
     branches:
       - master
 
+concurrency: # prevent concurrent deploys doing starnge things
+  group: deploy-to-neocities
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
