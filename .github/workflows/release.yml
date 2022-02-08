@@ -8,17 +8,18 @@ on:
         required: true
 
 env:
-  node_version: 14
+  node_version: lts/*
+  FORCE_COLOR: 2
 
 jobs:
   version_and_release:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2.4.0
+    - uses: actions/checkout@v2
       with:
         # fetch full history so things like auto-changelog work properly
         fetch-depth: 0
-    - uses: actions/setup-node@v2.5.1
+    - uses: actions/setup-node@v2
       with:
         node-version: ${{ env.node_version }}
         # setting a registry enables the NODE_AUTH_TOKEN env variable where we can set an npm token.  REQUIRED
