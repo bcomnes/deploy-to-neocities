@@ -12,9 +12,9 @@ jobs:
         node: [15]
 
     steps:
-    - uses: actions/checkout@v2.4.0
+    - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node }}
-      uses: actions/setup-node@v2.5.1
+      uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node }}
     - run: npm i
@@ -23,8 +23,11 @@ jobs:
   automerge:
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
     steps:
-      - uses: fastify/github-action-merge-dependabot@v2.7.1
+      - uses: fastify/github-action-merge-dependabot@v3.0.2
         if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' && contains(github.head_ref, 'dependabot/github_actions') }}
         with:
           github-token: ${{secrets.github_token}}
