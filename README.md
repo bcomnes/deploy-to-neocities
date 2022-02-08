@@ -20,7 +20,7 @@ on:
     branches:
       - master
 
-concurrency: # prevent concurrent deploys doing starnge things
+concurrency: # prevent concurrent deploys doing strange things
   group: deploy-to-neocities
   cancel-in-progress: true
 
