@@ -144,6 +144,7 @@ None.
 - [Neocities API Docs](https://neocities.org/api)
 - [neocities/neocities-node](https://github.com/neocities/neocities-node): Official Node API
 - [jonchang/deploy-neocities](https://github.com/jonchang/deploy-neocities): An alternative docker + official ruby client based action similar to this one.
+- [M1ssM0ss/deploy-to-neocities-template](https://github.com/M1ssM0ss/deploy-to-neocities-template): a template repo ready for cloning using deploy-to-neocities.
 
 ## CHANGELOG
 
