@@ -22,7 +22,7 @@
     "gh-release": "^6.0.0",
     "mkdirp": "^1.0.4",
     "npm-run-all2": "^5.0.2",
-    "standard": "^16.0.0"
+    "standard": "^17.0.0"
   },
   "homepage": "https://github.com/bcomnes/deploy-to-neocities#readme",
   "keywords": [],
