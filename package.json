@@ -14,7 +14,7 @@
     "webassert": "3.0.2"
   },
   "devDependencies": {
-    "@siteup/cli": "^1.3.5",
+    "@siteup/cli": "^2.0.0",
     "@vercel/ncc": "^0.33.1",
     "auto-changelog": "^2.0.0",
     "browser-sync": "^2.27.7",
