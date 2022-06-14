@@ -137,7 +137,7 @@ None.
 - https://github.com/PersonMeetup/frontiercorps ([frontiercorps.neocities.org](https://frontiercorps.neocities.org/))
 - https://github.com/riastrad/cyberbspace ([cyberb.space](https://cyberb.space))
 - https://github.com/lime360/lime360.neocities.org ([lime360.neocities.org](https://lime360.neocities.org/))
-- https://github.com/rogerahuntley/neocities-site ([stealdog.neocities.org](stealdog.neocities.org))
+- https://github.com/rogerahuntley/neocities-site ([stealdog.neocities.org](https://stealdog.neocities.org))
 - ...PR your site when you set it up!
 
 ## See also
