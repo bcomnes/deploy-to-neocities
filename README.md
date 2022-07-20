@@ -35,7 +35,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: 12
+        node-version: 16
     - name: Install deps and build
       run: |
         npm i
