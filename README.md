@@ -102,7 +102,7 @@ None.
 - [Support the distributed web](https://neocities.org/distributed-web). Built in IPFS support.
 - [Beginner friendly docs](https://neocities.org/tutorials) for learning how to make your own websites.
 
-### What are some of the drawbacks compared to Netlify/Zeit?
+### What are some of the drawbacks compared to Netlify/Vercel?
 
 - Not appropriate for hyper traffic commercial sites most likely.
 - No concept of a Deploy or atomicity when changing files.
