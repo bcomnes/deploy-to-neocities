@@ -136,7 +136,6 @@ None.
 - https://andri.dk/blog/2021/deploy-static-websites-anywhere
 - https://github.com/PersonMeetup/frontiercorps ([frontiercorps.neocities.org](https://frontiercorps.neocities.org/))
 - https://github.com/riastrad/cyberbspace ([cyberb.space](https://cyberb.space))
-- https://github.com/lime360/website ([lime360.neocities.org](https://lime360.neocities.org/))
 - https://github.com/rogerahuntley/neocities-site ([stealdog.neocities.org](https://stealdog.neocities.org))
 - https://github.com/ConorSheehan1/conorsheehan1.neocities.org ([conorsheehan1.neocities.org](https://conorsheehan1.neocities.org))
 - https://github.com/bechnokid/neocities ([bechnokid.neocities.org](https://bechnokid.neocities.org))
