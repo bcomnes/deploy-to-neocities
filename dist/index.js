@@ -1977,6 +1977,7 @@ const fetch = __nccwpck_require__(467)
 const { URL } = __nccwpck_require__(7310)
 const qs = __nccwpck_require__(3477)
 const os = __nccwpck_require__(2037)
+const { ErrorWithCause } = __nccwpck_require__(702)
 
 const { neocitiesLocalDiff } = __nccwpck_require__(8140)
 const pkg = __nccwpck_require__(926)
@@ -2178,7 +2179,7 @@ class NeocitiesAPIClient {
         const result = await fetch(url, reqOpts).then(handleResponse)
         results.push(result)
       } catch (err) {
-        const wrappedError = new Error('Neocities API error', {
+        const wrappedError = new ErrorWithCause('Neocities API error', {
           cause: err
         })
         wrappedError.results = results
@@ -2323,7 +2324,7 @@ class NeocitiesAPIClient {
       await Promise.all(work)
     } catch (err) {
       // Wrap error with stats so that we don't lose all that context
-      const wrappedError = new Error('Error uploading files', {
+      const wrappedError = new ErrorWithCause('Error uploading files', {
         cause: err
       })
       wrappedError.stats = stats()
@@ -2394,7 +2395,7 @@ const crypto = __nccwpck_require__(6113)
 const util = __nccwpck_require__(3837)
 const fs = __nccwpck_require__(7147)
 
-const ppump = util.promisify(__nccwpck_require__(8341))
+const ppump = util.promisify(__nccwpck_require__(5952))
 
 /**
  * neocitiesLocalDiff returns an array of files to delete and update and some useful stats.
@@ -2658,7 +2659,7 @@ module.exports = statsHandler
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const { Writable, Transform } = __nccwpck_require__(5147)
-const pump = __nccwpck_require__(8341)
+const pump = __nccwpck_require__(5952)
 const pumpify = __nccwpck_require__(212)
 
 async function getStreamsLength (readables) {
@@ -9048,6 +9049,221 @@ function onceStrict (fn) {
 
 /***/ }),
 
+/***/ 702:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const { ErrorWithCause } = __nccwpck_require__(8341); // linemod-replace-with: export { ErrorWithCause } from './lib/error-with-cause.mjs';
+
+const { // linemod-replace-with: export {
+  findCauseByReference,
+  getErrorCause,
+  messageWithCauses,
+  stackWithCauses,
+} = __nccwpck_require__(7343); // linemod-replace-with: } from './lib/helpers.mjs';
+
+module.exports = {      // linemod-remove
+  ErrorWithCause,       // linemod-remove
+  findCauseByReference, // linemod-remove
+  getErrorCause,        // linemod-remove
+  stackWithCauses,      // linemod-remove
+  messageWithCauses,    // linemod-remove
+};                      // linemod-remove
+
+
+/***/ }),
+
+/***/ 8341:
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @template [T=undefined] */
+class ErrorWithCause extends Error { // linemod-prefix-with: export
+  /**
+   * @param {string} message
+   * @param {{ cause?: T }} options
+   */
+  constructor (message, { cause } = {}) {
+    super(message);
+
+    /** @type {string} */
+    this.name = ErrorWithCause.name;
+    if (cause) {
+      /** @type {T} */
+      this.cause = cause;
+    }
+    /** @type {string} */
+    this.message = message;
+  }
+}
+
+module.exports = {      // linemod-remove
+  ErrorWithCause,       // linemod-remove
+};                      // linemod-remove
+
+
+/***/ }),
+
+/***/ 7343:
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * @template {Error} T
+ * @param {unknown} err
+ * @param {new(...args: any[]) => T} reference
+ * @returns {T|undefined}
+ */
+const findCauseByReference = (err, reference) => { // linemod-prefix-with: export
+  if (!err || !reference) return;
+  if (!(err instanceof Error)) return;
+  if (
+    !(reference.prototype instanceof Error) &&
+    // @ts-ignore
+    reference !== Error
+  ) return;
+
+  /**
+   * Ensures we don't go circular
+   *
+   * @type {Set<Error>}
+   */
+  const seen = new Set();
+
+  /** @type {Error|undefined} */
+  let currentErr = err;
+
+  while (currentErr && !seen.has(currentErr)) {
+    seen.add(currentErr);
+
+    if (currentErr instanceof reference) {
+      // @ts-ignore
+      return currentErr;
+    }
+
+    currentErr = getErrorCause(currentErr);
+  }
+};
+
+/**
+ * @param {Error|{ cause?: unknown|(()=>err)}} err
+ * @returns {Error|undefined}
+ */
+const getErrorCause = (err) => { // linemod-prefix-with: export
+  if (!err) return;
+
+  /** @type {unknown} */
+  // @ts-ignore
+  const cause = err.cause;
+
+  // VError / NError style causes
+  if (typeof cause === 'function') {
+    // @ts-ignore
+    const causeResult = err.cause();
+
+    return causeResult instanceof Error
+      ? causeResult
+      : undefined;
+  } else {
+    return cause instanceof Error
+      ? cause
+      : undefined;
+  }
+};
+
+/**
+ * Internal method that keeps a track of which error we have already added, to avoid circular recursion
+ *
+ * @private
+ * @param {Error} err
+ * @param {Set<Error>} seen
+ * @returns {string}
+ */
+const _stackWithCauses = (err, seen) => {
+  if (!(err instanceof Error)) return '';
+
+  const stack = err.stack || '';
+
+  // Ensure we don't go circular or crazily deep
+  if (seen.has(err)) {
+    return stack + '\ncauses have become circular...';
+  }
+
+  const cause = getErrorCause(err);
+
+  // TODO: Follow up in https://github.com/nodejs/node/issues/38725#issuecomment-920309092 on how to log stuff
+
+  if (cause) {
+    seen.add(err);
+    return (stack + '\ncaused by: ' + _stackWithCauses(cause, seen));
+  } else {
+    return stack;
+  }
+};
+
+/**
+ * @param {Error} err
+ * @returns {string}
+ */
+const stackWithCauses = (err) => _stackWithCauses(err, new Set()); // linemod-prefix-with: export
+
+/**
+ * Internal method that keeps a track of which error we have already added, to avoid circular recursion
+ *
+ * @private
+ * @param {Error} err
+ * @param {Set<Error>} seen
+ * @param {boolean} [skip]
+ * @returns {string}
+ */
+const _messageWithCauses = (err, seen, skip) => {
+  if (!(err instanceof Error)) return '';
+
+  const message = skip ? '' : (err.message || '');
+
+  // Ensure we don't go circular or crazily deep
+  if (seen.has(err)) {
+    return message + ': ...';
+  }
+
+  const cause = getErrorCause(err);
+
+  if (cause) {
+    seen.add(err);
+
+    // @ts-ignore
+    const skipIfVErrorStyleCause = typeof err.cause === 'function';
+
+    return (message +
+      (skipIfVErrorStyleCause ? '' : ': ') +
+      _messageWithCauses(cause, seen, skipIfVErrorStyleCause));
+  } else {
+    return message;
+  }
+};
+
+/**
+ * @param {Error} err
+ * @returns {string}
+ */
+const messageWithCauses = (err) => _messageWithCauses(err, new Set()); // linemod-prefix-with: export
+
+module.exports = {      // linemod-remove
+  findCauseByReference, // linemod-remove
+  getErrorCause,        // linemod-remove
+  stackWithCauses,      // linemod-remove
+  messageWithCauses,    // linemod-remove
+};                      // linemod-remove
+
+
+/***/ }),
+
 /***/ 5168:
 /***/ ((module) => {
 
@@ -9174,7 +9390,7 @@ module.exports = (number, options) => {
 
 /***/ }),
 
-/***/ 8341:
+/***/ 5952:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 var once = __nccwpck_require__(1223)
@@ -9266,7 +9482,7 @@ module.exports = pump
 /***/ 212:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-var pump = __nccwpck_require__(8341)
+var pump = __nccwpck_require__(5952)
 var inherits = __nccwpck_require__(4124)
 var Duplexify = __nccwpck_require__(6599)
 
@@ -17316,7 +17532,7 @@ Object.defineProperty(exports, '__esModule', {value: true}).default = assert
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"async-neocities","description":"WIP - nothing to see here","version":"2.1.3","author":"Bret Comnes <bcomnes@gmail.com> (https://bret.io)","bugs":{"url":"https://github.com/bcomnes/async-neocities/issues"},"dependencies":{"async-folder-walker":"^2.0.1","fetch-errors":"^2.0.1","form-data":"^4.0.0","lodash.chunk":"^4.2.0","nanoassert":"^2.0.0","node-fetch":"^2.6.0","pretty-bytes":"^5.3.0","pump":"^3.0.0","pumpify":"^2.0.1","streamx":"^2.6.0"},"devDependencies":{"auto-changelog":"^2.2.0","dependency-check":"^4.1.0","gh-release":"^6.0.0","minimatch":"^5.0.0","npm-run-all":"^4.1.5","standard":"^17.0.0","tap":"^16.0.0"},"homepage":"https://github.com/bcomnes/async-neocities","keywords":["neocities","async","api client","static hosting"],"license":"MIT","main":"index.js","repository":{"type":"git","url":"https://github.com/bcomnes/async-neocities.git"},"scripts":{"prepublishOnly":"git push --follow-tags && gh-release -y","test":"run-s test:*","test:deps":"dependency-check . --no-dev --no-peer","test:standard":"standard","test:tape":"tap --no-check-coverage","version":"auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern \'BREAKING CHANGE:\' && git add CHANGELOG.md"},"standard":{"ignore":["dist"]}}');
+module.exports = JSON.parse('{"name":"async-neocities","description":"WIP - nothing to see here","version":"2.1.4","author":"Bret Comnes <bcomnes@gmail.com> (https://bret.io)","bugs":{"url":"https://github.com/bcomnes/async-neocities/issues"},"dependencies":{"async-folder-walker":"^2.0.1","fetch-errors":"^2.0.1","form-data":"^4.0.0","lodash.chunk":"^4.2.0","nanoassert":"^2.0.0","node-fetch":"^2.6.0","pony-cause":"^2.1.4","pretty-bytes":"^5.3.0","pump":"^3.0.0","pumpify":"^2.0.1","streamx":"^2.6.0"},"devDependencies":{"auto-changelog":"^2.2.0","dependency-check":"^4.1.0","gh-release":"^6.0.0","minimatch":"^5.0.0","npm-run-all":"^4.1.5","standard":"^17.0.0","tap":"^16.0.0"},"homepage":"https://github.com/bcomnes/async-neocities","keywords":["neocities","async","api client","static hosting"],"license":"MIT","main":"index.js","repository":{"type":"git","url":"https://github.com/bcomnes/async-neocities.git"},"scripts":{"prepublishOnly":"git push --follow-tags && gh-release -y","test":"run-s test:*","test:deps":"dependency-check . --no-dev --no-peer","test:standard":"standard","test:tape":"tap --no-check-coverage","version":"auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern \'BREAKING CHANGE:\' && git add CHANGELOG.md"},"standard":{"ignore":["dist"]}}');
 
 /***/ }),
 
@@ -17385,6 +17601,7 @@ const ms = __nccwpck_require__(900)
 const assert = (__nccwpck_require__(3094)["default"])
 const fsp = (__nccwpck_require__(7147).promises)
 const minimatch = __nccwpck_require__(3973)
+const { stackWithCauses } = __nccwpck_require__(702)
 
 let cleanup
 
@@ -17420,7 +17637,7 @@ async function doDeploy () {
 }
 
 doDeploy().catch(err => {
-  console.error(err)
+  console.error(stackWithCauses(err))
   if (err.stats) {
     console.log('Files to upload: ')
     console.dir(err.stats.filesToUpload, { colors: true, depth: 999 })
