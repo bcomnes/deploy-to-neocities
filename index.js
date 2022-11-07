@@ -6,6 +6,7 @@ const ms = require('ms')
 const assert = require('webassert').default
 const fsp = require('fs').promises
 const minimatch = require('minimatch')
+const { stackWithCauses } = require('pony-cause')
 
 let cleanup
 
@@ -41,7 +42,7 @@ async function doDeploy () {
 }
 
 doDeploy().catch(err => {
-  console.error(err)
+  console.error(stackWithCauses(err))
   if (err.stats) {
     console.log('Files to upload: ')
     console.dir(err.stats.filesToUpload, { colors: true, depth: 999 })
