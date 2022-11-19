@@ -140,6 +140,7 @@ None.
 - https://github.com/ConorSheehan1/conorsheehan1.neocities.org ([conorsheehan1.neocities.org](https://conorsheehan1.neocities.org))
 - https://github.com/bechnokid/neocities ([bechnokid.neocities.org](https://bechnokid.neocities.org))
 - https://github.com/lime360/website ([lime360.neocities.org](https://lime360.neocities.org))
+- [See more!](https://github.com/bcomnes/deploy-to-neocities/network/dependents)
 - ...PR your site when you set it up!
 
 ## See also
