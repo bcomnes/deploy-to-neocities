@@ -9,7 +9,7 @@
   "dependencies": {
     "@actions/core": "1.10.0",
     "async-neocities": "2.1.4",
-    "minimatch": "5.1.0",
+    "minimatch": "5.1.1",
     "ms": "2.1.3",
     "pony-cause": "^2.1.4",
     "webassert": "3.0.2"
