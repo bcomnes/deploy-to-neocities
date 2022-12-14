@@ -20,7 +20,7 @@
     "auto-changelog": "^2.0.0",
     "browser-sync": "^2.27.7",
     "dependency-check": "^4.1.0",
-    "gh-release": "^6.0.0",
+    "gh-release": "^7.0.0",
     "mkdirp": "^1.0.4",
     "npm-run-all2": "^6.0.0",
     "standard": "^17.0.0"
