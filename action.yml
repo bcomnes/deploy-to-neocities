@@ -19,5 +19,5 @@ inputs:
     description: A glob string that prevents matched files from ever being deleted.
     required: false
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
