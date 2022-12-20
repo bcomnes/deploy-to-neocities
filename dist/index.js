@@ -4834,6 +4834,7 @@ const EMPTY = ''
 const SPACE = ' '
 const ESCAPE = '\\'
 const REGEX_TEST_BLANK_LINE = /^\s+$/
+const REGEX_INVALID_TRAILING_BACKSLASH = /(?:[^\\]|^)\\$/
 const REGEX_REPLACE_LEADING_EXCAPED_EXCLAMATION = /^\\!/
 const REGEX_REPLACE_LEADING_EXCAPED_HASH = /^\\#/
 const REGEX_SPLITALL_CRLF = /\r?\n/g
@@ -4845,10 +4846,14 @@ const REGEX_SPLITALL_CRLF = /\r?\n/g
 const REGEX_TEST_INVALID_PATH = /^\.*\/|^\.+$/
 
 const SLASH = '/'
-const KEY_IGNORE = typeof Symbol !== 'undefined'
-  ? Symbol.for('node-ignore')
-  /* istanbul ignore next */
-  : 'node-ignore'
+
+// Do not use ternary expression here, since "istanbul ignore next" is buggy
+let TMP_KEY_IGNORE = 'node-ignore'
+/* istanbul ignore else */
+if (typeof Symbol !== 'undefined') {
+  TMP_KEY_IGNORE = Symbol.for('node-ignore')
+}
+const KEY_IGNORE = TMP_KEY_IGNORE
 
 const define = (object, key, value) =>
   Object.defineProperty(object, key, {value})
@@ -5015,18 +5020,27 @@ const REPLACERS = [
       : '\\/.+'
   ],
 
-  // intermediate wildcards
+  // normal intermediate wildcards
   [
     // Never replace escaped '*'
     // ignore rule '\*' will match the path '*'
 
     // 'abc.*/' -> go
-    // 'abc.*'  -> skip this rule
-    /(^|[^\\]+)\\\*(?=.+)/g,
+    // 'abc.*'  -> skip this rule,
+    //    coz trailing single wildcard will be handed by [trailing wildcard]
+    /(^|[^\\]+)(\\\*)+(?=.+)/g,
 
     // '*.js' matches '.js'
     // '*.js' doesn't match 'abc'
-    (_, p1) => `${p1}[^\\/]*`
+    (_, p1, p2) => {
+      // 1.
+      // > An asterisk "*" matches anything except a slash.
+      // 2.
+      // > Other consecutive asterisks are considered regular asterisks
+      // > and will match according to the previous rules.
+      const unescaped = p2.replace(/\\\*/g, '[^\\/]*')
+      return p1 + unescaped
+    }
   ],
 
   [
@@ -5137,6 +5151,7 @@ const isString = subject => typeof subject === 'string'
 const checkPattern = pattern => pattern
   && isString(pattern)
   && !REGEX_TEST_BLANK_LINE.test(pattern)
+  && !REGEX_INVALID_TRAILING_BACKSLASH.test(pattern)
 
   // > A line starting with # serves as a comment.
   && pattern.indexOf('#') !== 0
@@ -5402,7 +5417,7 @@ module.exports = factory
 
 // Windows
 // --------------------------------------------------------------
-/* istanbul ignore if  */
+/* istanbul ignore if */
 if (
   // Detect `process` so that it can run in browsers.
   typeof process !== 'undefined'
@@ -6436,7 +6451,7 @@ class Minimatch {
       negateOffset++
     }
 
-    if (negateOffset) this.pattern = pattern.substr(negateOffset)
+    if (negateOffset) this.pattern = pattern.slice(negateOffset)
     this.negate = negate
   }
 
@@ -6812,7 +6827,7 @@ class Minimatch {
           } catch (er) {
             // not a valid class!
             sp = this.parse(cs, SUBPARSE)
-            re = re.substr(0, reClassStart) + '\\[' + sp[0] + '\\]'
+            re = re.substring(0, reClassStart) + '\\[' + sp[0] + '\\]'
             hasMagic = hasMagic || sp[1]
             inClass = false
             continue
@@ -6845,9 +6860,9 @@ class Minimatch {
       // this is a huge pita.  We now have to re-walk
       // the contents of the would-be class to re-translate
       // any characters that were passed through as-is
-      cs = pattern.substr(classStart + 1)
+      cs = pattern.slice(classStart + 1)
       sp = this.parse(cs, SUBPARSE)
-      re = re.substr(0, reClassStart) + '\\[' + sp[0]
+      re = re.substring(0, reClassStart) + '\\[' + sp[0]
       hasMagic = hasMagic || sp[1]
     }
 
@@ -9143,7 +9158,6 @@ const findCauseByReference = (err, reference) => { // linemod-prefix-with: expor
     seen.add(currentErr);
 
     if (currentErr instanceof reference) {
-      // @ts-ignore
       return currentErr;
     }
 
@@ -9156,23 +9170,20 @@ const findCauseByReference = (err, reference) => { // linemod-prefix-with: expor
  * @returns {Error|undefined}
  */
 const getErrorCause = (err) => { // linemod-prefix-with: export
-  if (!err) return;
-
-  /** @type {unknown} */
-  // @ts-ignore
-  const cause = err.cause;
+  if (!err || typeof err !== 'object' || !('cause' in err)) {
+    return;
+  }
 
   // VError / NError style causes
-  if (typeof cause === 'function') {
-    // @ts-ignore
+  if (typeof err.cause === 'function') {
     const causeResult = err.cause();
 
     return causeResult instanceof Error
       ? causeResult
       : undefined;
   } else {
-    return cause instanceof Error
-      ? cause
+    return err.cause instanceof Error
+      ? err.cause
       : undefined;
   }
 };
@@ -9237,8 +9248,7 @@ const _messageWithCauses = (err, seen, skip) => {
   if (cause) {
     seen.add(err);
 
-    // @ts-ignore
-    const skipIfVErrorStyleCause = typeof err.cause === 'function';
+    const skipIfVErrorStyleCause = 'cause' in err && typeof err.cause === 'function';
 
     return (message +
       (skipIfVErrorStyleCause ? '' : ': ') +
@@ -12952,6 +12962,13 @@ const READ_DONE             = 0b0010000000000 << 3
 const READ_NEXT_TICK        = 0b0100000000001 << 3 // also active
 const READ_NEEDS_PUSH       = 0b1000000000000 << 3
 
+// Combined read state
+const READ_FLOWING = READ_RESUMED | READ_PIPE_DRAINED
+const READ_ACTIVE_AND_SYNC = READ_ACTIVE | READ_SYNC
+const READ_ACTIVE_AND_SYNC_AND_NEEDS_PUSH = READ_ACTIVE | READ_SYNC | READ_NEEDS_PUSH
+const READ_PRIMARY_AND_ACTIVE = READ_PRIMARY | READ_ACTIVE
+const READ_EMIT_READABLE_AND_QUEUED = READ_EMIT_READABLE | READ_QUEUED
+
 const READ_NOT_ACTIVE             = MAX ^ READ_ACTIVE
 const READ_NON_PRIMARY            = MAX ^ READ_PRIMARY
 const READ_NON_PRIMARY_AND_PUSHED = MAX ^ (READ_PRIMARY | READ_NEEDS_PUSH)
@@ -12960,7 +12977,7 @@ const READ_PUSHED                 = MAX ^ READ_NEEDS_PUSH
 const READ_PAUSED                 = MAX ^ READ_RESUMED
 const READ_NOT_QUEUED             = MAX ^ (READ_QUEUED | READ_EMITTED_READABLE)
 const READ_NOT_ENDING             = MAX ^ READ_ENDING
-const READ_PIPE_NOT_DRAINED       = MAX ^ (READ_RESUMED | READ_PIPE_DRAINED)
+const READ_PIPE_NOT_DRAINED       = MAX ^ READ_FLOWING
 const READ_NOT_NEXT_TICK          = MAX ^ READ_NEXT_TICK
 
 // Write state
@@ -12990,19 +13007,14 @@ const DESTROY_STATUS = DESTROYING | DESTROYED
 const OPEN_STATUS = DESTROY_STATUS | OPENING
 const AUTO_DESTROY = DESTROY_STATUS | DONE
 const NON_PRIMARY = WRITE_NON_PRIMARY & READ_NON_PRIMARY
-const TICKING = (WRITE_NEXT_TICK | READ_NEXT_TICK) & NOT_ACTIVE
-const ACTIVE_OR_TICKING = ACTIVE | TICKING
+const ACTIVE_OR_TICKING = WRITE_NEXT_TICK | READ_NEXT_TICK
+const TICKING = ACTIVE_OR_TICKING & NOT_ACTIVE
 const IS_OPENING = OPEN_STATUS | TICKING
 
-// Combined read state
+// Combined shared state and read state
 const READ_PRIMARY_STATUS = OPEN_STATUS | READ_ENDING | READ_DONE
 const READ_STATUS = OPEN_STATUS | READ_DONE | READ_QUEUED
-const READ_FLOWING = READ_RESUMED | READ_PIPE_DRAINED
-const READ_ACTIVE_AND_SYNC = READ_ACTIVE | READ_SYNC
-const READ_ACTIVE_AND_SYNC_AND_NEEDS_PUSH = READ_ACTIVE | READ_SYNC | READ_NEEDS_PUSH
-const READ_PRIMARY_AND_ACTIVE = READ_PRIMARY | READ_ACTIVE
 const READ_ENDING_STATUS = OPEN_STATUS | READ_ENDING | READ_QUEUED
-const READ_EMIT_READABLE_AND_QUEUED = READ_EMIT_READABLE | READ_QUEUED
 const READ_READABLE_STATUS = OPEN_STATUS | READ_EMIT_READABLE | READ_QUEUED | READ_EMITTED_READABLE
 const SHOULD_NOT_READ = OPEN_STATUS | READ_ACTIVE | READ_ENDING | READ_DONE | READ_NEEDS_PUSH
 const READ_BACKPRESSURE_STATUS = DESTROY_STATUS | READ_ENDING | READ_DONE
@@ -13879,6 +13891,10 @@ function isStreamx (stream) {
   return typeof stream._duplexState === 'number' && isStream(stream)
 }
 
+function getStreamError (stream) {
+  return (stream._readableState && stream._readableState.error) || (stream._writableState && stream._writableState.error)
+}
+
 function isReadStreamx (stream) {
   return isStreamx(stream) && stream.readable
 }
@@ -13902,6 +13918,7 @@ module.exports = {
   pipelinePromise,
   isStream,
   isStreamx,
+  getStreamError,
   Stream,
   Writable,
   Readable,
