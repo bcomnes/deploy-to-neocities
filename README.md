@@ -113,8 +113,6 @@ None.
 
 ## Sites using deploy-to-neocities
 
-(Some may be NSFW)
-
 - https://github.com/bcomnes/bret.io ([bret.io](https://bret.io))
 - https://github.com/ecomnes/elenacomnes.com ([elenacomnes.comnes](https://elenacomnes.com))
 - https://github.com/gumcast/gumcast-client ([gumcast.com](https://gumcast.com))
