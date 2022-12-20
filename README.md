@@ -29,11 +29,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
     # Set up any tools and build steps here
     # This example uses a Node.js toolchain to build a site
     - name: Use Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: lts/*
     - name: Install deps and build
