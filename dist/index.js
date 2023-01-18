@@ -21388,11 +21388,12 @@ var require_cjs2 = __commonJS({
               continue;
             }
             case ")": {
-              const plEntry = patternListStack.pop();
+              const plEntry = patternListStack[patternListStack.length - 1];
               if (inClass || !plEntry) {
                 re += "\\)";
                 continue;
               }
+              patternListStack.pop();
               clearStateChar();
               hasMagic = true;
               pl = plEntry;
