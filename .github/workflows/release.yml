@@ -9,7 +9,7 @@ on:
 
 env:
   node_version: 16
-  FORCE_COLOR: 2
+  FORCE_COLOR: 1
 
 concurrency: # prevent concurrent releases
   group: npm-bump
