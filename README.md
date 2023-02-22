@@ -139,6 +139,7 @@ None.
 - https://github.com/bechnokid/neocities ([bechnokid.neocities.org](https://bechnokid.neocities.org))
 - https://github.com/lime360/website ([lime360.neocities.org](https://lime360.neocities.org))
 - https://obspogon.neocities.org/
+- https://profsugoi.neocities.org/
 - [See more!](https://github.com/bcomnes/deploy-to-neocities/network/dependents)
 - ...PR your site when you set it up!
 
@@ -149,6 +150,7 @@ None.
 - [neocities/neocities-node](https://github.com/neocities/neocities-node): Official Node API
 - [jonchang/deploy-neocities](https://github.com/jonchang/deploy-neocities): An alternative docker + official ruby client based action similar to this one.
 - [M1ssM0ss/deploy-to-neocities-template](https://github.com/M1ssM0ss/deploy-to-neocities-template): a template repo ready for cloning using deploy-to-neocities.
+- [professorsugoi/Deploy-Astro-Neocities](https://github.com/professorsugoi/Deploy-Astro-Neocities): a template repo for projets built with Astro. uses deploy-to-neocities.
 
 ## CHANGELOG
 
