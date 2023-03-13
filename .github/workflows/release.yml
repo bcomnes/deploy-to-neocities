@@ -30,7 +30,7 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
     - run: npm i
     - run: npm test
-    - uses: bcomnes/npm-bump@v2.1.0
+    - uses: bcomnes/npm-bump@v2.2.1
       with:
         git_email: bcomnes@gmail.com
         git_username: ${{ github.actor }}
