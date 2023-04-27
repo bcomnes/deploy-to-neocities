@@ -5,7 +5,7 @@ const path = require('path')
 const ms = require('ms')
 const assert = require('webassert').default
 const fsp = require('fs').promises
-const minimatch = require('minimatch')
+const { minimatch } = require('minimatch')
 const { stackWithCauses } = require('pony-cause')
 
 let cleanup
