@@ -20,7 +20,6 @@
     "browser-sync": "^2.27.7",
     "dependency-check": "^4.1.0",
     "gh-release": "^7.0.0",
-    "mkdirp": "^2.1.1",
     "npm-run-all2": "^6.0.0",
     "standard": "^17.0.0",
     "esbuild": "^0.17.2"
@@ -38,7 +37,7 @@
     "build": "npm run clean && run-p build:*",
     "build:action": "rm -rf dist && esbuild index.js --bundle --platform=node --target=node16 --sourcemap=external --outdir=dist",
     "build:site": "siteup --src . --dest public",
-    "clean": "rimraf public && mkdirp public",
+    "clean": "rm -rf public && mkdir -p public",
     "release": "git push --follow-tags && gh-release -y",
     "start": "npm run watch",
     "test": "run-s test:*",
