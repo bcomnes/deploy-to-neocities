@@ -140,6 +140,7 @@ None.
 - https://github.com/lime360/website ([lime360.neocities.org](https://lime360.neocities.org))
 - https://obspogon.neocities.org/
 - https://profsugoi.neocities.org/
+- https://github.com/tencurse/neocities ([10kph.neocities.org](https://10kph.neocities.org/))
 - [See more!](https://github.com/bcomnes/deploy-to-neocities/network/dependents)
 - ...PR your site when you set it up!
 
