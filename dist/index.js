@@ -6357,6 +6357,11 @@ var require_fixed_size = __commonJS({
         this.btm = 0;
         this.next = null;
       }
+      clear() {
+        this.top = this.btm = 0;
+        this.next = null;
+        this.buffer.fill(void 0);
+      }
       push(data) {
         if (this.buffer[this.top] !== void 0)
           return false;
@@ -6391,6 +6396,11 @@ var require_fast_fifo = __commonJS({
         this.hwm = hwm || 16;
         this.head = new FixedFIFO(this.hwm);
         this.tail = this.head;
+        this.length = 0;
+      }
+      clear() {
+        this.head = this.tail;
+        this.head.clear();
         this.length = 0;
       }
       push(val) {
