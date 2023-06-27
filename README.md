@@ -119,7 +119,6 @@ None.
 - https://github.com/bcomnes/deploy-to-neocities/blob/master/.github/workflows/neocities.yml ([deploy-to-neocities.neocities.org](https://deploy-to-neocities.neocities.org))
 - [Zambonifofex/stories](https://github.com/Zambonifofex/stories) ([zamstories.neocities.org](https://zamstories.neocities.org))
 - [Your Neofeed](https://github.com/victoriadrake/neocities-neofeed), (っ◔◡◔)っ a personal timeline for Neocities and GitHub Pages.
-- https://punkedwerewolf.net
 - https://speakscribe.com
 - https://geno7.neocities.org
 - https://github.com/M1ssM0ss/deploy-to-neocities-template
@@ -127,11 +126,10 @@ None.
 - https://flamedfury.com
 - https://keb.neocities.org
 - https://missmoss.neocities.org
-- https://fuckingwebmaster.net
 - https://rarebit.neocities.org
 - https://cavacado.neocities.org
 - https://wanderinginn.neocities.org
-- https://andri.dk/blog/2021/deploy-static-websites-anywhere
+- https://andri.dk/blog/2019/2021/deploy-static-websites-anywhere/
 - https://github.com/PersonMeetup/frontiercorps ([frontiercorps.neocities.org](https://frontiercorps.neocities.org/))
 - https://github.com/riastrad/cyberbspace ([cyberb.space](https://cyberb.space))
 - https://github.com/rogerahuntley/neocities-site ([stealdog.neocities.org](https://stealdog.neocities.org))
