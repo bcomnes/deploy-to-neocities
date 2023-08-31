@@ -4,6 +4,7 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __esm = (fn, res) => function __init() {
   return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
 };
@@ -31,6 +32,32 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var __publicField = (obj, key, value) => {
+  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+  return value;
+};
+var __accessCheck = (obj, member, msg) => {
+  if (!member.has(obj))
+    throw TypeError("Cannot " + msg);
+};
+var __privateGet = (obj, member, getter) => {
+  __accessCheck(obj, member, "read from private field");
+  return getter ? getter.call(obj) : member.get(obj);
+};
+var __privateAdd = (obj, member, value) => {
+  if (member.has(obj))
+    throw TypeError("Cannot add the same private member more than once");
+  member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
+};
+var __privateSet = (obj, member, value, setter) => {
+  __accessCheck(obj, member, "write to private field");
+  setter ? setter.call(obj, value) : member.set(obj, value);
+  return value;
+};
+var __privateMethod = (obj, member, method) => {
+  __accessCheck(obj, member, "access private method");
+  return method;
+};
 
 // node_modules/@actions/core/lib/utils.js
 var require_utils = __commonJS({
@@ -975,12 +1002,12 @@ var require_lib = __commonJS({
     var RetryableHttpVerbs = ["OPTIONS", "GET", "DELETE", "HEAD"];
     var ExponentialBackoffCeiling = 10;
     var ExponentialBackoffTimeSlice = 5;
-    var HttpClientError = class _HttpClientError extends Error {
+    var HttpClientError = class extends Error {
       constructor(message, statusCode) {
         super(message);
         this.name = "HttpClientError";
         this.statusCode = statusCode;
-        Object.setPrototypeOf(this, _HttpClientError.prototype);
+        Object.setPrototypeOf(this, HttpClientError.prototype);
       }
     };
     exports.HttpClientError = HttpClientError;
@@ -1571,13 +1598,13 @@ var require_oidc_utils = __commonJS({
     var http_client_1 = require_lib();
     var auth_1 = require_auth();
     var core_1 = require_core();
-    var OidcClient = class _OidcClient {
+    var OidcClient = class {
       static createHttpClient(allowRetry = true, maxRetry = 10) {
         const requestOptions = {
           allowRetries: allowRetry,
           maxRetries: maxRetry
         };
-        return new http_client_1.HttpClient("actions/oidc-client", [new auth_1.BearerCredentialHandler(_OidcClient.getRequestToken())], requestOptions);
+        return new http_client_1.HttpClient("actions/oidc-client", [new auth_1.BearerCredentialHandler(OidcClient.getRequestToken())], requestOptions);
       }
       static getRequestToken() {
         const token = process.env["ACTIONS_ID_TOKEN_REQUEST_TOKEN"];
@@ -1596,7 +1623,7 @@ var require_oidc_utils = __commonJS({
       static getCall(id_token_url) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-          const httpclient = _OidcClient.createHttpClient();
+          const httpclient = OidcClient.createHttpClient();
           const res = yield httpclient.getJson(id_token_url).catch((error) => {
             throw new Error(`Failed to get ID Token. 
  
@@ -1614,13 +1641,13 @@ var require_oidc_utils = __commonJS({
       static getIDToken(audience) {
         return __awaiter(this, void 0, void 0, function* () {
           try {
-            let id_token_url = _OidcClient.getIDTokenUrl();
+            let id_token_url = OidcClient.getIDTokenUrl();
             if (audience) {
               const encodedAudience = encodeURIComponent(audience);
               id_token_url = `${id_token_url}&audience=${encodedAudience}`;
             }
             core_1.debug(`ID token url is ${id_token_url}`);
-            const id_token = yield _OidcClient.getCall(id_token_url);
+            const id_token = yield OidcClient.getCall(id_token_url);
             core_1.setSecret(id_token);
             return id_token;
           } catch (error) {
@@ -4524,7 +4551,7 @@ var require_lib3 = __commonJS({
     var Readable = Stream.Readable;
     var BUFFER = Symbol("buffer");
     var TYPE = Symbol("type");
-    var Blob = class _Blob {
+    var Blob = class {
       constructor() {
         this[TYPE] = "";
         const blobParts = arguments[0];
@@ -4543,7 +4570,7 @@ var require_lib3 = __commonJS({
               buffer = Buffer.from(element.buffer, element.byteOffset, element.byteLength);
             } else if (element instanceof ArrayBuffer) {
               buffer = Buffer.from(element);
-            } else if (element instanceof _Blob) {
+            } else if (element instanceof Blob) {
               buffer = element[BUFFER];
             } else {
               buffer = Buffer.from(typeof element === "string" ? element : String(element));
@@ -4605,7 +4632,7 @@ var require_lib3 = __commonJS({
         const span = Math.max(relativeEnd - relativeStart, 0);
         const buffer = this[BUFFER];
         const slicedBuffer = buffer.slice(relativeStart, relativeStart + span);
-        const blob = new _Blob([], { type: arguments[2] });
+        const blob = new Blob([], { type: arguments[2] });
         blob[BUFFER] = slicedBuffer;
         return blob;
       }
@@ -4982,7 +5009,7 @@ var require_lib3 = __commonJS({
       return void 0;
     }
     var MAP = Symbol("map");
-    var Headers = class _Headers {
+    var Headers = class {
       /**
        * Headers class
        *
@@ -4992,7 +5019,7 @@ var require_lib3 = __commonJS({
       constructor() {
         let init = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : void 0;
         this[MAP] = /* @__PURE__ */ Object.create(null);
-        if (init instanceof _Headers) {
+        if (init instanceof Headers) {
           const rawHeaders = init.raw();
           const headerNames = Object.keys(rawHeaders);
           for (const headerName of headerNames) {
@@ -5261,7 +5288,7 @@ var require_lib3 = __commonJS({
     }
     var INTERNALS$1 = Symbol("Response internals");
     var STATUS_CODES = http.STATUS_CODES;
-    var Response = class _Response {
+    var Response = class {
       constructor() {
         let body = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : null;
         let opts = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
@@ -5309,7 +5336,7 @@ var require_lib3 = __commonJS({
        * @return  Response
        */
       clone() {
-        return new _Response(clone(this), {
+        return new Response(clone(this), {
           url: this.url,
           status: this.status,
           statusText: this.statusText,
@@ -5353,7 +5380,7 @@ var require_lib3 = __commonJS({
       const proto = signal && typeof signal === "object" && Object.getPrototypeOf(signal);
       return !!(proto && proto.constructor.name === "AbortSignal");
     }
-    var Request = class _Request {
+    var Request = class {
       constructor(input) {
         let init = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
         let parsedURL;
@@ -5423,7 +5450,7 @@ var require_lib3 = __commonJS({
        * @return  Request
        */
       clone() {
-        return new _Request(this);
+        return new Request(this);
       }
     };
     Body.mixIn(Request.prototype);
@@ -5760,7 +5787,7 @@ var require_lib3 = __commonJS({
 var require_error_with_cause = __commonJS({
   "node_modules/pony-cause/lib/error-with-cause.js"(exports, module2) {
     "use strict";
-    var ErrorWithCause = class _ErrorWithCause extends Error {
+    var ErrorWithCause = class extends Error {
       // linemod-prefix-with: export
       /**
        * @param {string} message
@@ -5768,7 +5795,7 @@ var require_error_with_cause = __commonJS({
        */
       constructor(message, { cause } = {}) {
         super(message);
-        this.name = _ErrorWithCause.name;
+        this.name = ErrorWithCause.name;
         if (cause) {
           this.cause = cause;
         }
@@ -6357,11 +6384,6 @@ var require_fixed_size = __commonJS({
         this.btm = 0;
         this.next = null;
       }
-      clear() {
-        this.top = this.btm = 0;
-        this.next = null;
-        this.buffer.fill(void 0);
-      }
       push(data) {
         if (this.buffer[this.top] !== void 0)
           return false;
@@ -6396,11 +6418,6 @@ var require_fast_fifo = __commonJS({
         this.hwm = hwm || 16;
         this.head = new FixedFIFO(this.hwm);
         this.tail = this.head;
-        this.length = 0;
-      }
-      clear() {
-        this.head = this.tail;
-        this.head.clear();
         this.length = 0;
       }
       push(val) {
@@ -6441,7 +6458,7 @@ var require_streamx = __commonJS({
     var PREMATURE_CLOSE = new Error("Premature close");
     var queueTick = require_process_next_tick();
     var FIFO = require_fast_fifo();
-    var MAX = (1 << 27) - 1;
+    var MAX = (1 << 26) - 1;
     var OPENING = 1;
     var PREDESTROYING = 2;
     var DESTROYING = 4;
@@ -6449,8 +6466,8 @@ var require_streamx = __commonJS({
     var NOT_OPENING = MAX ^ OPENING;
     var NOT_PREDESTROYING = MAX ^ PREDESTROYING;
     var READ_ACTIVE = 1 << 4;
-    var READ_UPDATING = 2 << 4;
-    var READ_PRIMARY = 4 << 4;
+    var READ_PRIMARY = 2 << 4;
+    var READ_SYNC = 4 << 4;
     var READ_QUEUED = 8 << 4;
     var READ_RESUMED = 16 << 4;
     var READ_PIPE_DRAINED = 32 << 4;
@@ -6459,39 +6476,39 @@ var require_streamx = __commonJS({
     var READ_EMIT_READABLE = 256 << 4;
     var READ_EMITTED_READABLE = 512 << 4;
     var READ_DONE = 1024 << 4;
-    var READ_NEXT_TICK = 2048 << 4;
+    var READ_NEXT_TICK = 2049 << 4;
     var READ_NEEDS_PUSH = 4096 << 4;
     var READ_FLOWING = READ_RESUMED | READ_PIPE_DRAINED;
-    var READ_ACTIVE_AND_NEEDS_PUSH = READ_ACTIVE | READ_NEEDS_PUSH;
+    var READ_ACTIVE_AND_SYNC = READ_ACTIVE | READ_SYNC;
+    var READ_ACTIVE_AND_SYNC_AND_NEEDS_PUSH = READ_ACTIVE | READ_SYNC | READ_NEEDS_PUSH;
     var READ_PRIMARY_AND_ACTIVE = READ_PRIMARY | READ_ACTIVE;
     var READ_EMIT_READABLE_AND_QUEUED = READ_EMIT_READABLE | READ_QUEUED;
     var READ_NOT_ACTIVE = MAX ^ READ_ACTIVE;
     var READ_NON_PRIMARY = MAX ^ READ_PRIMARY;
     var READ_NON_PRIMARY_AND_PUSHED = MAX ^ (READ_PRIMARY | READ_NEEDS_PUSH);
+    var READ_NOT_SYNC = MAX ^ READ_SYNC;
     var READ_PUSHED = MAX ^ READ_NEEDS_PUSH;
     var READ_PAUSED = MAX ^ READ_RESUMED;
     var READ_NOT_QUEUED = MAX ^ (READ_QUEUED | READ_EMITTED_READABLE);
     var READ_NOT_ENDING = MAX ^ READ_ENDING;
     var READ_PIPE_NOT_DRAINED = MAX ^ READ_FLOWING;
     var READ_NOT_NEXT_TICK = MAX ^ READ_NEXT_TICK;
-    var READ_NOT_UPDATING = MAX ^ READ_UPDATING;
     var WRITE_ACTIVE = 1 << 17;
-    var WRITE_UPDATING = 2 << 17;
-    var WRITE_PRIMARY = 4 << 17;
+    var WRITE_PRIMARY = 2 << 17;
+    var WRITE_SYNC = 4 << 17;
     var WRITE_QUEUED = 8 << 17;
     var WRITE_UNDRAINED = 16 << 17;
     var WRITE_DONE = 32 << 17;
     var WRITE_EMIT_DRAIN = 64 << 17;
-    var WRITE_NEXT_TICK = 128 << 17;
-    var WRITE_WRITING = 256 << 17;
-    var WRITE_FINISHING = 512 << 17;
-    var WRITE_NOT_ACTIVE = MAX ^ (WRITE_ACTIVE | WRITE_WRITING);
+    var WRITE_NEXT_TICK = 129 << 17;
+    var WRITE_FINISHING = 256 << 17;
+    var WRITE_NOT_ACTIVE = MAX ^ WRITE_ACTIVE;
+    var WRITE_NOT_SYNC = MAX ^ WRITE_SYNC;
     var WRITE_NON_PRIMARY = MAX ^ WRITE_PRIMARY;
     var WRITE_NOT_FINISHING = MAX ^ WRITE_FINISHING;
     var WRITE_DRAINED = MAX ^ WRITE_UNDRAINED;
     var WRITE_NOT_QUEUED = MAX ^ WRITE_QUEUED;
     var WRITE_NOT_NEXT_TICK = MAX ^ WRITE_NEXT_TICK;
-    var WRITE_NOT_UPDATING = MAX ^ WRITE_UPDATING;
     var ACTIVE = READ_ACTIVE | WRITE_ACTIVE;
     var NOT_ACTIVE = MAX ^ ACTIVE;
     var DONE = READ_DONE | WRITE_DONE;
@@ -6508,17 +6525,15 @@ var require_streamx = __commonJS({
     var READ_READABLE_STATUS = OPEN_STATUS | READ_EMIT_READABLE | READ_QUEUED | READ_EMITTED_READABLE;
     var SHOULD_NOT_READ = OPEN_STATUS | READ_ACTIVE | READ_ENDING | READ_DONE | READ_NEEDS_PUSH;
     var READ_BACKPRESSURE_STATUS = DESTROY_STATUS | READ_ENDING | READ_DONE;
-    var READ_UPDATE_SYNC_STATUS = READ_UPDATING | OPEN_STATUS | READ_NEXT_TICK | READ_PRIMARY;
     var WRITE_PRIMARY_STATUS = OPEN_STATUS | WRITE_FINISHING | WRITE_DONE;
     var WRITE_QUEUED_AND_UNDRAINED = WRITE_QUEUED | WRITE_UNDRAINED;
     var WRITE_QUEUED_AND_ACTIVE = WRITE_QUEUED | WRITE_ACTIVE;
     var WRITE_DRAIN_STATUS = WRITE_QUEUED | WRITE_UNDRAINED | OPEN_STATUS | WRITE_ACTIVE;
     var WRITE_STATUS = OPEN_STATUS | WRITE_ACTIVE | WRITE_QUEUED;
     var WRITE_PRIMARY_AND_ACTIVE = WRITE_PRIMARY | WRITE_ACTIVE;
-    var WRITE_ACTIVE_AND_WRITING = WRITE_ACTIVE | WRITE_WRITING;
+    var WRITE_ACTIVE_AND_SYNC = WRITE_ACTIVE | WRITE_SYNC;
     var WRITE_FINISHING_STATUS = OPEN_STATUS | WRITE_FINISHING | WRITE_QUEUED_AND_ACTIVE | WRITE_DONE;
     var WRITE_BACKPRESSURE_STATUS = WRITE_UNDRAINED | DESTROY_STATUS | WRITE_FINISHING | WRITE_DONE;
-    var WRITE_UPDATE_SYNC_STATUS = WRITE_UPDATING | OPEN_STATUS | WRITE_NEXT_TICK | WRITE_PRIMARY;
     var asyncIterator = Symbol.asyncIterator || Symbol("asyncIterator");
     var WritableState = class {
       constructor(stream, { highWaterMark = 16384, map = null, mapWritable, byteLength, byteLengthWritable } = {}) {
@@ -6528,7 +6543,6 @@ var require_streamx = __commonJS({
         this.buffered = 0;
         this.error = null;
         this.pipeline = null;
-        this.drains = null;
         this.byteLength = byteLengthWritable || byteLength || defaultByteLength;
         this.map = mapWritable || map;
         this.afterWrite = afterWrite.bind(this);
@@ -6551,9 +6565,10 @@ var require_streamx = __commonJS({
       }
       shift() {
         const data = this.queue.shift();
+        const stream = this.stream;
         this.buffered -= this.byteLength(data);
         if (this.buffered === 0)
-          this.stream._duplexState &= WRITE_NOT_QUEUED;
+          stream._duplexState &= WRITE_NOT_QUEUED;
         return data;
       }
       end(data) {
@@ -6576,17 +6591,14 @@ var require_streamx = __commonJS({
       }
       update() {
         const stream = this.stream;
-        stream._duplexState |= WRITE_UPDATING;
-        do {
-          while ((stream._duplexState & WRITE_STATUS) === WRITE_QUEUED) {
-            const data = this.shift();
-            stream._duplexState |= WRITE_ACTIVE_AND_WRITING;
-            stream._write(data, this.afterWrite);
-          }
-          if ((stream._duplexState & WRITE_PRIMARY_AND_ACTIVE) === 0)
-            this.updateNonPrimary();
-        } while (this.continueUpdate() === true);
-        stream._duplexState &= WRITE_NOT_UPDATING;
+        while ((stream._duplexState & WRITE_STATUS) === WRITE_QUEUED) {
+          const data = this.shift();
+          stream._duplexState |= WRITE_ACTIVE_AND_SYNC;
+          stream._write(data, this.afterWrite);
+          stream._duplexState &= WRITE_NOT_SYNC;
+        }
+        if ((stream._duplexState & WRITE_PRIMARY_AND_ACTIVE) === 0)
+          this.updateNonPrimary();
       }
       updateNonPrimary() {
         const stream = this.stream;
@@ -6607,24 +6619,11 @@ var require_streamx = __commonJS({
           stream._open(afterOpen.bind(this));
         }
       }
-      continueUpdate() {
-        if ((this.stream._duplexState & WRITE_NEXT_TICK) === 0)
-          return false;
-        this.stream._duplexState &= WRITE_NOT_NEXT_TICK;
-        return true;
-      }
-      updateCallback() {
-        if ((this.stream._duplexState & WRITE_UPDATE_SYNC_STATUS) === WRITE_PRIMARY)
-          this.update();
-        else
-          this.updateNextTick();
-      }
       updateNextTick() {
         if ((this.stream._duplexState & WRITE_NEXT_TICK) !== 0)
           return;
         this.stream._duplexState |= WRITE_NEXT_TICK;
-        if ((this.stream._duplexState & WRITE_UPDATING) === 0)
-          queueTick(this.afterUpdateNextTick);
+        queueTick(this.afterUpdateNextTick);
       }
     };
     var ReadableState = class {
@@ -6692,15 +6691,15 @@ var require_streamx = __commonJS({
         return data;
       }
       unshift(data) {
-        const pending = [this.map !== null ? this.map(data) : data];
-        while (this.buffered > 0)
-          pending.push(this.shift());
-        for (let i = 0; i < pending.length - 1; i++) {
-          const data2 = pending[i];
-          this.buffered += this.byteLength(data2);
-          this.queue.push(data2);
+        let tail;
+        const pending = [];
+        while ((tail = this.queue.shift()) !== void 0) {
+          pending.push(tail);
         }
-        this.push(pending[pending.length - 1]);
+        this.push(data);
+        for (let i = 0; i < pending.length; i++) {
+          this.queue.push(pending[i]);
+        }
       }
       read() {
         const stream = this.stream;
@@ -6726,22 +6725,20 @@ var require_streamx = __commonJS({
       }
       update() {
         const stream = this.stream;
-        stream._duplexState |= READ_UPDATING;
-        do {
-          this.drain();
-          while (this.buffered < this.highWaterMark && (stream._duplexState & SHOULD_NOT_READ) === 0) {
-            stream._duplexState |= READ_ACTIVE_AND_NEEDS_PUSH;
-            stream._read(this.afterRead);
+        this.drain();
+        while (this.buffered < this.highWaterMark && (stream._duplexState & SHOULD_NOT_READ) === 0) {
+          stream._duplexState |= READ_ACTIVE_AND_SYNC_AND_NEEDS_PUSH;
+          stream._read(this.afterRead);
+          stream._duplexState &= READ_NOT_SYNC;
+          if ((stream._duplexState & READ_ACTIVE) === 0)
             this.drain();
-          }
-          if ((stream._duplexState & READ_READABLE_STATUS) === READ_EMIT_READABLE_AND_QUEUED) {
-            stream._duplexState |= READ_EMITTED_READABLE;
-            stream.emit("readable");
-          }
-          if ((stream._duplexState & READ_PRIMARY_AND_ACTIVE) === 0)
-            this.updateNonPrimary();
-        } while (this.continueUpdate() === true);
-        stream._duplexState &= READ_NOT_UPDATING;
+        }
+        if ((stream._duplexState & READ_READABLE_STATUS) === READ_EMIT_READABLE_AND_QUEUED) {
+          stream._duplexState |= READ_EMITTED_READABLE;
+          stream.emit("readable");
+        }
+        if ((stream._duplexState & READ_PRIMARY_AND_ACTIVE) === 0)
+          this.updateNonPrimary();
       }
       updateNonPrimary() {
         const stream = this.stream;
@@ -6765,24 +6762,11 @@ var require_streamx = __commonJS({
           stream._open(afterOpen.bind(this));
         }
       }
-      continueUpdate() {
-        if ((this.stream._duplexState & READ_NEXT_TICK) === 0)
-          return false;
-        this.stream._duplexState &= READ_NOT_NEXT_TICK;
-        return true;
-      }
-      updateCallback() {
-        if ((this.stream._readableState & READ_UPDATE_SYNC_STATUS) === READ_PRIMARY)
-          this.update();
-        else
-          this.updateNextTick();
-      }
       updateNextTick() {
         if ((this.stream._duplexState & READ_NEXT_TICK) !== 0)
           return;
         this.stream._duplexState |= READ_NEXT_TICK;
-        if ((this.stream._duplexState & READ_UPDATING) === 0)
-          queueTick(this.afterUpdateNextTick);
+        queueTick(this.afterUpdateNextTick);
       }
     };
     var TransformState = class {
@@ -6831,7 +6815,10 @@ var require_streamx = __commonJS({
     };
     function afterDrain() {
       this.stream._duplexState |= READ_PIPE_DRAINED;
-      this.updateCallback();
+      if ((this.stream._duplexState & READ_ACTIVE_AND_SYNC) === 0)
+        this.updateNextTick();
+      else
+        this.drain();
     }
     function afterFinal(err) {
       const stream = this.stream;
@@ -6845,10 +6832,7 @@ var require_streamx = __commonJS({
         stream._duplexState |= DESTROYING;
       }
       stream._duplexState &= WRITE_NOT_ACTIVE;
-      if ((stream._duplexState & WRITE_UPDATING) === 0)
-        this.update();
-      else
-        this.updateNextTick();
+      this.update();
     }
     function afterDestroy(err) {
       const stream = this.stream;
@@ -6862,53 +6846,37 @@ var require_streamx = __commonJS({
       const ws = stream._writableState;
       if (rs !== null && rs.pipeline !== null)
         rs.pipeline.done(stream, err);
-      if (ws !== null) {
-        while (ws.drains !== null && ws.drains.length > 0)
-          ws.drains.shift().resolve(false);
-        if (ws.pipeline !== null)
-          ws.pipeline.done(stream, err);
-      }
+      if (ws !== null && ws.pipeline !== null)
+        ws.pipeline.done(stream, err);
     }
     function afterWrite(err) {
       const stream = this.stream;
       if (err)
         stream.destroy(err);
       stream._duplexState &= WRITE_NOT_ACTIVE;
-      if (this.drains !== null)
-        tickDrains(this.drains);
       if ((stream._duplexState & WRITE_DRAIN_STATUS) === WRITE_UNDRAINED) {
         stream._duplexState &= WRITE_DRAINED;
         if ((stream._duplexState & WRITE_EMIT_DRAIN) === WRITE_EMIT_DRAIN) {
           stream.emit("drain");
         }
       }
-      this.updateCallback();
+      if ((stream._duplexState & WRITE_SYNC) === 0)
+        this.update();
     }
     function afterRead(err) {
       if (err)
         this.stream.destroy(err);
       this.stream._duplexState &= READ_NOT_ACTIVE;
-      this.updateCallback();
+      if ((this.stream._duplexState & READ_SYNC) === 0)
+        this.update();
     }
     function updateReadNT() {
-      if ((this.stream._duplexState & READ_UPDATING) === 0) {
-        this.stream._duplexState &= READ_NOT_NEXT_TICK;
-        this.update();
-      }
+      this.stream._duplexState &= READ_NOT_NEXT_TICK;
+      this.update();
     }
     function updateWriteNT() {
-      if ((this.stream._duplexState & WRITE_UPDATING) === 0) {
-        this.stream._duplexState &= WRITE_NOT_NEXT_TICK;
-        this.update();
-      }
-    }
-    function tickDrains(drains) {
-      for (let i = 0; i < drains.length; i++) {
-        if (--drains[i].writes === 0) {
-          drains.shift().resolve(true);
-          i--;
-        }
-      }
+      this.stream._duplexState &= WRITE_NOT_NEXT_TICK;
+      this.update();
     }
     function afterOpen(err) {
       const stream = this.stream;
@@ -6923,10 +6891,10 @@ var require_streamx = __commonJS({
       }
       stream._duplexState &= NOT_ACTIVE;
       if (stream._writableState !== null) {
-        stream._writableState.updateCallback();
+        stream._writableState.update();
       }
       if (stream._readableState !== null) {
-        stream._readableState.updateCallback();
+        stream._readableState.update();
       }
     }
     function afterTransform(err, data) {
@@ -6977,14 +6945,10 @@ var require_streamx = __commonJS({
           if (!err)
             err = STREAM_DESTROYED;
           this._duplexState = (this._duplexState | DESTROYING) & NON_PRIMARY;
-          if (this._readableState !== null) {
-            this._readableState.highWaterMark = 0;
+          if (this._readableState !== null)
             this._readableState.error = err;
-          }
-          if (this._writableState !== null) {
-            this._writableState.highWaterMark = 0;
+          if (this._writableState !== null)
             this._writableState.error = err;
-          }
           this._duplexState |= PREDESTROYING;
           this._predestroy();
           this._duplexState &= NOT_PREDESTROYING;
@@ -7014,7 +6978,7 @@ var require_streamx = __commonJS({
         return super.on(name, fn);
       }
     };
-    var Readable = class _Readable extends Stream {
+    var Readable = class extends Stream {
       constructor(opts) {
         super(opts);
         this._duplexState |= OPENING | WRITE_DONE;
@@ -7023,15 +6987,15 @@ var require_streamx = __commonJS({
           if (opts.read)
             this._read = opts.read;
           if (opts.eagerOpen)
-            this._readableState.updateNextTick();
+            this.resume().pause();
         }
       }
       _read(cb) {
         cb(null);
       }
       pipe(dest, cb) {
-        this._readableState.updateNextTick();
         this._readableState.pipe(dest, cb);
+        this._readableState.updateNextTick();
         return dest;
       }
       read() {
@@ -7057,7 +7021,7 @@ var require_streamx = __commonJS({
       }
       static _fromAsyncIterator(ite, opts) {
         let destroy;
-        const rs = new _Readable({
+        const rs = new Readable({
           ...opts,
           read(cb) {
             ite.next().then(push).then(cb.bind(null, null)).catch(cb);
@@ -7087,7 +7051,7 @@ var require_streamx = __commonJS({
         if (!Array.isArray(data))
           data = data === void 0 ? [] : [data];
         let i = 0;
-        return new _Readable({
+        return new Readable({
           ...opts,
           read(cb) {
             this.push(i === data.length ? null : data[i++]);
@@ -7179,8 +7143,6 @@ var require_streamx = __commonJS({
             this._write = opts.write;
           if (opts.final)
             this._final = opts.final;
-          if (opts.eagerOpen)
-            this._writableState.updateNextTick();
         }
       }
       _writev(batch, cb) {
@@ -7194,19 +7156,6 @@ var require_streamx = __commonJS({
       }
       static isBackpressured(ws) {
         return (ws._duplexState & WRITE_BACKPRESSURE_STATUS) !== 0;
-      }
-      static drained(ws) {
-        if (ws.destroyed)
-          return Promise.resolve(false);
-        const state = ws._writableState;
-        const writes = state.queue.length + (ws._duplexState & WRITE_WRITING ? 1 : 0);
-        if (writes === 0)
-          return Promise.resolve(true);
-        if (state.drains === null)
-          state.drains = [];
-        return new Promise((resolve) => {
-          state.drains.push({ writes, resolve });
-        });
       }
       write(data) {
         this._writableState.updateNextTick();
@@ -7331,19 +7280,13 @@ var require_streamx = __commonJS({
       }
       if (done) {
         let fin = false;
-        const autoDestroy = isStreamx(dest) || !!(dest._writableState && dest._writableState.autoDestroy);
-        dest.on("error", (err) => {
-          if (error === null)
-            error = err;
-        });
         dest.on("finish", () => {
           fin = true;
-          if (!autoDestroy)
-            done(error);
         });
-        if (autoDestroy) {
-          dest.on("close", () => done(error || (fin ? null : PREMATURE_CLOSE)));
-        }
+        dest.on("error", (err) => {
+          error = error || err;
+        });
+        dest.on("close", () => done(error || (fin ? null : PREMATURE_CLOSE)));
       }
       return dest;
       function errorHandle(s, rd, wr, onerror2) {
@@ -7372,8 +7315,7 @@ var require_streamx = __commonJS({
       return typeof stream._duplexState === "number" && isStream(stream);
     }
     function getStreamError(stream) {
-      const err = stream._readableState && stream._readableState.error || stream._writableState && stream._writableState.error;
-      return err === STREAM_DESTROYED ? null : err;
+      return stream._readableState && stream._readableState.error || stream._writableState && stream._writableState.error;
     }
     function isReadStreamx(stream) {
       return isStreamx(stream) && stream.readable;
@@ -21263,7 +21205,7 @@ var require_ast = __commonJS({
     var unescape_js_1 = require_unescape();
     var types = /* @__PURE__ */ new Set(["!", "?", "+", "*", "@"]);
     var isExtglobType = (c) => types.has(c);
-    var startNoTraversal = "(?!(?:^|/)\\.\\.?(?:$|/))";
+    var startNoTraversal = "(?!\\.\\.?(?:$|/))";
     var startNoDot = "(?!\\.)";
     var addPatternStart = /* @__PURE__ */ new Set(["[", "."]);
     var justDots = /* @__PURE__ */ new Set(["..", "."]);
@@ -21272,113 +21214,87 @@ var require_ast = __commonJS({
     var qmark = "[^/]";
     var star = qmark + "*?";
     var starNoEmpty = qmark + "+?";
-    var AST = class _AST {
-      type;
-      #root;
-      #hasMagic;
-      #uflag = false;
-      #parts = [];
-      #parent;
-      #parentIndex;
-      #negs;
-      #filledNegs = false;
-      #options;
-      #toString;
-      // set to true if it's an extglob with no children
-      // (which really means one child of '')
-      #emptyExt = false;
+    var _root, _hasMagic, _uflag, _parts, _parent, _parentIndex, _negs, _filledNegs, _options, _toString, _emptyExt, _fillNegs, fillNegs_fn, _parseAST, parseAST_fn, _parseGlob, parseGlob_fn;
+    var _AST = class {
       constructor(type, parent, options = {}) {
+        __privateAdd(this, _fillNegs);
+        __publicField(this, "type");
+        __privateAdd(this, _root, void 0);
+        __privateAdd(this, _hasMagic, void 0);
+        __privateAdd(this, _uflag, false);
+        __privateAdd(this, _parts, []);
+        __privateAdd(this, _parent, void 0);
+        __privateAdd(this, _parentIndex, void 0);
+        __privateAdd(this, _negs, void 0);
+        __privateAdd(this, _filledNegs, false);
+        __privateAdd(this, _options, void 0);
+        __privateAdd(this, _toString, void 0);
+        // set to true if it's an extglob with no children
+        // (which really means one child of '')
+        __privateAdd(this, _emptyExt, false);
         this.type = type;
         if (type)
-          this.#hasMagic = true;
-        this.#parent = parent;
-        this.#root = this.#parent ? this.#parent.#root : this;
-        this.#options = this.#root === this ? options : this.#root.#options;
-        this.#negs = this.#root === this ? [] : this.#root.#negs;
-        if (type === "!" && !this.#root.#filledNegs)
-          this.#negs.push(this);
-        this.#parentIndex = this.#parent ? this.#parent.#parts.length : 0;
+          __privateSet(this, _hasMagic, true);
+        __privateSet(this, _parent, parent);
+        __privateSet(this, _root, __privateGet(this, _parent) ? __privateGet(__privateGet(this, _parent), _root) : this);
+        __privateSet(this, _options, __privateGet(this, _root) === this ? options : __privateGet(__privateGet(this, _root), _options));
+        __privateSet(this, _negs, __privateGet(this, _root) === this ? [] : __privateGet(__privateGet(this, _root), _negs));
+        if (type === "!" && !__privateGet(__privateGet(this, _root), _filledNegs))
+          __privateGet(this, _negs).push(this);
+        __privateSet(this, _parentIndex, __privateGet(this, _parent) ? __privateGet(__privateGet(this, _parent), _parts).length : 0);
       }
       get hasMagic() {
-        if (this.#hasMagic !== void 0)
-          return this.#hasMagic;
-        for (const p of this.#parts) {
+        if (__privateGet(this, _hasMagic) !== void 0)
+          return __privateGet(this, _hasMagic);
+        for (const p of __privateGet(this, _parts)) {
           if (typeof p === "string")
             continue;
           if (p.type || p.hasMagic)
-            return this.#hasMagic = true;
+            return __privateSet(this, _hasMagic, true);
         }
-        return this.#hasMagic;
+        return __privateGet(this, _hasMagic);
       }
       // reconstructs the pattern
       toString() {
-        if (this.#toString !== void 0)
-          return this.#toString;
+        if (__privateGet(this, _toString) !== void 0)
+          return __privateGet(this, _toString);
         if (!this.type) {
-          return this.#toString = this.#parts.map((p) => String(p)).join("");
+          return __privateSet(this, _toString, __privateGet(this, _parts).map((p) => String(p)).join(""));
         } else {
-          return this.#toString = this.type + "(" + this.#parts.map((p) => String(p)).join("|") + ")";
+          return __privateSet(this, _toString, this.type + "(" + __privateGet(this, _parts).map((p) => String(p)).join("|") + ")");
         }
-      }
-      #fillNegs() {
-        if (this !== this.#root)
-          throw new Error("should only call on root");
-        if (this.#filledNegs)
-          return this;
-        this.toString();
-        this.#filledNegs = true;
-        let n;
-        while (n = this.#negs.pop()) {
-          if (n.type !== "!")
-            continue;
-          let p = n;
-          let pp = p.#parent;
-          while (pp) {
-            for (let i = p.#parentIndex + 1; !pp.type && i < pp.#parts.length; i++) {
-              for (const part of n.#parts) {
-                if (typeof part === "string") {
-                  throw new Error("string part in extglob AST??");
-                }
-                part.copyIn(pp.#parts[i]);
-              }
-            }
-            p = pp;
-            pp = p.#parent;
-          }
-        }
-        return this;
       }
       push(...parts) {
         for (const p of parts) {
           if (p === "")
             continue;
-          if (typeof p !== "string" && !(p instanceof _AST && p.#parent === this)) {
+          if (typeof p !== "string" && !(p instanceof _AST && __privateGet(p, _parent) === this)) {
             throw new Error("invalid part: " + p);
           }
-          this.#parts.push(p);
+          __privateGet(this, _parts).push(p);
         }
       }
       toJSON() {
         var _a;
-        const ret = this.type === null ? this.#parts.slice().map((p) => typeof p === "string" ? p : p.toJSON()) : [this.type, ...this.#parts.map((p) => p.toJSON())];
+        const ret = this.type === null ? __privateGet(this, _parts).slice().map((p) => typeof p === "string" ? p : p.toJSON()) : [this.type, ...__privateGet(this, _parts).map((p) => p.toJSON())];
         if (this.isStart() && !this.type)
           ret.unshift([]);
-        if (this.isEnd() && (this === this.#root || this.#root.#filledNegs && ((_a = this.#parent) == null ? void 0 : _a.type) === "!")) {
+        if (this.isEnd() && (this === __privateGet(this, _root) || __privateGet(__privateGet(this, _root), _filledNegs) && ((_a = __privateGet(this, _parent)) == null ? void 0 : _a.type) === "!")) {
           ret.push({});
         }
         return ret;
       }
       isStart() {
         var _a;
-        if (this.#root === this)
+        if (__privateGet(this, _root) === this)
           return true;
-        if (!((_a = this.#parent) == null ? void 0 : _a.isStart()))
+        if (!((_a = __privateGet(this, _parent)) == null ? void 0 : _a.isStart()))
           return false;
-        if (this.#parentIndex === 0)
+        if (__privateGet(this, _parentIndex) === 0)
           return true;
-        const p = this.#parent;
-        for (let i = 0; i < this.#parentIndex; i++) {
-          const pp = p.#parts[i];
+        const p = __privateGet(this, _parent);
+        for (let i = 0; i < __privateGet(this, _parentIndex); i++) {
+          const pp = __privateGet(p, _parts)[i];
           if (!(pp instanceof _AST && pp.type === "!")) {
             return false;
           }
@@ -21387,16 +21303,16 @@ var require_ast = __commonJS({
       }
       isEnd() {
         var _a, _b, _c;
-        if (this.#root === this)
+        if (__privateGet(this, _root) === this)
           return true;
-        if (((_a = this.#parent) == null ? void 0 : _a.type) === "!")
+        if (((_a = __privateGet(this, _parent)) == null ? void 0 : _a.type) === "!")
           return true;
-        if (!((_b = this.#parent) == null ? void 0 : _b.isEnd()))
+        if (!((_b = __privateGet(this, _parent)) == null ? void 0 : _b.isEnd()))
           return false;
         if (!this.type)
-          return (_c = this.#parent) == null ? void 0 : _c.isEnd();
-        const pl = this.#parent ? this.#parent.#parts.length : 0;
-        return this.#parentIndex === pl - 1;
+          return (_c = __privateGet(this, _parent)) == null ? void 0 : _c.isEnd();
+        const pl = __privateGet(this, _parent) ? __privateGet(__privateGet(this, _parent), _parts).length : 0;
+        return __privateGet(this, _parentIndex) === pl - 1;
       }
       copyIn(part) {
         if (typeof part === "string")
@@ -21406,132 +21322,29 @@ var require_ast = __commonJS({
       }
       clone(parent) {
         const c = new _AST(this.type, parent);
-        for (const p of this.#parts) {
+        for (const p of __privateGet(this, _parts)) {
           c.copyIn(p);
         }
         return c;
       }
-      static #parseAST(str, ast, pos, opt) {
-        let escaping = false;
-        let inBrace = false;
-        let braceStart = -1;
-        let braceNeg = false;
-        if (ast.type === null) {
-          let i2 = pos;
-          let acc2 = "";
-          while (i2 < str.length) {
-            const c = str.charAt(i2++);
-            if (escaping || c === "\\") {
-              escaping = !escaping;
-              acc2 += c;
-              continue;
-            }
-            if (inBrace) {
-              if (i2 === braceStart + 1) {
-                if (c === "^" || c === "!") {
-                  braceNeg = true;
-                }
-              } else if (c === "]" && !(i2 === braceStart + 2 && braceNeg)) {
-                inBrace = false;
-              }
-              acc2 += c;
-              continue;
-            } else if (c === "[") {
-              inBrace = true;
-              braceStart = i2;
-              braceNeg = false;
-              acc2 += c;
-              continue;
-            }
-            if (!opt.noext && isExtglobType(c) && str.charAt(i2) === "(") {
-              ast.push(acc2);
-              acc2 = "";
-              const ext = new _AST(c, ast);
-              i2 = _AST.#parseAST(str, ext, i2, opt);
-              ast.push(ext);
-              continue;
-            }
-            acc2 += c;
-          }
-          ast.push(acc2);
-          return i2;
-        }
-        let i = pos + 1;
-        let part = new _AST(null, ast);
-        const parts = [];
-        let acc = "";
-        while (i < str.length) {
-          const c = str.charAt(i++);
-          if (escaping || c === "\\") {
-            escaping = !escaping;
-            acc += c;
-            continue;
-          }
-          if (inBrace) {
-            if (i === braceStart + 1) {
-              if (c === "^" || c === "!") {
-                braceNeg = true;
-              }
-            } else if (c === "]" && !(i === braceStart + 2 && braceNeg)) {
-              inBrace = false;
-            }
-            acc += c;
-            continue;
-          } else if (c === "[") {
-            inBrace = true;
-            braceStart = i;
-            braceNeg = false;
-            acc += c;
-            continue;
-          }
-          if (isExtglobType(c) && str.charAt(i) === "(") {
-            part.push(acc);
-            acc = "";
-            const ext = new _AST(c, part);
-            part.push(ext);
-            i = _AST.#parseAST(str, ext, i, opt);
-            continue;
-          }
-          if (c === "|") {
-            part.push(acc);
-            acc = "";
-            parts.push(part);
-            part = new _AST(null, ast);
-            continue;
-          }
-          if (c === ")") {
-            if (acc === "" && ast.#parts.length === 0) {
-              ast.#emptyExt = true;
-            }
-            part.push(acc);
-            acc = "";
-            ast.push(...parts, part);
-            return i;
-          }
-          acc += c;
-        }
-        ast.type = null;
-        ast.#hasMagic = void 0;
-        ast.#parts = [str.substring(pos - 1)];
-        return i;
-      }
       static fromGlob(pattern, options = {}) {
+        var _a;
         const ast = new _AST(null, void 0, options);
-        _AST.#parseAST(pattern, ast, 0, options);
+        __privateMethod(_a = _AST, _parseAST, parseAST_fn).call(_a, pattern, ast, 0, options);
         return ast;
       }
       // returns the regular expression if there's magic, or the unescaped
       // string if not.
       toMMPattern() {
-        if (this !== this.#root)
-          return this.#root.toMMPattern();
+        if (this !== __privateGet(this, _root))
+          return __privateGet(this, _root).toMMPattern();
         const glob = this.toString();
         const [re, body, hasMagic, uflag] = this.toRegExpSource();
-        const anyMagic = hasMagic || this.#hasMagic || this.#options.nocase && !this.#options.nocaseMagicOnly && glob.toUpperCase() !== glob.toLowerCase();
+        const anyMagic = hasMagic || __privateGet(this, _hasMagic) || __privateGet(this, _options).nocase && !__privateGet(this, _options).nocaseMagicOnly && glob.toUpperCase() !== glob.toLowerCase();
         if (!anyMagic) {
           return body;
         }
-        const flags = (this.#options.nocase ? "i" : "") + (uflag ? "u" : "");
+        const flags = (__privateGet(this, _options).nocase ? "i" : "") + (uflag ? "u" : "");
         return Object.assign(new RegExp(`^${re}$`, flags), {
           _src: re,
           _glob: glob
@@ -21606,139 +21419,278 @@ var require_ast = __commonJS({
       // - Since the start for a join is eg /(?!\.) and the start for a part
       // is ^(?!\.), we can just prepend (?!\.) to the pattern (either root
       // or start or whatever) and prepend ^ or / at the Regexp construction.
-      toRegExpSource(allowDot) {
+      toRegExpSource() {
         var _a;
-        const dot = allowDot ?? !!this.#options.dot;
-        if (this.#root === this)
-          this.#fillNegs();
+        if (__privateGet(this, _root) === this)
+          __privateMethod(this, _fillNegs, fillNegs_fn).call(this);
         if (!this.type) {
           const noEmpty = this.isStart() && this.isEnd();
-          const src = this.#parts.map((p) => {
-            const [re, _, hasMagic, uflag] = typeof p === "string" ? _AST.#parseGlob(p, this.#hasMagic, noEmpty) : p.toRegExpSource(allowDot);
-            this.#hasMagic = this.#hasMagic || hasMagic;
-            this.#uflag = this.#uflag || uflag;
+          const src = __privateGet(this, _parts).map((p) => {
+            var _a2;
+            const [re, _, hasMagic, uflag] = typeof p === "string" ? __privateMethod(_a2 = _AST, _parseGlob, parseGlob_fn).call(_a2, p, __privateGet(this, _hasMagic), noEmpty) : p.toRegExpSource();
+            __privateSet(this, _hasMagic, __privateGet(this, _hasMagic) || hasMagic);
+            __privateSet(this, _uflag, __privateGet(this, _uflag) || uflag);
             return re;
           }).join("");
           let start2 = "";
           if (this.isStart()) {
-            if (typeof this.#parts[0] === "string") {
-              const dotTravAllowed = this.#parts.length === 1 && justDots.has(this.#parts[0]);
+            if (typeof __privateGet(this, _parts)[0] === "string") {
+              const dotTravAllowed = __privateGet(this, _parts).length === 1 && justDots.has(__privateGet(this, _parts)[0]);
               if (!dotTravAllowed) {
                 const aps = addPatternStart;
                 const needNoTrav = (
                   // dots are allowed, and the pattern starts with [ or .
-                  dot && aps.has(src.charAt(0)) || // the pattern starts with \., and then [ or .
+                  __privateGet(this, _options).dot && aps.has(src.charAt(0)) || // the pattern starts with \., and then [ or .
                   src.startsWith("\\.") && aps.has(src.charAt(2)) || // the pattern starts with \.\., and then [ or .
                   src.startsWith("\\.\\.") && aps.has(src.charAt(4))
                 );
-                const needNoDot = !dot && !allowDot && aps.has(src.charAt(0));
+                const needNoDot = !__privateGet(this, _options).dot && aps.has(src.charAt(0));
                 start2 = needNoTrav ? startNoTraversal : needNoDot ? startNoDot : "";
               }
             }
           }
           let end = "";
-          if (this.isEnd() && this.#root.#filledNegs && ((_a = this.#parent) == null ? void 0 : _a.type) === "!") {
+          if (this.isEnd() && __privateGet(__privateGet(this, _root), _filledNegs) && ((_a = __privateGet(this, _parent)) == null ? void 0 : _a.type) === "!") {
             end = "(?:$|\\/)";
           }
           const final2 = start2 + src + end;
           return [
             final2,
             (0, unescape_js_1.unescape)(src),
-            this.#hasMagic = !!this.#hasMagic,
-            this.#uflag
+            __privateSet(this, _hasMagic, !!__privateGet(this, _hasMagic)),
+            __privateGet(this, _uflag)
           ];
         }
-        const repeated = this.type === "*" || this.type === "+";
         const start = this.type === "!" ? "(?:(?!(?:" : "(?:";
-        let body = this.#partsToRegExp(dot);
+        const body = __privateGet(this, _parts).map((p) => {
+          if (typeof p === "string") {
+            throw new Error("string type in extglob ast??");
+          }
+          const [re, _, _hasMagic2, uflag] = p.toRegExpSource();
+          __privateSet(this, _uflag, __privateGet(this, _uflag) || uflag);
+          return re;
+        }).filter((p) => !(this.isStart() && this.isEnd()) || !!p).join("|");
         if (this.isStart() && this.isEnd() && !body && this.type !== "!") {
           const s = this.toString();
-          this.#parts = [s];
+          __privateSet(this, _parts, [s]);
           this.type = null;
-          this.#hasMagic = void 0;
+          __privateSet(this, _hasMagic, void 0);
           return [s, (0, unescape_js_1.unescape)(this.toString()), false, false];
         }
-        let bodyDotAllowed = !repeated || allowDot || dot || !startNoDot ? "" : this.#partsToRegExp(true);
-        if (bodyDotAllowed === body) {
-          bodyDotAllowed = "";
-        }
-        if (bodyDotAllowed) {
-          body = `(?:${body})(?:${bodyDotAllowed})*?`;
-        }
         let final = "";
-        if (this.type === "!" && this.#emptyExt) {
-          final = (this.isStart() && !dot ? startNoDot : "") + starNoEmpty;
+        if (this.type === "!" && __privateGet(this, _emptyExt)) {
+          final = (this.isStart() && !__privateGet(this, _options).dot ? startNoDot : "") + starNoEmpty;
         } else {
           const close = this.type === "!" ? (
             // !() must match something,but !(x) can match ''
-            "))" + (this.isStart() && !dot && !allowDot ? startNoDot : "") + star + ")"
-          ) : this.type === "@" ? ")" : this.type === "?" ? ")?" : this.type === "+" && bodyDotAllowed ? ")" : this.type === "*" && bodyDotAllowed ? `)?` : `)${this.type}`;
+            "))" + (this.isStart() && !__privateGet(this, _options).dot ? startNoDot : "") + star + ")"
+          ) : this.type === "@" ? ")" : `)${this.type}`;
           final = start + body + close;
         }
         return [
           final,
           (0, unescape_js_1.unescape)(body),
-          this.#hasMagic = !!this.#hasMagic,
-          this.#uflag
+          __privateSet(this, _hasMagic, !!__privateGet(this, _hasMagic)),
+          __privateGet(this, _uflag)
         ];
       }
-      #partsToRegExp(dot) {
-        return this.#parts.map((p) => {
-          if (typeof p === "string") {
-            throw new Error("string type in extglob ast??");
-          }
-          const [re, _, _hasMagic, uflag] = p.toRegExpSource(dot);
-          this.#uflag = this.#uflag || uflag;
-          return re;
-        }).filter((p) => !(this.isStart() && this.isEnd()) || !!p).join("|");
-      }
-      static #parseGlob(glob, hasMagic, noEmpty = false) {
-        let escaping = false;
-        let re = "";
-        let uflag = false;
-        for (let i = 0; i < glob.length; i++) {
-          const c = glob.charAt(i);
-          if (escaping) {
-            escaping = false;
-            re += (reSpecials.has(c) ? "\\" : "") + c;
-            continue;
-          }
-          if (c === "\\") {
-            if (i === glob.length - 1) {
-              re += "\\\\";
-            } else {
-              escaping = true;
-            }
-            continue;
-          }
-          if (c === "[") {
-            const [src, needUflag, consumed, magic] = (0, brace_expressions_js_1.parseClass)(glob, i);
-            if (consumed) {
-              re += src;
-              uflag = uflag || needUflag;
-              i += consumed - 1;
-              hasMagic = hasMagic || magic;
-              continue;
-            }
-          }
-          if (c === "*") {
-            if (noEmpty && glob === "*")
-              re += starNoEmpty;
-            else
-              re += star;
-            hasMagic = true;
-            continue;
-          }
-          if (c === "?") {
-            re += qmark;
-            hasMagic = true;
-            continue;
-          }
-          re += regExpEscape(c);
-        }
-        return [re, (0, unescape_js_1.unescape)(glob), !!hasMagic, uflag];
-      }
     };
+    var AST = _AST;
+    _root = new WeakMap();
+    _hasMagic = new WeakMap();
+    _uflag = new WeakMap();
+    _parts = new WeakMap();
+    _parent = new WeakMap();
+    _parentIndex = new WeakMap();
+    _negs = new WeakMap();
+    _filledNegs = new WeakMap();
+    _options = new WeakMap();
+    _toString = new WeakMap();
+    _emptyExt = new WeakMap();
+    _fillNegs = new WeakSet();
+    fillNegs_fn = function() {
+      if (this !== __privateGet(this, _root))
+        throw new Error("should only call on root");
+      if (__privateGet(this, _filledNegs))
+        return this;
+      this.toString();
+      __privateSet(this, _filledNegs, true);
+      let n;
+      while (n = __privateGet(this, _negs).pop()) {
+        if (n.type !== "!")
+          continue;
+        let p = n;
+        let pp = __privateGet(p, _parent);
+        while (pp) {
+          for (let i = __privateGet(p, _parentIndex) + 1; !pp.type && i < __privateGet(pp, _parts).length; i++) {
+            for (const part of __privateGet(n, _parts)) {
+              if (typeof part === "string") {
+                throw new Error("string part in extglob AST??");
+              }
+              part.copyIn(__privateGet(pp, _parts)[i]);
+            }
+          }
+          p = pp;
+          pp = __privateGet(p, _parent);
+        }
+      }
+      return this;
+    };
+    _parseAST = new WeakSet();
+    parseAST_fn = function(str, ast, pos, opt) {
+      var _a, _b;
+      let escaping = false;
+      let inBrace = false;
+      let braceStart = -1;
+      let braceNeg = false;
+      if (ast.type === null) {
+        let i2 = pos;
+        let acc2 = "";
+        while (i2 < str.length) {
+          const c = str.charAt(i2++);
+          if (escaping || c === "\\") {
+            escaping = !escaping;
+            acc2 += c;
+            continue;
+          }
+          if (inBrace) {
+            if (i2 === braceStart + 1) {
+              if (c === "^" || c === "!") {
+                braceNeg = true;
+              }
+            } else if (c === "]" && !(i2 === braceStart + 2 && braceNeg)) {
+              inBrace = false;
+            }
+            acc2 += c;
+            continue;
+          } else if (c === "[") {
+            inBrace = true;
+            braceStart = i2;
+            braceNeg = false;
+            acc2 += c;
+            continue;
+          }
+          if (!opt.noext && isExtglobType(c) && str.charAt(i2) === "(") {
+            ast.push(acc2);
+            acc2 = "";
+            const ext = new _AST(c, ast);
+            i2 = __privateMethod(_a = _AST, _parseAST, parseAST_fn).call(_a, str, ext, i2, opt);
+            ast.push(ext);
+            continue;
+          }
+          acc2 += c;
+        }
+        ast.push(acc2);
+        return i2;
+      }
+      let i = pos + 1;
+      let part = new _AST(null, ast);
+      const parts = [];
+      let acc = "";
+      while (i < str.length) {
+        const c = str.charAt(i++);
+        if (escaping || c === "\\") {
+          escaping = !escaping;
+          acc += c;
+          continue;
+        }
+        if (inBrace) {
+          if (i === braceStart + 1) {
+            if (c === "^" || c === "!") {
+              braceNeg = true;
+            }
+          } else if (c === "]" && !(i === braceStart + 2 && braceNeg)) {
+            inBrace = false;
+          }
+          acc += c;
+          continue;
+        } else if (c === "[") {
+          inBrace = true;
+          braceStart = i;
+          braceNeg = false;
+          acc += c;
+          continue;
+        }
+        if (isExtglobType(c) && str.charAt(i) === "(") {
+          part.push(acc);
+          acc = "";
+          const ext = new _AST(c, part);
+          part.push(ext);
+          i = __privateMethod(_b = _AST, _parseAST, parseAST_fn).call(_b, str, ext, i, opt);
+          continue;
+        }
+        if (c === "|") {
+          part.push(acc);
+          acc = "";
+          parts.push(part);
+          part = new _AST(null, ast);
+          continue;
+        }
+        if (c === ")") {
+          if (acc === "" && __privateGet(ast, _parts).length === 0) {
+            __privateSet(ast, _emptyExt, true);
+          }
+          part.push(acc);
+          acc = "";
+          ast.push(...parts, part);
+          return i;
+        }
+        acc += c;
+      }
+      ast.type = null;
+      __privateSet(ast, _hasMagic, void 0);
+      __privateSet(ast, _parts, [str.substring(pos - 1)]);
+      return i;
+    };
+    _parseGlob = new WeakSet();
+    parseGlob_fn = function(glob, hasMagic, noEmpty = false) {
+      let escaping = false;
+      let re = "";
+      let uflag = false;
+      for (let i = 0; i < glob.length; i++) {
+        const c = glob.charAt(i);
+        if (escaping) {
+          escaping = false;
+          re += (reSpecials.has(c) ? "\\" : "") + c;
+          continue;
+        }
+        if (c === "\\") {
+          if (i === glob.length - 1) {
+            re += "\\\\";
+          } else {
+            escaping = true;
+          }
+          continue;
+        }
+        if (c === "[") {
+          const [src, needUflag, consumed, magic] = (0, brace_expressions_js_1.parseClass)(glob, i);
+          if (consumed) {
+            re += src;
+            uflag = uflag || needUflag;
+            i += consumed - 1;
+            hasMagic = hasMagic || magic;
+            continue;
+          }
+        }
+        if (c === "*") {
+          if (noEmpty && glob === "*")
+            re += starNoEmpty;
+          else
+            re += star;
+          hasMagic = true;
+          continue;
+        }
+        if (c === "?") {
+          re += qmark;
+          hasMagic = true;
+          continue;
+        }
+        re += regExpEscape(c);
+      }
+      return [re, (0, unescape_js_1.unescape)(glob), !!hasMagic, uflag];
+    };
+    __privateAdd(AST, _parseAST);
+    __privateAdd(AST, _parseGlob);
     exports.AST = AST;
   }
 });
@@ -22262,21 +22214,26 @@ var require_cjs2 = __commonJS({
       matchOne(file, pattern, partial = false) {
         const options = this.options;
         if (this.isWindows) {
-          const fileDrive = typeof file[0] === "string" && /^[a-z]:$/i.test(file[0]);
-          const fileUNC = !fileDrive && file[0] === "" && file[1] === "" && file[2] === "?" && /^[a-z]:$/i.test(file[3]);
-          const patternDrive = typeof pattern[0] === "string" && /^[a-z]:$/i.test(pattern[0]);
-          const patternUNC = !patternDrive && pattern[0] === "" && pattern[1] === "" && pattern[2] === "?" && typeof pattern[3] === "string" && /^[a-z]:$/i.test(pattern[3]);
-          const fdi = fileUNC ? 3 : fileDrive ? 0 : void 0;
-          const pdi = patternUNC ? 3 : patternDrive ? 0 : void 0;
-          if (typeof fdi === "number" && typeof pdi === "number") {
-            const [fd, pd] = [file[fdi], pattern[pdi]];
+          const fileUNC = file[0] === "" && file[1] === "" && file[2] === "?" && typeof file[3] === "string" && /^[a-z]:$/i.test(file[3]);
+          const patternUNC = pattern[0] === "" && pattern[1] === "" && pattern[2] === "?" && typeof pattern[3] === "string" && /^[a-z]:$/i.test(pattern[3]);
+          if (fileUNC && patternUNC) {
+            const fd = file[3];
+            const pd = pattern[3];
             if (fd.toLowerCase() === pd.toLowerCase()) {
-              pattern[pdi] = fd;
-              if (pdi > fdi) {
-                pattern = pattern.slice(pdi);
-              } else if (fdi > pdi) {
-                file = file.slice(fdi);
-              }
+              file[3] = pd;
+            }
+          } else if (patternUNC && typeof file[0] === "string") {
+            const pd = pattern[3];
+            const fd = file[0];
+            if (pd.toLowerCase() === fd.toLowerCase()) {
+              pattern[3] = fd;
+              pattern = pattern.slice(3);
+            }
+          } else if (fileUNC && typeof pattern[0] === "string") {
+            const fd = file[3];
+            if (fd.toLowerCase() === pattern[0].toLowerCase()) {
+              pattern[0] = fd;
+              file = file.slice(3);
             }
           }
         }
