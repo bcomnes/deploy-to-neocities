@@ -10,7 +10,7 @@ env:
   FORCE_COLOR: 1
   node_version: 16
 
-concurrency: # prevent concurrent deploys doing starnge things
+concurrency: # prevent concurrent deploys doing strange things
   group: deploy-to-neocities
   cancel-in-progress: true
 
