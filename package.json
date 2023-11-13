@@ -15,7 +15,7 @@
     "webassert": "3.0.2"
   },
   "devDependencies": {
-    "@siteup/cli": "^5.0.0",
+    "@siteup/cli": "^6.0.0",
     "auto-changelog": "^2.0.0",
     "browser-sync": "^2.27.7",
     "dependency-check": "^4.1.0",
