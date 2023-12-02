@@ -15,9 +15,8 @@
     "webassert": "3.0.2"
   },
   "devDependencies": {
-    "@siteup/cli": "^5.0.0",
+    "top-bun": "^7.0.0",
     "auto-changelog": "^2.0.0",
-    "browser-sync": "^2.27.7",
     "dependency-check": "^4.1.0",
     "gh-release": "^7.0.0",
     "npm-run-all2": "^6.0.0",
@@ -36,7 +35,7 @@
   "scripts": {
     "build": "npm run clean && run-p build:*",
     "build:action": "rm -rf dist && esbuild index.js --bundle --platform=node --target=node16 --sourcemap=external --outdir=dist",
-    "build:site": "siteup --src . --dest public",
+    "build:site": "tb --src . --dest public",
     "clean": "rm -rf public && mkdir -p public",
     "release": "git push --follow-tags && gh-release -y",
     "start": "npm run watch",
@@ -47,7 +46,6 @@
     "version:build": "npm run build:action && git add dist",
     "version:changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md",
     "watch": "npm run clean && run-p watch:*",
-    "watch:serve": "browser-sync start --server 'public' --files 'public'",
     "watch:site": "npm run build:site -- -w"
   },
   "standard": {

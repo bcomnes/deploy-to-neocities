@@ -8,7 +8,7 @@ on:
       
 env:
   FORCE_COLOR: 1
-  node_version: 16
+  node_version: lts/*
 
 concurrency: # prevent concurrent deploys doing strange things
   group: deploy-to-neocities
@@ -23,7 +23,7 @@ jobs:
     # Set up any tools and build steps here
     # This example uses a Node.js toolchain to build a site
     - name: Use Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ env.node_version }}
     - run: npm i

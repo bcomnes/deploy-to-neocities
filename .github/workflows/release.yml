@@ -8,7 +8,7 @@ on:
         required: true
 
 env:
-  node_version: 16
+  node_version: lts/*
   FORCE_COLOR: 1
 
 concurrency: # prevent concurrent releases
