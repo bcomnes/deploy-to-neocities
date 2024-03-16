@@ -20,6 +20,10 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
+    types: [closed]
 
 concurrency: # prevent concurrent deploys doing strange things
   group: deploy-to-neocities
