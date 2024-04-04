@@ -15,11 +15,11 @@ Efficiently deploy a website to [Neocities][nc] using [Github actions](https://g
 ```yaml
 name: Deploy to neocities
 
-# only run on changes to master
+# only run on changes to main. Use main or master depending on whatever your default branch is called. 
 on:
   push:
     branches:
-      - master
+      - main
 
 concurrency: # prevent concurrent deploys doing strange things
   group: deploy-to-neocities
