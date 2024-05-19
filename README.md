@@ -142,6 +142,7 @@ None.
 - https://github.com/tencurse/neocities ([10kph.neocities.org](https://10kph.neocities.org/))
 - https://github.com/alephdfilms/neocities/ ([alephd.neocities.org](https://alephd.neocities.org/)]
 - https://sacred.neocities.org/ (https://github.com/M-Valentino/sacredOS)
+- https://lenp.net/
 - [See more!](https://github.com/bcomnes/deploy-to-neocities/network/dependents)
 - ...PR your site when you set it up!
 
