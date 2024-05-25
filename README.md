@@ -15,7 +15,7 @@ Efficiently deploy a website to [Neocities][nc] using [Github actions](https://g
 ```yaml
 name: Deploy to neocities
 
-# only run on changes to main. Use main or master depending on whatever your default branch is called. 
+# only run on changes to main. Use main or master depending on whatever your default branch is called.
 on:
   push:
     branches:
@@ -72,7 +72,7 @@ You most likely only want to run this on the `master` branch so that only change
 ### Inputs
 
 - `api_token` (**REQUIRED**): The API token for your [Neocities][nc] website to deploy to.
-- `dist_dir`: The directory to deploy to [Neocities][nc]. Default: `public`. Don't deploy your root repo directory (e.g. `./`). It contains `.git`, `.github` and other files that won't deploy properly to neocities. Keep it clean by keeping or building your site into a subdir and deploy that. 
+- `dist_dir`: The directory to deploy to [Neocities][nc]. Default: `public`. Don't deploy your root repo directory (e.g. `./`). It contains `.git`, `.github` and other files that won't deploy properly to neocities. Keep it clean by keeping or building your site into a subdir and deploy that.
 - `cleanup`:  Boolean string (`true` or `false`).  If `true`, `deploy-to-neocities` will destructively delete files found on [Neocities][nc] not found in your `dist_dir`.  Default: `false`.
 - `protected_files`: An optional glob string used to mark files as protected.  Protected files are never cleaned up.  Test this option out with `cleanup` set to false before relying on it.  Protected files are printed when `cleanup` is set to true or false.  Glob strings are processed by [minimatch](https://github.com/isaacs/minimatch) against remote neocities file paths.  Protected files can still be updated.
 
@@ -143,6 +143,7 @@ None.
 - https://github.com/alephdfilms/neocities/ ([alephd.neocities.org](https://alephd.neocities.org/)]
 - https://sacred.neocities.org/ (https://github.com/M-Valentino/sacredOS)
 - https://lenp.net/ (https://github.com/Len42/web-site)
+- https://github.com/helenclx/Neocities-Leilukin (https://leilukin.neocities.org/)
 - [See more!](https://github.com/bcomnes/deploy-to-neocities/network/dependents)
 - ...PR your site when you set it up!
 
