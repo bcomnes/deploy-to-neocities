@@ -21,7 +21,7 @@
     "gh-release": "^7.0.0",
     "npm-run-all2": "^6.0.0",
     "standard": "^17.0.0",
-    "esbuild": "^0.22.0"
+    "esbuild": "^0.23.0"
   },
   "homepage": "https://github.com/bcomnes/deploy-to-neocities#readme",
   "keywords": [],
