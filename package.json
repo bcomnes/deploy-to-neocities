@@ -7,7 +7,7 @@
     "url": "https://github.com/bcomnes/deploy-to-neocities/issues"
   },
   "dependencies": {
-    "@actions/core": "1.11.0",
+    "@actions/core": "1.11.1",
     "async-neocities": "2.1.6",
     "minimatch": "10.0.1",
     "ms": "2.1.3",
