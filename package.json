@@ -19,7 +19,7 @@
     "auto-changelog": "^2.0.0",
     "dependency-check": "^4.1.0",
     "gh-release": "^7.0.0",
-    "npm-run-all2": "^6.0.0",
+    "npm-run-all2": "^7.0.0",
     "standard": "^17.0.0",
     "esbuild": "^0.24.0"
   },
