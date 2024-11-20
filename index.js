@@ -1,57 +1,84 @@
-const core = require('@actions/core')
-// const github = require('@actions/github')
-const Neocities = require('async-neocities')
-const path = require('path')
-const ms = require('ms')
-const assert = require('webassert').default
-const fsp = require('fs').promises
-const { minimatch } = require('minimatch')
-const { stackWithCauses } = require('pony-cause')
+import core from '@actions/core'
+import {
+  NeocitiesAPIClient,
+  printDeployText,
+  printPreviewText,
+  printResultsErrorDump,
+  SimpleTimer
+} from 'async-neocities'
+import path from 'node:path'
+import assert from 'node:assert'
+import fs from 'node:fs/promises'
+import { minimatch } from 'minimatch'
 
-let cleanup
-
-async function doDeploy () {
-  const token = core.getInput('api_token')
+async function run () {
+  const key = core.getInput('api_key') || core.getInput('api_token')
   const distDir = path.join(process.cwd(), core.getInput('dist_dir'))
-  cleanup = JSON.parse(core.getInput('cleanup'))
+  const cleanup = JSON.parse(core.getInput('cleanup'))
+  const neocitiesSupporter = JSON.parse(core.getInput('neocities_supporter'))
+  const previewDeploy = JSON.parse(core.getInput('preview_before_deploy'))
   const protectedFilesGlob = core.getInput('protected_files')
 
-  assert(typeof cleanup === 'boolean', 'Cleanup input must be a boolean "true" or "false"')
-  const stat = await fsp.stat(distDir)
-  assert(stat.isDirectory(), 'dist_dir must be a directory that exists')
+  assert(typeof cleanup === 'boolean', '`cleanup` input must be a boolean "true" or "false"')
+  assert(typeof neocitiesSupporter === 'boolean', '`neocities_supporter` input must be a boolean "true" or "false"')
+  assert(typeof previewDeploy === 'boolean', '`preview_before_deploy` input must be a boolean "true" or "false"')
 
-  const client = new Neocities(token)
+  const stat = await fs.stat(distDir)
 
-  const deployOpts = {
-    cleanup,
-    statsCb: Neocities.statsHandler()
+  assert(stat.isDirectory(), '`dist_dir` input must be a path to a directory that exists')
+
+  const client = new NeocitiesAPIClient(key)
+
+  if (previewDeploy) {
+    const previewTimer = new SimpleTimer()
+    console.log('Running deploy preview prior to deployment...\n\n')
+
+    const diff = await client.previewDeploy({
+      directory: distDir,
+      includeUnsupportedFiles: neocitiesSupporter,
+      protectedFileFilter: protectedFilesGlob ? minimatch.filter(protectedFilesGlob) : undefined
+    })
+
+    previewTimer.stop()
+
+    printPreviewText({
+      diff,
+      timer: previewTimer,
+      cleanup,
+      includeUnsupportedFiles: neocitiesSupporter
+    })
   }
 
-  if (protectedFilesGlob) deployOpts.protectedFileFilter = minimatch.filter(protectedFilesGlob)
+  const deployTimer = new SimpleTimer()
+  console.log('Deploying to Neocities...')
 
-  const stats = await client.deploy(distDir, deployOpts)
+  const results = await client.deploy({
+    directory: distDir,
+    cleanup,
+    includeUnsupportedFiles: neocitiesSupporter,
+    protectedFileFilter: protectedFilesGlob ? minimatch.filter(protectedFilesGlob) : undefined
+  })
 
-  console.log(`Deployed to Neocities in ${ms(stats.time)}:`)
-  console.log(`    Uploaded ${stats.filesToUpload.length} files`)
-  console.log(`    ${cleanup ? 'Deleted' : 'Orphaned'} ${stats.filesToDelete.length} files`)
-  console.log(`    Skipped ${stats.filesSkipped.length} files`)
-  console.log(`    ${stats.protectedFiles.length} protected files:`)
-  if (stats.protectedFiles.length) {
-    console.log(stats.protectedFiles)
+  deployTimer.stop()
+
+  if (results.errors.length > 0) {
+    printResultsErrorDump({
+      results,
+      timer: deployTimer
+    })
+    core.setFailed('The deploy completed with errors.')
+  } else {
+    printDeployText({
+      results,
+      timer: deployTimer,
+      cleanup,
+      includeUnsupportedFiles: neocitiesSupporter
+    })
   }
 }
 
-doDeploy().catch(err => {
-  console.error(stackWithCauses(err))
-  if (err.stats) {
-    console.log('Files to upload: ')
-    console.dir(err.stats.filesToUpload, { colors: true, depth: 999 })
-
-    if (cleanup) {
-      console.log('Files to delete: ')
-      console.dir(err.stats.filesToDelete, { colors: true, depth: 999 })
-    }
-  }
-
-  core.setFailed(err.message)
+run().catch(err => {
+  console.log('Unexpected error/throw during deployment:\n\n')
+  console.dir(err, { colors: true, depth: 999 })
+  core.setFailed(err instanceof Error ? err.message : `An unexpected error occurred during deployment: ${err}`)
 })

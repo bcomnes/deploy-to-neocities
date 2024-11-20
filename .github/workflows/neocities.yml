@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - master
-      
+
 env:
   FORCE_COLOR: 1
   node_version: lts/*
@@ -32,7 +32,9 @@ jobs:
     - name: Deploy to neocities
       uses: bcomnes/deploy-to-neocities@master # dont use master in production
       with:
-        api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
+        api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
         cleanup: true
         dist_dir: public
         protected_files: 'dropbox/*'
+        neocities_supporter: true # set this to true if you have a supporter account and want to bypass unsuported files filter.
+        preview_before_deploy: true

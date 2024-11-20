@@ -10,6 +10,8 @@
 
 Efficiently deploy a website to [Neocities][nc] using [Github actions](https://github.com/features/actions).  Uses content aware diffing to only update files that changed.
 
+Alternatively, you can use the bin helper in [async-neocities](https://github.com/bcomnes/async-neocities) to deploy to neocities locally from your own machine as well as in CI.
+
 ## Usage
 
 ```yaml
@@ -30,23 +32,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     # Set up any tools and build steps here
     # This example uses a Node.js toolchain to build a site
     - name: Use Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: lts/*
+    # If you have a different build process, replace this with your own build steps
     - name: Install deps and build
       run: |
         npm i
         npm run build
     # When the dist_dir is ready, deploy it to neocities
     - name: Deploy to neocities
-      uses: bcomnes/deploy-to-neocities@v2
+      uses: bcomnes/deploy-to-neocities@v3
       with:
-        api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
+        api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
         cleanup: false
+        neocities_supporter: false # set this to true if you have a supporter account and want to bypass unsuported files filter.
+        preview_before_deploy: true # print a deployment plan prior to waiting for files to upload.
         dist_dir: public
 ```
 
@@ -73,7 +78,9 @@ You most likely only want to run this on the `master` branch so that only change
 
 - `api_token` (**REQUIRED**): The API token for your [Neocities][nc] website to deploy to.
 - `dist_dir`: The directory to deploy to [Neocities][nc]. Default: `public`. Don't deploy your root repo directory (e.g. `./`). It contains `.git`, `.github` and other files that won't deploy properly to neocities. Keep it clean by keeping or building your site into a subdir and deploy that.
+- `neocoties_supporter`: Set this to `true` if you have a paid neocities account and want to bypass the [unsupported files filter](https://neocities.org/site_files/allowed_types).
 - `cleanup`:  Boolean string (`true` or `false`).  If `true`, `deploy-to-neocities` will destructively delete files found on [Neocities][nc] not found in your `dist_dir`.  Default: `false`.
+- `preview_before_deploy`: Boolean string (`true` or `false`).  If `true`, `deploy-to-neocities` will print a preview of the files that will be uploaded and deleted.  Default: `true`.
 - `protected_files`: An optional glob string used to mark files as protected.  Protected files are never cleaned up.  Test this option out with `cleanup` set to false before relying on it.  Protected files are printed when `cleanup` is set to true or false.  Glob strings are processed by [minimatch](https://github.com/isaacs/minimatch) against remote neocities file paths.  Protected files can still be updated.
 
 ### Outputs

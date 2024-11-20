@@ -1,5 +1,6 @@
-const tap = require('tap')
+import assert from 'node:assert'
+import test from 'node:test'
 
-tap.test('test', async t => {
-  t.ok(true)
+test('test', async _t => {
+  assert.ok(true)
 })

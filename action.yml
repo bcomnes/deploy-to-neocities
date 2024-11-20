@@ -4,20 +4,32 @@ branding:
   icon: aperture
   color: orange
 inputs:
-  api_token:  # api token for site to deploy to
-    description: 'Neocities API token for site to deploy to'
+  api_key:  # api token for site to deploy to
+    description: 'Neocities API key for site to deploy to'
     required: true
   dist_dir:
     description: 'Local folder to deploy to neocities'
     default: 'public'
     required: true
+  neocities_supporter:
+    description: 'Set to true if you are a Neocities supporter to bypass file type upload restrictions'
+    default: 'false'
+    required: true
   cleanup:
     description: Delete orphaned files on neocities that don't exist in distDir
-    default: false
+    default: 'false'
     required: true
+  preview_before_deploy:
+    description: 'Set to true if you want to print deploy preview stats prior to deploying.'
+    default: 'true'
+    required: false
   protected_files:
     description: A glob string that prevents matched files from ever being deleted.
     required: false
+  api_token:  # api token for site to deploy to
+    description: 'Neocities API key for site to deploy to'
+    required: false
+    deprecationMessage: 'api_token is deprecated, use api_key instead'
 runs:
   using: 'node20'
-  main: 'dist/index.js'
+  main: 'dist/index.cjs'
