@@ -78,7 +78,7 @@ You most likely only want to run this on the `master` branch so that only change
 
 - `api_key` (**REQUIRED**): The API token for your [Neocities][nc] website to deploy to.
 - `dist_dir`: The directory to deploy to [Neocities][nc]. Default: `public`. Don't deploy your root repo directory (e.g. `./`). It contains `.git`, `.github` and other files that won't deploy properly to neocities. Keep it clean by keeping or building your site into a subdir and deploy that.
-- `neocoties_supporter`: Set this to `true` if you have a paid neocities account and want to bypass the [unsupported files filter](https://neocities.org/site_files/allowed_types).
+- `neocities_supporter`: Set this to `true` if you have a paid neocities account and want to bypass the [unsupported files filter](https://neocities.org/site_files/allowed_types).
 - `cleanup`:  Boolean string (`true` or `false`).  If `true`, `deploy-to-neocities` will destructively delete files found on [Neocities][nc] not found in your `dist_dir`.  Default: `false`.
 - `preview_before_deploy`: Boolean string (`true` or `false`).  If `true`, `deploy-to-neocities` will print a preview of the files that will be uploaded and deleted.  Default: `true`.
 - `protected_files`: An optional glob string used to mark files as protected.  Protected files are never cleaned up.  Test this option out with `cleanup` set to false before relying on it.  Protected files are printed when `cleanup` is set to true or false.  Glob strings are processed by [minimatch](https://github.com/isaacs/minimatch) against remote neocities file paths.  Protected files can still be updated.
