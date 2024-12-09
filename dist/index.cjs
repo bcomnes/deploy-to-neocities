@@ -27178,7 +27178,6 @@ var require_client_h2 = __commonJS({
     } = require_symbols6();
     var kOpenStreams = Symbol("open streams");
     var extractBody;
-    var h2ExperimentalWarned = false;
     var http2;
     try {
       http2 = require("node:http2");
@@ -27211,12 +27210,6 @@ var require_client_h2 = __commonJS({
     }
     async function connectH2(client, socket) {
       client[kSocket] = socket;
-      if (!h2ExperimentalWarned) {
-        h2ExperimentalWarned = true;
-        process.emitWarning("H2 support is experimental, expect them to change at any time.", {
-          code: "UNDICI-H2"
-        });
-      }
       const session = http2.connect(client[kUrl], {
         createConnection: () => socket,
         peerMaxConcurrentStreams: client[kMaxConcurrentStreams],
@@ -31411,53 +31404,52 @@ var require_decorator_handler = __commonJS({
   "node_modules/async-neocities/node_modules/undici/lib/handler/decorator-handler.js"(exports2, module2) {
     "use strict";
     var assert2 = require("node:assert");
+    var WrapHandler = require_wrap_handler();
     module2.exports = class DecoratorHandler {
       #handler;
       #onCompleteCalled = false;
       #onErrorCalled = false;
+      #onResponseStartCalled = false;
       constructor(handler) {
         if (typeof handler !== "object" || handler === null) {
           throw new TypeError("handler must be an object");
         }
-        this.#handler = handler;
+        this.#handler = WrapHandler.wrap(handler);
       }
-      onConnect(...args) {
-        return this.#handler.onConnect?.(...args);
+      onRequestStart(...args) {
+        this.#handler.onRequestStart?.(...args);
       }
-      onError(...args) {
-        this.#onErrorCalled = true;
-        return this.#handler.onError?.(...args);
-      }
-      onUpgrade(...args) {
+      onRequestUpgrade(...args) {
         assert2(!this.#onCompleteCalled);
         assert2(!this.#onErrorCalled);
-        return this.#handler.onUpgrade?.(...args);
+        return this.#handler.onRequestUpgrade?.(...args);
       }
-      onResponseStarted(...args) {
+      onResponseStart(...args) {
         assert2(!this.#onCompleteCalled);
         assert2(!this.#onErrorCalled);
-        return this.#handler.onResponseStarted?.(...args);
+        assert2(!this.#onResponseStartCalled);
+        this.#onResponseStartCalled = true;
+        return this.#handler.onResponseStart?.(...args);
       }
-      onHeaders(...args) {
+      onResponseData(...args) {
         assert2(!this.#onCompleteCalled);
         assert2(!this.#onErrorCalled);
-        return this.#handler.onHeaders?.(...args);
+        return this.#handler.onResponseData?.(...args);
       }
-      onData(...args) {
-        assert2(!this.#onCompleteCalled);
-        assert2(!this.#onErrorCalled);
-        return this.#handler.onData?.(...args);
-      }
-      onComplete(...args) {
+      onResponseEnd(...args) {
         assert2(!this.#onCompleteCalled);
         assert2(!this.#onErrorCalled);
         this.#onCompleteCalled = true;
-        return this.#handler.onComplete?.(...args);
+        return this.#handler.onResponseEnd?.(...args);
       }
-      onBodySent(...args) {
-        assert2(!this.#onCompleteCalled);
-        assert2(!this.#onErrorCalled);
-        return this.#handler.onBodySent?.(...args);
+      onResponseError(...args) {
+        this.#onErrorCalled = true;
+        return this.#handler.onResponseError?.(...args);
+      }
+      /**
+       * @deprecated
+       */
+      onBodySent() {
       }
     };
   }
@@ -31643,49 +31635,46 @@ var require_redirect = __commonJS({
 var require_response_error = __commonJS({
   "node_modules/async-neocities/node_modules/undici/lib/interceptor/response-error.js"(exports2, module2) {
     "use strict";
-    var { parseHeaders } = require_util8();
     var DecoratorHandler = require_decorator_handler();
     var { ResponseError } = require_errors2();
     var ResponseErrorHandler = class extends DecoratorHandler {
-      #handler;
       #statusCode;
       #contentType;
       #decoder;
       #headers;
       #body;
-      constructor(opts, { handler }) {
+      constructor(_opts, { handler }) {
         super(handler);
-        this.#handler = handler;
       }
-      onConnect(abort) {
+      #checkContentType(contentType) {
+        return this.#contentType.indexOf(contentType) === 0;
+      }
+      onRequestStart(controller, context) {
         this.#statusCode = 0;
         this.#contentType = null;
         this.#decoder = null;
         this.#headers = null;
         this.#body = "";
-        return this.#handler.onConnect(abort);
+        return super.onRequestStart(controller, context);
       }
-      #checkContentType(contentType) {
-        return this.#contentType.indexOf(contentType) === 0;
-      }
-      onHeaders(statusCode, rawHeaders, resume, statusMessage, headers = parseHeaders(rawHeaders)) {
+      onResponseStart(controller, statusCode, headers, statusMessage) {
         this.#statusCode = statusCode;
         this.#headers = headers;
         this.#contentType = headers["content-type"];
         if (this.#statusCode < 400) {
-          return this.#handler.onHeaders(statusCode, rawHeaders, resume, statusMessage, headers);
+          return super.onResponseStart(controller, statusCode, headers, statusMessage);
         }
         if (this.#checkContentType("application/json") || this.#checkContentType("text/plain")) {
           this.#decoder = new TextDecoder("utf-8");
         }
       }
-      onData(chunk2) {
+      onResponseData(controller, chunk2) {
         if (this.#statusCode < 400) {
-          return this.#handler.onData(chunk2);
+          return super.onResponseData(controller, chunk2);
         }
         this.#body += this.#decoder?.decode(chunk2, { stream: true }) ?? "";
       }
-      onComplete(rawTrailers) {
+      onResponseEnd(controller, trailers) {
         if (this.#statusCode >= 400) {
           this.#body += this.#decoder?.decode(void 0, { stream: false }) ?? "";
           if (this.#checkContentType("application/json")) {
@@ -31705,13 +31694,13 @@ var require_response_error = __commonJS({
           } finally {
             Error.stackTraceLimit = stackTraceLimit;
           }
-          this.#handler.onError(err);
+          super.onResponseError(controller, err);
         } else {
-          this.#handler.onComplete(rawTrailers);
+          super.onResponseEnd(controller, trailers);
         }
       }
-      onError(err) {
-        this.#handler.onError(err);
+      onResponseError(err) {
+        super.onResponseError(err);
       }
     };
     module2.exports = () => {
@@ -31752,80 +31741,71 @@ var require_retry = __commonJS({
 var require_dump = __commonJS({
   "node_modules/async-neocities/node_modules/undici/lib/interceptor/dump.js"(exports2, module2) {
     "use strict";
-    var util = require_util8();
     var { InvalidArgumentError, RequestAbortedError } = require_errors2();
     var DecoratorHandler = require_decorator_handler();
     var DumpHandler = class extends DecoratorHandler {
       #maxSize = 1024 * 1024;
-      #abort = null;
       #dumped = false;
-      #aborted = false;
       #size = 0;
-      #reason = null;
-      #handler = null;
-      constructor({ maxSize }, handler) {
+      #controller = null;
+      aborted = false;
+      reason = false;
+      constructor({ maxSize, signal }, handler) {
         if (maxSize != null && (!Number.isFinite(maxSize) || maxSize < 1)) {
           throw new InvalidArgumentError("maxSize must be a number greater than 0");
         }
         super(handler);
         this.#maxSize = maxSize ?? this.#maxSize;
-        this.#handler = handler;
       }
-      onConnect(abort) {
-        this.#abort = abort;
-        this.#handler.onConnect(this.#customAbort.bind(this));
+      #abort(reason) {
+        this.aborted = true;
+        this.reason = reason;
       }
-      #customAbort(reason) {
-        this.#aborted = true;
-        this.#reason = reason;
+      onRequestStart(controller, context) {
+        controller.abort = this.#abort.bind(this);
+        this.#controller = controller;
+        return super.onRequestStart(controller, context);
       }
-      // TODO: will require adjustment after new hooks are out
-      onHeaders(statusCode, rawHeaders, resume, statusMessage) {
-        const headers = util.parseHeaders(rawHeaders);
+      onResponseStart(controller, statusCode, headers, statusMessage) {
         const contentLength = headers["content-length"];
         if (contentLength != null && contentLength > this.#maxSize) {
           throw new RequestAbortedError(
             `Response size (${contentLength}) larger than maxSize (${this.#maxSize})`
           );
         }
-        if (this.#aborted) {
+        if (this.aborted === true) {
           return true;
         }
-        return this.#handler.onHeaders(
-          statusCode,
-          rawHeaders,
-          resume,
-          statusMessage
-        );
+        return super.onResponseStart(controller, statusCode, headers, statusMessage);
       }
-      onError(err) {
+      onResponseError(controller, err) {
         if (this.#dumped) {
           return;
         }
-        err = this.#reason ?? err;
-        this.#handler.onError(err);
+        err = this.#controller.reason ?? err;
+        super.onResponseError(controller, err);
       }
-      onData(chunk2) {
+      onResponseData(controller, chunk2) {
         this.#size = this.#size + chunk2.length;
         if (this.#size >= this.#maxSize) {
           this.#dumped = true;
-          if (this.#aborted) {
-            this.#handler.onError(this.#reason);
+          if (this.aborted === true) {
+            super.onResponseError(controller, this.reason);
           } else {
-            this.#handler.onComplete([]);
+            super.onResponseEnd(controller, {});
           }
         }
         return true;
       }
-      onComplete(trailers) {
+      onResponseEnd(controller, trailers) {
         if (this.#dumped) {
           return;
         }
-        if (this.#aborted) {
-          this.#handler.onError(this.reason);
+        if (this.#controller.aborted === true) {
+          super.onResponseError(controller, this.reason);
           return;
         }
-        this.#handler.onComplete(trailers);
+        super.onResponseEnd(controller, trailers);
       }
     };
     function createDumpInterceptor({ maxSize: defaultMaxSize } = {
@@ -31834,10 +31814,7 @@ var require_dump = __commonJS({
       return (dispatch) => {
         return function Intercept(opts, handler) {
           const { dumpMaxSize = defaultMaxSize } = opts;
-          const dumpHandler = new DumpHandler(
-            { maxSize: dumpMaxSize },
-            handler
-          );
+          const dumpHandler = new DumpHandler({ maxSize: dumpMaxSize, signal: opts.signal }, handler);
           return dispatch(opts, dumpHandler);
         };
       };
@@ -32025,24 +32002,24 @@ var require_dns = __commonJS({
       #state = null;
       #opts = null;
       #dispatch = null;
-      #handler = null;
       #origin = null;
+      #controller = null;
       constructor(state, { origin, handler, dispatch }, opts) {
         super(handler);
         this.#origin = origin;
-        this.#handler = handler;
         this.#opts = { ...opts };
         this.#state = state;
         this.#dispatch = dispatch;
       }
-      onError(err) {
+      onResponseError(controller, err) {
         switch (err.code) {
           case "ETIMEDOUT":
           case "ECONNREFUSED": {
             if (this.#state.dualStack) {
               this.#state.runLookup(this.#origin, this.#opts, (err2, newOrigin) => {
                 if (err2) {
-                  return this.#handler.onError(err2);
+                  super.onResponseError(controller, err2);
+                  return;
                 }
                 const dispatchOpts = {
                   ...this.#opts,
@@ -32052,14 +32029,14 @@ var require_dns = __commonJS({
               });
               return;
             }
-            this.#handler.onError(err);
-            return;
+            super.onResponseError(controller, err);
+            break;
           }
           case "ENOTFOUND":
             this.#state.deleteRecord(this.#origin);
           // eslint-disable-next-line no-fallthrough
           default:
-            this.#handler.onError(err);
+            super.onResponseError(controller, err);
             break;
         }
       }
@@ -39935,9 +39912,6 @@ var require_undici2 = __commonJS({
       const SqliteCacheStore = require_sqlite_cache_store();
       module2.exports.cacheStores.SqliteCacheStore = SqliteCacheStore;
     } catch (err) {
-      if (err.code !== "ERR_UNKNOWN_BUILTIN_MODULE") {
-        throw err;
-      }
     }
     module2.exports.buildConnector = buildConnector;
     module2.exports.errors = errors;
@@ -40043,7 +40017,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "async-neocities",
       description: "A library and bin to deploy to neocities",
-      version: "4.0.4",
+      version: "4.1.0",
       author: "Bret Comnes <bcomnes@gmail.com> (https://bret.io)",
       type: "module",
       bin: {
@@ -50089,7 +50063,8 @@ async function previewDeployToNeocities({
   directory,
   apiKey,
   includeUnsupportedFiles = false,
-  protectedFileFilter
+  protectedFileFilter,
+  uploadSort
 }) {
   const [localListing, neocitiesFiles] = await Promise.all([
     import_async_folder_walker.default.allFiles(directory, {
@@ -50106,6 +50081,9 @@ async function previewDeployToNeocities({
     protectedFileFilter,
     includeUnsupportedFiles
   });
+  if (typeof uploadSort === "function") {
+    diff.filesToUpload.sort(uploadSort);
+  }
   return diff;
 }
 async function deployToNeocities({
@@ -50113,18 +50091,17 @@ async function deployToNeocities({
   apiKey,
   cleanup = false,
   includeUnsupportedFiles = false,
-  protectedFileFilter
+  protectedFileFilter,
+  uploadSort
 }) {
   const diff = await previewDeployToNeocities({
     directory,
     apiKey,
     includeUnsupportedFiles,
-    protectedFileFilter
+    protectedFileFilter,
+    uploadSort
   });
-  const {
-    filesToUpload,
-    filesToDelete
-  } = diff;
+  const { filesToUpload, filesToDelete } = diff;
   if (filesToUpload.length === 0 && (!cleanup || filesToDelete.length === 0)) {
     return {
       errors: [],
@@ -50460,6 +50437,7 @@ var NeocitiesAPIClient = class {
    * @param  {boolean}  [options.cleanup=false]     Set cleanup to true to delete orphaned file.
    * @param  {boolean}  [options.includeUnsupportedFiles=false]     Set to true to bypass file type restrictions.
    * @param  {(path: string) => boolean} [options.protectedFileFilter] A filter function to filter out file you want to ignore.
+   * @param  {Endpoints.Comparator<FileUpload>} [options.uploadSort] A sort function that lets you sort file upload order prior to uploading. FileUpload.name is probably what you want to sort by.
    * @return {ReturnType<typeof Endpoints.deployToNeocities>} The fetched site info
    */
   async deploy(options) {
@@ -50475,6 +50453,7 @@ var NeocitiesAPIClient = class {
    * @param  {string}   options.directory   The path to the directory preview deploy.
    * @param  {boolean}  [options.includeUnsupportedFiles=false]     Set to true to bypass file type restrictions.
    * @param  {(path: string) => boolean} [options.protectedFileFilter] A filter function to filter out file you want to ignore.
+   * @param  {Endpoints.Comparator<FileUpload>} [options.uploadSort] A sort function that lets you sort file upload order prior to uploading. FileUpload.name is probably what you want to sort by.
    * @return {Promise<AsyncNeocitiesDiff>}
    */
   async previewDeploy(options) {

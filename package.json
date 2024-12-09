@@ -1,7 +1,7 @@
 {
   "name": "deploy-to-neocities",
   "description": "Github Action to deplpoy a folder to Neocities.org",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "author": "Bret Comnes <bcomnes@gmail.com> (https://bret.io/)",
   "bugs": {
     "url": "https://github.com/bcomnes/deploy-to-neocities/issues"
