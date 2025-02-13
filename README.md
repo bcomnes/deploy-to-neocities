@@ -66,7 +66,7 @@ You'll need the API token for your site. Go to:
 https://neocities.org/settings/{{your-sitename}}#api_key
 ```
 
-Get your site's API token. In your GitHub repository, set a [secret][sec] called `NEOCITIES_API_TOKEN`.  Set the `api_token` input on your `deploy-to-neocities` action to `${{ secrets.NEOCITIES_API_TOKEN }}` as in the example above.
+Retreive your site's API token from Neocities. In your GitHub repository, set a [secret][sec] called `NEOCITIES_API_TOKEN`.  Set the `api_token` input on your `deploy-to-neocities` action to `${{ secrets.NEOCITIES_API_TOKEN }}` as in the example above. The setting (as of writing) lives in Repository > Settings > Security > Secrets and Variables > Actions > Repository secrets.
 
 During your workflow, generate the files you want to deploy to [Neocities][nc] into a directory. Set this as the `dist_dir` directory in your workflow (the default is `public`).  You can use any tools to generate your site that can be installed or brought into the Github actions environment.
 
