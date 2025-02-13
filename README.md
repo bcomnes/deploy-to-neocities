@@ -32,9 +32,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # The checkout step copies your repo into the action runner. Important!
     - uses: actions/checkout@v4
     # Set up any tools and build steps here
     # This example uses a Node.js toolchain to build a site
+    # If you don't need Node.js to build your site, you can omit this.
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
@@ -45,6 +47,7 @@ jobs:
         npm i
         npm run build
     # When the dist_dir is ready, deploy it to neocities
+    # Here we deploy the folder named `public`
     - name: Deploy to neocities
       uses: bcomnes/deploy-to-neocities@v3
       with:
