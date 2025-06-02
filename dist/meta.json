@@ -580,7 +580,7 @@
       "format": "cjs"
     },
     "node_modules/undici/lib/fetch/body.js": {
-      "bytes": 19320,
+      "bytes": 19464,
       "imports": [
         {
           "path": "node_modules/@fastify/busboy/lib/main.js",
@@ -651,6 +651,11 @@
           "path": "node_modules/undici/lib/fetch/dataURL.js",
           "kind": "require-call",
           "original": "./dataURL"
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
         },
         {
           "path": "stream/web",
@@ -971,7 +976,7 @@
       "format": "cjs"
     },
     "node_modules/undici/lib/pool.js": {
-      "bytes": 2496,
+      "bytes": 3071,
       "imports": [
         {
           "path": "node_modules/undici/lib/pool-base.js",
@@ -1684,7 +1689,7 @@
       "format": "cjs"
     },
     "node_modules/undici/lib/fetch/headers.js": {
-      "bytes": 17082,
+      "bytes": 17165,
       "imports": [
         {
           "path": "node_modules/undici/lib/core/symbols.js",
@@ -1705,6 +1710,11 @@
           "path": "node_modules/undici/lib/fetch/util.js",
           "kind": "require-call",
           "original": "./util"
+        },
+        {
+          "path": "util",
+          "kind": "require-call",
+          "external": true
         },
         {
           "path": "node_modules/undici/lib/fetch/webidl.js",
@@ -2200,19 +2210,8 @@
       "format": "cjs"
     },
     "node_modules/undici/lib/cookies/util.js": {
-      "bytes": 7397,
-      "imports": [
-        {
-          "path": "assert",
-          "kind": "require-call",
-          "external": true
-        },
-        {
-          "path": "node_modules/undici/lib/core/symbols.js",
-          "kind": "require-call",
-          "original": "../core/symbols"
-        }
-      ],
+      "bytes": 6987,
+      "imports": [],
       "format": "cjs"
     },
     "node_modules/undici/lib/cookies/parse.js": {
@@ -2242,7 +2241,7 @@
       "format": "cjs"
     },
     "node_modules/undici/lib/cookies/index.js": {
-      "bytes": 4329,
+      "bytes": 4205,
       "imports": [
         {
           "path": "node_modules/undici/lib/cookies/parse.js",
@@ -2955,6 +2954,11 @@
       "imports": [],
       "format": "cjs"
     },
+    "node_modules/async-neocities/node_modules/undici/lib/util/timers.js": {
+      "bytes": 11737,
+      "imports": [],
+      "format": "cjs"
+    },
     "node_modules/async-neocities/node_modules/undici/lib/core/errors.js": {
       "bytes": 6419,
       "imports": [],
@@ -2977,7 +2981,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/core/util.js": {
-      "bytes": 22646,
+      "bytes": 24941,
       "imports": [
         {
           "path": "node:assert",
@@ -3025,6 +3029,11 @@
           "external": true
         },
         {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/util/timers.js",
+          "kind": "require-call",
+          "original": "../util/timers"
+        },
+        {
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/errors.js",
           "kind": "require-call",
           "original": "./errors"
@@ -3038,6 +3047,17 @@
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/tree.js",
           "kind": "require-call",
           "original": "./tree"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/async-neocities/node_modules/undici/lib/util/stats.js": {
+      "bytes": 600,
+      "imports": [
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/core/symbols.js",
+          "kind": "require-call",
+          "original": "../core/symbols"
         }
       ],
       "format": "cjs"
@@ -3090,7 +3110,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/handler/wrap-handler.js": {
-      "bytes": 2421,
+      "bytes": 2451,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/errors.js",
@@ -3158,13 +3178,8 @@
       ],
       "format": "cjs"
     },
-    "node_modules/async-neocities/node_modules/undici/lib/util/timers.js": {
-      "bytes": 11737,
-      "imports": [],
-      "format": "cjs"
-    },
     "node_modules/async-neocities/node_modules/undici/lib/core/connect.js": {
-      "bytes": 7286,
+      "bytes": 5069,
       "imports": [
         {
           "path": "node:net",
@@ -3185,11 +3200,6 @@
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/errors.js",
           "kind": "require-call",
           "original": "./errors"
-        },
-        {
-          "path": "node_modules/async-neocities/node_modules/undici/lib/util/timers.js",
-          "kind": "require-call",
-          "original": "../util/timers"
         },
         {
           "path": "node:tls",
@@ -3248,7 +3258,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/web/fetch/data-url.js": {
-      "bytes": 21980,
+      "bytes": 21982,
       "imports": [
         {
           "path": "node:assert",
@@ -3418,7 +3428,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/web/fetch/body.js": {
-      "bytes": 17377,
+      "bytes": 17524,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/util.js",
@@ -3469,6 +3479,11 @@
           "path": "node_modules/async-neocities/node_modules/undici/lib/web/fetch/formdata-parser.js",
           "kind": "require-call",
           "original": "./formdata-parser"
+        },
+        {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
         }
       ],
       "format": "cjs"
@@ -3535,7 +3550,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/dispatcher/client-h2.js": {
-      "bytes": 19891,
+      "bytes": 20317,
       "imports": [
         {
           "path": "node:assert",
@@ -3563,6 +3578,11 @@
           "original": "../core/symbols.js"
         },
         {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/core/diagnostics.js",
+          "kind": "require-call",
+          "original": "../core/diagnostics.js"
+        },
+        {
           "path": "node:http2",
           "kind": "require-call",
           "external": true
@@ -3576,7 +3596,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/dispatcher/client.js": {
-      "bytes": 16597,
+      "bytes": 16725,
       "imports": [
         {
           "path": "node:assert",
@@ -3597,6 +3617,11 @@
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/util.js",
           "kind": "require-call",
           "original": "../core/util.js"
+        },
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/util/stats.js",
+          "kind": "require-call",
+          "original": "../util/stats.js"
         },
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/diagnostics.js",
@@ -3646,20 +3671,14 @@
       "imports": [],
       "format": "cjs"
     },
-    "node_modules/async-neocities/node_modules/undici/lib/dispatcher/pool-stats.js": {
-      "bytes": 567,
+    "node_modules/async-neocities/node_modules/undici/lib/dispatcher/pool-base.js": {
+      "bytes": 4494,
       "imports": [
         {
-          "path": "node_modules/async-neocities/node_modules/undici/lib/core/symbols.js",
+          "path": "node_modules/async-neocities/node_modules/undici/lib/util/stats.js",
           "kind": "require-call",
-          "original": "../core/symbols"
-        }
-      ],
-      "format": "cjs"
-    },
-    "node_modules/async-neocities/node_modules/undici/lib/dispatcher/pool-base.js": {
-      "bytes": 4550,
-      "imports": [
+          "original": "../util/stats.js"
+        },
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/dispatcher/dispatcher-base.js",
           "kind": "require-call",
@@ -3674,17 +3693,12 @@
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/symbols.js",
           "kind": "require-call",
           "original": "../core/symbols"
-        },
-        {
-          "path": "node_modules/async-neocities/node_modules/undici/lib/dispatcher/pool-stats.js",
-          "kind": "require-call",
-          "original": "./pool-stats"
         }
       ],
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/dispatcher/pool.js": {
-      "bytes": 2274,
+      "bytes": 3417,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/dispatcher/pool-base.js",
@@ -3751,7 +3765,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/dispatcher/agent.js": {
-      "bytes": 3327,
+      "bytes": 3855,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/errors.js",
@@ -3787,7 +3801,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/dispatcher/proxy-agent.js": {
-      "bytes": 5799,
+      "bytes": 7919,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/symbols.js",
@@ -3823,12 +3837,17 @@
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/connect.js",
           "kind": "require-call",
           "original": "../core/connect"
+        },
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/dispatcher/client.js",
+          "kind": "require-call",
+          "original": "./client"
         }
       ],
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/dispatcher/env-http-proxy-agent.js": {
-      "bytes": 4479,
+      "bytes": 4239,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/dispatcher/dispatcher-base.js",
@@ -3854,7 +3873,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/handler/retry-handler.js": {
-      "bytes": 9547,
+      "bytes": 9558,
       "imports": [
         {
           "path": "node:assert",
@@ -3896,6 +3915,42 @@
           "path": "node_modules/async-neocities/node_modules/undici/lib/handler/retry-handler.js",
           "kind": "require-call",
           "original": "../handler/retry-handler"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/async-neocities/node_modules/undici/lib/dispatcher/h2c-client.js": {
+      "bytes": 3072,
+      "imports": [
+        {
+          "path": "node:net",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/core/symbols.js",
+          "kind": "require-call",
+          "original": "../core/symbols"
+        },
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/core/errors.js",
+          "kind": "require-call",
+          "original": "../core/errors"
+        },
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/core/util.js",
+          "kind": "require-call",
+          "original": "../core/util"
+        },
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/dispatcher/client.js",
+          "kind": "require-call",
+          "original": "./client"
+        },
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/dispatcher/dispatcher-base.js",
+          "kind": "require-call",
+          "original": "./dispatcher-base"
         }
       ],
       "format": "cjs"
@@ -4155,12 +4210,12 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/mock/mock-symbols.js": {
-      "bytes": 876,
+      "bytes": 1366,
       "imports": [],
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/mock/mock-utils.js": {
-      "bytes": 11312,
+      "bytes": 12554,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/mock/mock-errors.js",
@@ -4186,6 +4241,11 @@
           "path": "node:util",
           "kind": "require-call",
           "external": true
+        },
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/core/errors.js",
+          "kind": "require-call",
+          "original": "../core/errors"
         }
       ],
       "format": "cjs"
@@ -4257,6 +4317,22 @@
       ],
       "format": "cjs"
     },
+    "node_modules/async-neocities/node_modules/undici/lib/mock/mock-call-history.js": {
+      "bytes": 7928,
+      "imports": [
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/mock/mock-symbols.js",
+          "kind": "require-call",
+          "original": "./mock-symbols"
+        },
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/core/errors.js",
+          "kind": "require-call",
+          "original": "../core/errors"
+        }
+      ],
+      "format": "cjs"
+    },
     "node_modules/async-neocities/node_modules/undici/lib/mock/mock-pool.js": {
       "bytes": 1672,
       "imports": [
@@ -4315,7 +4391,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/mock/mock-agent.js": {
-      "bytes": 4535,
+      "bytes": 6714,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/symbols.js",
@@ -4361,6 +4437,11 @@
           "path": "node_modules/async-neocities/node_modules/undici/lib/mock/pending-interceptors-formatter.js",
           "kind": "require-call",
           "original": "./pending-interceptors-formatter"
+        },
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/mock/mock-call-history.js",
+          "kind": "require-call",
+          "original": "./mock-call-history"
         }
       ],
       "format": "cjs"
@@ -4440,7 +4521,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/interceptor/response-error.js": {
-      "bytes": 2371,
+      "bytes": 2403,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/handler/decorator-handler.js",
@@ -4483,7 +4564,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/interceptor/dns.js": {
-      "bytes": 9380,
+      "bytes": 10903,
       "imports": [
         {
           "path": "node:net",
@@ -4509,7 +4590,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/util/cache.js": {
-      "bytes": 10946,
+      "bytes": 11135,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/util.js",
@@ -4519,8 +4600,13 @@
       ],
       "format": "cjs"
     },
+    "node_modules/async-neocities/node_modules/undici/lib/util/date.js": {
+      "bytes": 6713,
+      "imports": [],
+      "format": "cjs"
+    },
     "node_modules/async-neocities/node_modules/undici/lib/handler/cache-handler.js": {
-      "bytes": 11089,
+      "bytes": 13041,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/util.js",
@@ -4531,15 +4617,25 @@
           "path": "node_modules/async-neocities/node_modules/undici/lib/util/cache.js",
           "kind": "require-call",
           "original": "../util/cache"
+        },
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/util/date.js",
+          "kind": "require-call",
+          "original": "../util/date.js"
         }
       ],
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/cache/memory-cache-store.js": {
-      "bytes": 5014,
+      "bytes": 6733,
       "imports": [
         {
           "path": "node:stream",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:events",
           "kind": "require-call",
           "external": true
         },
@@ -4552,7 +4648,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/handler/cache-revalidation-handler.js": {
-      "bytes": 3148,
+      "bytes": 3165,
       "imports": [
         {
           "path": "node:assert",
@@ -4563,7 +4659,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/interceptor/cache.js": {
-      "bytes": 10296,
+      "bytes": 10977,
       "imports": [
         {
           "path": "node:assert",
@@ -4609,13 +4705,8 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/cache/sqlite-cache-store.js": {
-      "bytes": 11058,
+      "bytes": 11423,
       "imports": [
-        {
-          "path": "node:sqlite",
-          "kind": "require-call",
-          "external": true
-        },
         {
           "path": "stream",
           "kind": "require-call",
@@ -4625,6 +4716,11 @@
           "path": "node_modules/async-neocities/node_modules/undici/lib/util/cache.js",
           "kind": "require-call",
           "original": "../util/cache.js"
+        },
+        {
+          "path": "node:sqlite",
+          "kind": "require-call",
+          "external": true
         }
       ],
       "format": "cjs"
@@ -4738,7 +4834,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/web/fetch/request.js": {
-      "bytes": 35681,
+      "bytes": 35638,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/web/fetch/body.js",
@@ -4804,7 +4900,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/web/fetch/index.js": {
-      "bytes": 81926,
+      "bytes": 81925,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/web/fetch/response.js",
@@ -5080,6 +5176,27 @@
       "imports": [],
       "format": "cjs"
     },
+    "node_modules/async-neocities/node_modules/undici/lib/web/websocket/util.js": {
+      "bytes": 9442,
+      "imports": [
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/web/websocket/constants.js",
+          "kind": "require-call",
+          "original": "./constants"
+        },
+        {
+          "path": "node:buffer",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/web/fetch/data-url.js",
+          "kind": "require-call",
+          "original": "../fetch/data-url"
+        }
+      ],
+      "format": "cjs"
+    },
     "node_modules/async-neocities/node_modules/undici/lib/web/websocket/frame.js": {
       "bytes": 3389,
       "imports": [
@@ -5097,7 +5214,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/web/websocket/connection.js": {
-      "bytes": 12745,
+      "bytes": 13484,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/web/websocket/constants.js",
@@ -5152,32 +5269,6 @@
       ],
       "format": "cjs"
     },
-    "node_modules/async-neocities/node_modules/undici/lib/web/websocket/util.js": {
-      "bytes": 10382,
-      "imports": [
-        {
-          "path": "node_modules/async-neocities/node_modules/undici/lib/web/websocket/constants.js",
-          "kind": "require-call",
-          "original": "./constants"
-        },
-        {
-          "path": "node:buffer",
-          "kind": "require-call",
-          "external": true
-        },
-        {
-          "path": "node_modules/async-neocities/node_modules/undici/lib/web/fetch/data-url.js",
-          "kind": "require-call",
-          "original": "../fetch/data-url"
-        },
-        {
-          "path": "node_modules/async-neocities/node_modules/undici/lib/web/websocket/connection.js",
-          "kind": "require-call",
-          "original": "./connection"
-        }
-      ],
-      "format": "cjs"
-    },
     "node_modules/async-neocities/node_modules/undici/lib/web/websocket/permessage-deflate.js": {
       "bytes": 1985,
       "imports": [
@@ -5195,7 +5286,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/web/websocket/receiver.js": {
-      "bytes": 13820,
+      "bytes": 14757,
       "imports": [
         {
           "path": "node:stream",
@@ -5221,6 +5312,11 @@
           "path": "node_modules/async-neocities/node_modules/undici/lib/web/websocket/util.js",
           "kind": "require-call",
           "original": "./util"
+        },
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/web/websocket/connection.js",
+          "kind": "require-call",
+          "original": "./connection"
         },
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/web/websocket/frame.js",
@@ -5257,7 +5353,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/lib/web/websocket/websocket.js": {
-      "bytes": 22421,
+      "bytes": 22419,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/web/fetch/webidl.js",
@@ -5502,7 +5598,7 @@
       "format": "cjs"
     },
     "node_modules/async-neocities/node_modules/undici/index.js": {
-      "bytes": 6623,
+      "bytes": 6629,
       "imports": [
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/dispatcher/client.js",
@@ -5545,6 +5641,11 @@
           "original": "./lib/dispatcher/retry-agent"
         },
         {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/dispatcher/h2c-client.js",
+          "kind": "require-call",
+          "original": "./lib/dispatcher/h2c-client"
+        },
+        {
           "path": "node_modules/async-neocities/node_modules/undici/lib/core/errors.js",
           "kind": "require-call",
           "original": "./lib/core/errors"
@@ -5568,6 +5669,11 @@
           "path": "node_modules/async-neocities/node_modules/undici/lib/mock/mock-client.js",
           "kind": "require-call",
           "original": "./lib/mock/mock-client"
+        },
+        {
+          "path": "node_modules/async-neocities/node_modules/undici/lib/mock/mock-call-history.js",
+          "kind": "require-call",
+          "original": "./lib/mock/mock-call-history"
         },
         {
           "path": "node_modules/async-neocities/node_modules/undici/lib/mock/mock-agent.js",
@@ -5942,13 +6048,451 @@
       ],
       "format": "cjs"
     },
+    "node_modules/es-object-atoms/index.js": {
+      "bytes": 67,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/es-errors/index.js": {
+      "bytes": 66,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/es-errors/eval.js": {
+      "bytes": 75,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/es-errors/range.js": {
+      "bytes": 77,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/es-errors/ref.js": {
+      "bytes": 79,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/es-errors/syntax.js": {
+      "bytes": 79,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/es-errors/type.js": {
+      "bytes": 75,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/es-errors/uri.js": {
+      "bytes": 73,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/math-intrinsics/abs.js": {
+      "bytes": 73,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/math-intrinsics/floor.js": {
+      "bytes": 77,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/math-intrinsics/max.js": {
+      "bytes": 73,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/math-intrinsics/min.js": {
+      "bytes": 73,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/math-intrinsics/pow.js": {
+      "bytes": 73,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/math-intrinsics/round.js": {
+      "bytes": 77,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/math-intrinsics/isNaN.js": {
+      "bytes": 121,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/math-intrinsics/sign.js": {
+      "bytes": 214,
+      "imports": [
+        {
+          "path": "node_modules/math-intrinsics/isNaN.js",
+          "kind": "require-call",
+          "original": "./isNaN"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/gopd/gOPD.js": {
+      "bytes": 97,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/gopd/index.js": {
+      "bytes": 206,
+      "imports": [
+        {
+          "path": "node_modules/gopd/gOPD.js",
+          "kind": "require-call",
+          "original": "./gOPD"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/es-define-property/index.js": {
+      "bytes": 288,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/has-symbols/shams.js": {
+      "bytes": 1922,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/has-symbols/index.js": {
+      "bytes": 447,
+      "imports": [
+        {
+          "path": "node_modules/has-symbols/shams.js",
+          "kind": "require-call",
+          "original": "./shams"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/get-proto/Reflect.getPrototypeOf.js": {
+      "bytes": 150,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/get-proto/Object.getPrototypeOf.js": {
+      "bytes": 156,
+      "imports": [
+        {
+          "path": "node_modules/es-object-atoms/index.js",
+          "kind": "require-call",
+          "original": "es-object-atoms"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/function-bind/implementation.js": {
+      "bytes": 2043,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/function-bind/index.js": {
+      "bytes": 126,
+      "imports": [
+        {
+          "path": "node_modules/function-bind/implementation.js",
+          "kind": "require-call",
+          "original": "./implementation"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/call-bind-apply-helpers/functionCall.js": {
+      "bytes": 97,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/call-bind-apply-helpers/functionApply.js": {
+      "bytes": 99,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/call-bind-apply-helpers/reflectApply.js": {
+      "bytes": 132,
+      "imports": [],
+      "format": "cjs"
+    },
+    "node_modules/call-bind-apply-helpers/actualApply.js": {
+      "bytes": 280,
+      "imports": [
+        {
+          "path": "node_modules/function-bind/index.js",
+          "kind": "require-call",
+          "original": "function-bind"
+        },
+        {
+          "path": "node_modules/call-bind-apply-helpers/functionApply.js",
+          "kind": "require-call",
+          "original": "./functionApply"
+        },
+        {
+          "path": "node_modules/call-bind-apply-helpers/functionCall.js",
+          "kind": "require-call",
+          "original": "./functionCall"
+        },
+        {
+          "path": "node_modules/call-bind-apply-helpers/reflectApply.js",
+          "kind": "require-call",
+          "original": "./reflectApply"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/call-bind-apply-helpers/index.js": {
+      "bytes": 511,
+      "imports": [
+        {
+          "path": "node_modules/function-bind/index.js",
+          "kind": "require-call",
+          "original": "function-bind"
+        },
+        {
+          "path": "node_modules/es-errors/type.js",
+          "kind": "require-call",
+          "original": "es-errors/type"
+        },
+        {
+          "path": "node_modules/call-bind-apply-helpers/functionCall.js",
+          "kind": "require-call",
+          "original": "./functionCall"
+        },
+        {
+          "path": "node_modules/call-bind-apply-helpers/actualApply.js",
+          "kind": "require-call",
+          "original": "./actualApply"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/dunder-proto/get.js": {
+      "bytes": 980,
+      "imports": [
+        {
+          "path": "node_modules/call-bind-apply-helpers/index.js",
+          "kind": "require-call",
+          "original": "call-bind-apply-helpers"
+        },
+        {
+          "path": "node_modules/gopd/index.js",
+          "kind": "require-call",
+          "original": "gopd"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/get-proto/index.js": {
+      "bytes": 821,
+      "imports": [
+        {
+          "path": "node_modules/get-proto/Reflect.getPrototypeOf.js",
+          "kind": "require-call",
+          "original": "./Reflect.getPrototypeOf"
+        },
+        {
+          "path": "node_modules/get-proto/Object.getPrototypeOf.js",
+          "kind": "require-call",
+          "original": "./Object.getPrototypeOf"
+        },
+        {
+          "path": "node_modules/dunder-proto/get.js",
+          "kind": "require-call",
+          "original": "dunder-proto/get"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/hasown/index.js": {
+      "bytes": 206,
+      "imports": [
+        {
+          "path": "node_modules/function-bind/index.js",
+          "kind": "require-call",
+          "original": "function-bind"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/get-intrinsic/index.js": {
+      "bytes": 14439,
+      "imports": [
+        {
+          "path": "node_modules/es-object-atoms/index.js",
+          "kind": "require-call",
+          "original": "es-object-atoms"
+        },
+        {
+          "path": "node_modules/es-errors/index.js",
+          "kind": "require-call",
+          "original": "es-errors"
+        },
+        {
+          "path": "node_modules/es-errors/eval.js",
+          "kind": "require-call",
+          "original": "es-errors/eval"
+        },
+        {
+          "path": "node_modules/es-errors/range.js",
+          "kind": "require-call",
+          "original": "es-errors/range"
+        },
+        {
+          "path": "node_modules/es-errors/ref.js",
+          "kind": "require-call",
+          "original": "es-errors/ref"
+        },
+        {
+          "path": "node_modules/es-errors/syntax.js",
+          "kind": "require-call",
+          "original": "es-errors/syntax"
+        },
+        {
+          "path": "node_modules/es-errors/type.js",
+          "kind": "require-call",
+          "original": "es-errors/type"
+        },
+        {
+          "path": "node_modules/es-errors/uri.js",
+          "kind": "require-call",
+          "original": "es-errors/uri"
+        },
+        {
+          "path": "node_modules/math-intrinsics/abs.js",
+          "kind": "require-call",
+          "original": "math-intrinsics/abs"
+        },
+        {
+          "path": "node_modules/math-intrinsics/floor.js",
+          "kind": "require-call",
+          "original": "math-intrinsics/floor"
+        },
+        {
+          "path": "node_modules/math-intrinsics/max.js",
+          "kind": "require-call",
+          "original": "math-intrinsics/max"
+        },
+        {
+          "path": "node_modules/math-intrinsics/min.js",
+          "kind": "require-call",
+          "original": "math-intrinsics/min"
+        },
+        {
+          "path": "node_modules/math-intrinsics/pow.js",
+          "kind": "require-call",
+          "original": "math-intrinsics/pow"
+        },
+        {
+          "path": "node_modules/math-intrinsics/round.js",
+          "kind": "require-call",
+          "original": "math-intrinsics/round"
+        },
+        {
+          "path": "node_modules/math-intrinsics/sign.js",
+          "kind": "require-call",
+          "original": "math-intrinsics/sign"
+        },
+        {
+          "path": "node_modules/gopd/index.js",
+          "kind": "require-call",
+          "original": "gopd"
+        },
+        {
+          "path": "node_modules/es-define-property/index.js",
+          "kind": "require-call",
+          "original": "es-define-property"
+        },
+        {
+          "path": "node_modules/has-symbols/index.js",
+          "kind": "require-call",
+          "original": "has-symbols"
+        },
+        {
+          "path": "node_modules/get-proto/index.js",
+          "kind": "require-call",
+          "original": "get-proto"
+        },
+        {
+          "path": "node_modules/get-proto/Object.getPrototypeOf.js",
+          "kind": "require-call",
+          "original": "get-proto/Object.getPrototypeOf"
+        },
+        {
+          "path": "node_modules/get-proto/Reflect.getPrototypeOf.js",
+          "kind": "require-call",
+          "original": "get-proto/Reflect.getPrototypeOf"
+        },
+        {
+          "path": "node_modules/call-bind-apply-helpers/functionApply.js",
+          "kind": "require-call",
+          "original": "call-bind-apply-helpers/functionApply"
+        },
+        {
+          "path": "node_modules/call-bind-apply-helpers/functionCall.js",
+          "kind": "require-call",
+          "original": "call-bind-apply-helpers/functionCall"
+        },
+        {
+          "path": "node_modules/function-bind/index.js",
+          "kind": "require-call",
+          "original": "function-bind"
+        },
+        {
+          "path": "node_modules/hasown/index.js",
+          "kind": "require-call",
+          "original": "hasown"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/has-tostringtag/shams.js": {
+      "bytes": 189,
+      "imports": [
+        {
+          "path": "node_modules/has-symbols/shams.js",
+          "kind": "require-call",
+          "original": "has-symbols/shams"
+        }
+      ],
+      "format": "cjs"
+    },
+    "node_modules/es-set-tostringtag/index.js": {
+      "bytes": 1213,
+      "imports": [
+        {
+          "path": "node_modules/get-intrinsic/index.js",
+          "kind": "require-call",
+          "original": "get-intrinsic"
+        },
+        {
+          "path": "node_modules/has-tostringtag/shams.js",
+          "kind": "require-call",
+          "original": "has-tostringtag/shams"
+        },
+        {
+          "path": "node_modules/hasown/index.js",
+          "kind": "require-call",
+          "original": "hasown"
+        },
+        {
+          "path": "node_modules/es-errors/type.js",
+          "kind": "require-call",
+          "original": "es-errors/type"
+        }
+      ],
+      "format": "cjs"
+    },
     "node_modules/form-data/lib/populate.js": {
       "bytes": 177,
       "imports": [],
       "format": "cjs"
     },
     "node_modules/form-data/lib/form_data.js": {
-      "bytes": 13716,
+      "bytes": 14010,
       "imports": [
         {
           "path": "node_modules/combined-stream/lib/combined_stream.js",
@@ -6001,6 +6545,11 @@
           "original": "asynckit"
         },
         {
+          "path": "node_modules/es-set-tostringtag/index.js",
+          "kind": "require-call",
+          "original": "es-set-tostringtag"
+        },
+        {
           "path": "node_modules/form-data/lib/populate.js",
           "kind": "require-call",
           "original": "./populate.js"
@@ -6040,7 +6589,7 @@
       "format": "esm"
     },
     "node_modules/async-neocities/lib/folder-diff.js": {
-      "bytes": 6316,
+      "bytes": 6337,
       "imports": [
         {
           "path": "node:crypto",
@@ -6308,7 +6857,7 @@
       "imports": [],
       "exports": [],
       "inputs": {},
-      "bytes": 3264946
+      "bytes": 3366608
     },
     "dist/index.cjs": {
       "imports": [
@@ -6543,6 +7092,11 @@
           "external": true
         },
         {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
           "path": "stream/web",
           "kind": "require-call",
           "external": true
@@ -6728,6 +7282,11 @@
           "external": true
         },
         {
+          "path": "util",
+          "kind": "require-call",
+          "external": true
+        },
+        {
           "path": "assert",
           "kind": "require-call",
           "external": true
@@ -6814,11 +7373,6 @@
         },
         {
           "path": "buffer",
-          "kind": "require-call",
-          "external": true
-        },
-        {
-          "path": "assert",
           "kind": "require-call",
           "external": true
         },
@@ -7153,6 +7707,11 @@
           "external": true
         },
         {
+          "path": "node:crypto",
+          "kind": "require-call",
+          "external": true
+        },
+        {
           "path": "node:assert",
           "kind": "require-call",
           "external": true
@@ -7194,6 +7753,11 @@
         },
         {
           "path": "node:assert",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "node:net",
           "kind": "require-call",
           "external": true
         },
@@ -7328,6 +7892,11 @@
           "external": true
         },
         {
+          "path": "node:events",
+          "kind": "require-call",
+          "external": true
+        },
+        {
           "path": "node:assert",
           "kind": "require-call",
           "external": true
@@ -7343,12 +7912,12 @@
           "external": true
         },
         {
-          "path": "node:sqlite",
+          "path": "stream",
           "kind": "require-call",
           "external": true
         },
         {
-          "path": "stream",
+          "path": "node:sqlite",
           "kind": "require-call",
           "external": true
         },
@@ -7443,6 +8012,11 @@
           "external": true
         },
         {
+          "path": "node:buffer",
+          "kind": "require-call",
+          "external": true
+        },
+        {
           "path": "node:crypto",
           "kind": "require-call",
           "external": true
@@ -7454,11 +8028,6 @@
         },
         {
           "path": "node:crypto",
-          "kind": "require-call",
-          "external": true
-        },
-        {
-          "path": "node:buffer",
           "kind": "require-call",
           "external": true
         },
@@ -7700,7 +8269,7 @@
           "bytesInOutput": 6097
         },
         "node_modules/undici/lib/fetch/body.js": {
-          "bytesInOutput": 13430
+          "bytesInOutput": 13607
         },
         "node_modules/undici/lib/core/request.js": {
           "bytesInOutput": 14692
@@ -7745,7 +8314,7 @@
           "bytesInOutput": 5180
         },
         "node_modules/undici/lib/pool.js": {
-          "bytesInOutput": 2832
+          "bytesInOutput": 3109
         },
         "node_modules/undici/lib/balanced-pool.js": {
           "bytesInOutput": 5409
@@ -7823,7 +8392,7 @@
           "bytesInOutput": 845
         },
         "node_modules/undici/lib/fetch/headers.js": {
-          "bytesInOutput": 13195
+          "bytesInOutput": 13293
         },
         "node_modules/undici/lib/fetch/response.js": {
           "bytesInOutput": 13521
@@ -7865,13 +8434,13 @@
           "bytesInOutput": 296
         },
         "node_modules/undici/lib/cookies/util.js": {
-          "bytesInOutput": 4936
+          "bytesInOutput": 4424
         },
         "node_modules/undici/lib/cookies/parse.js": {
           "bytesInOutput": 5063
         },
         "node_modules/undici/lib/cookies/index.js": {
-          "bytesInOutput": 3940
+          "bytesInOutput": 3883
         },
         "node_modules/undici/lib/websocket/constants.js": {
           "bytesInOutput": 903
@@ -7942,6 +8511,9 @@
         "node_modules/async-neocities/node_modules/undici/lib/core/symbols.js": {
           "bytesInOutput": 2919
         },
+        "node_modules/async-neocities/node_modules/undici/lib/util/timers.js": {
+          "bytesInOutput": 7015
+        },
         "node_modules/async-neocities/node_modules/undici/lib/core/errors.js": {
           "bytesInOutput": 7648
         },
@@ -7952,7 +8524,10 @@
           "bytesInOutput": 3847
         },
         "node_modules/async-neocities/node_modules/undici/lib/core/util.js": {
-          "bytesInOutput": 18241
+          "bytesInOutput": 19916
+        },
+        "node_modules/async-neocities/node_modules/undici/lib/util/stats.js": {
+          "bytesInOutput": 857
         },
         "node_modules/async-neocities/node_modules/undici/lib/core/diagnostics.js": {
           "bytesInOutput": 6143
@@ -7961,7 +8536,7 @@
           "bytesInOutput": 11840
         },
         "node_modules/async-neocities/node_modules/undici/lib/handler/wrap-handler.js": {
-          "bytesInOutput": 2675
+          "bytesInOutput": 2837
         },
         "node_modules/async-neocities/node_modules/undici/lib/dispatcher/dispatcher.js": {
           "bytesInOutput": 1489
@@ -7972,11 +8547,8 @@
         "node_modules/async-neocities/node_modules/undici/lib/dispatcher/dispatcher-base.js": {
           "bytesInOutput": 4247
         },
-        "node_modules/async-neocities/node_modules/undici/lib/util/timers.js": {
-          "bytesInOutput": 7015
-        },
         "node_modules/async-neocities/node_modules/undici/lib/core/connect.js": {
-          "bytesInOutput": 6677
+          "bytesInOutput": 5095
         },
         "node_modules/async-neocities/node_modules/undici/lib/llhttp/utils.js": {
           "bytesInOutput": 889
@@ -7997,7 +8569,7 @@
           "bytesInOutput": 1060
         },
         "node_modules/async-neocities/node_modules/undici/lib/web/fetch/data-url.js": {
-          "bytesInOutput": 11939
+          "bytesInOutput": 11941
         },
         "node_modules/async-neocities/node_modules/undici/lib/web/fetch/webidl.js": {
           "bytesInOutput": 15900
@@ -8012,46 +8584,46 @@
           "bytesInOutput": 10454
         },
         "node_modules/async-neocities/node_modules/undici/lib/web/fetch/body.js": {
-          "bytesInOutput": 10827
+          "bytesInOutput": 11007
         },
         "node_modules/async-neocities/node_modules/undici/lib/dispatcher/client-h1.js": {
           "bytesInOutput": 39255
         },
         "node_modules/async-neocities/node_modules/undici/lib/dispatcher/client-h2.js": {
-          "bytesInOutput": 18781
+          "bytesInOutput": 19251
         },
         "node_modules/async-neocities/node_modules/undici/lib/dispatcher/client.js": {
-          "bytesInOutput": 17400
+          "bytesInOutput": 17530
         },
         "node_modules/async-neocities/node_modules/undici/lib/dispatcher/fixed-queue.js": {
           "bytesInOutput": 1877
         },
-        "node_modules/async-neocities/node_modules/undici/lib/dispatcher/pool-stats.js": {
-          "bytesInOutput": 816
-        },
         "node_modules/async-neocities/node_modules/undici/lib/dispatcher/pool-base.js": {
-          "bytesInOutput": 5220
+          "bytesInOutput": 5147
         },
         "node_modules/async-neocities/node_modules/undici/lib/dispatcher/pool.js": {
-          "bytesInOutput": 2661
+          "bytesInOutput": 3482
         },
         "node_modules/async-neocities/node_modules/undici/lib/dispatcher/balanced-pool.js": {
           "bytesInOutput": 5430
         },
         "node_modules/async-neocities/node_modules/undici/lib/dispatcher/agent.js": {
-          "bytesInOutput": 3540
+          "bytesInOutput": 4313
         },
         "node_modules/async-neocities/node_modules/undici/lib/dispatcher/proxy-agent.js": {
-          "bytesInOutput": 5881
+          "bytesInOutput": 8322
         },
         "node_modules/async-neocities/node_modules/undici/lib/dispatcher/env-http-proxy-agent.js": {
-          "bytesInOutput": 4773
+          "bytesInOutput": 4504
         },
         "node_modules/async-neocities/node_modules/undici/lib/handler/retry-handler.js": {
-          "bytesInOutput": 9363
+          "bytesInOutput": 9374
         },
         "node_modules/async-neocities/node_modules/undici/lib/dispatcher/retry-agent.js": {
           "bytesInOutput": 944
+        },
+        "node_modules/async-neocities/node_modules/undici/lib/dispatcher/h2c-client.js": {
+          "bytesInOutput": 3353
         },
         "node_modules/async-neocities/node_modules/undici/lib/api/readable.js": {
           "bytesInOutput": 12583
@@ -8081,16 +8653,19 @@
           "bytesInOutput": 583
         },
         "node_modules/async-neocities/node_modules/undici/lib/mock/mock-symbols.js": {
-          "bytesInOutput": 1122
+          "bytesInOutput": 1636
         },
         "node_modules/async-neocities/node_modules/undici/lib/mock/mock-utils.js": {
-          "bytesInOutput": 11503
+          "bytesInOutput": 12878
         },
         "node_modules/async-neocities/node_modules/undici/lib/mock/mock-interceptor.js": {
           "bytesInOutput": 6551
         },
         "node_modules/async-neocities/node_modules/undici/lib/mock/mock-client.js": {
           "bytesInOutput": 1915
+        },
+        "node_modules/async-neocities/node_modules/undici/lib/mock/mock-call-history.js": {
+          "bytesInOutput": 8352
         },
         "node_modules/async-neocities/node_modules/undici/lib/mock/mock-pool.js": {
           "bytesInOutput": 1901
@@ -8099,7 +8674,7 @@
           "bytesInOutput": 1463
         },
         "node_modules/async-neocities/node_modules/undici/lib/mock/mock-agent.js": {
-          "bytesInOutput": 4740
+          "bytesInOutput": 6945
         },
         "node_modules/async-neocities/node_modules/undici/lib/global.js": {
           "bytesInOutput": 931
@@ -8114,7 +8689,7 @@
           "bytesInOutput": 891
         },
         "node_modules/async-neocities/node_modules/undici/lib/interceptor/response-error.js": {
-          "bytesInOutput": 2750
+          "bytesInOutput": 2782
         },
         "node_modules/async-neocities/node_modules/undici/lib/interceptor/retry.js": {
           "bytesInOutput": 626
@@ -8123,25 +8698,28 @@
           "bytesInOutput": 2934
         },
         "node_modules/async-neocities/node_modules/undici/lib/interceptor/dns.js": {
-          "bytesInOutput": 9967
+          "bytesInOutput": 11493
         },
         "node_modules/async-neocities/node_modules/undici/lib/util/cache.js": {
-          "bytesInOutput": 8751
+          "bytesInOutput": 8905
+        },
+        "node_modules/async-neocities/node_modules/undici/lib/util/date.js": {
+          "bytesInOutput": 6341
         },
         "node_modules/async-neocities/node_modules/undici/lib/handler/cache-handler.js": {
-          "bytesInOutput": 9665
+          "bytesInOutput": 11094
         },
         "node_modules/async-neocities/node_modules/undici/lib/cache/memory-cache-store.js": {
-          "bytesInOutput": 5106
+          "bytesInOutput": 6771
         },
         "node_modules/async-neocities/node_modules/undici/lib/handler/cache-revalidation-handler.js": {
           "bytesInOutput": 2828
         },
         "node_modules/async-neocities/node_modules/undici/lib/interceptor/cache.js": {
-          "bytesInOutput": 8319
+          "bytesInOutput": 8706
         },
         "node_modules/async-neocities/node_modules/undici/lib/cache/sqlite-cache-store.js": {
-          "bytesInOutput": 11349
+          "bytesInOutput": 11698
         },
         "node_modules/async-neocities/node_modules/undici/lib/web/fetch/headers.js": {
           "bytesInOutput": 15488
@@ -8153,10 +8731,10 @@
           "bytesInOutput": 1238
         },
         "node_modules/async-neocities/node_modules/undici/lib/web/fetch/request.js": {
-          "bytesInOutput": 28249
+          "bytesInOutput": 28416
         },
         "node_modules/async-neocities/node_modules/undici/lib/web/fetch/index.js": {
-          "bytesInOutput": 41743
+          "bytesInOutput": 41801
         },
         "node_modules/async-neocities/node_modules/undici/lib/web/cache/util.js": {
           "bytesInOutput": 875
@@ -8185,26 +8763,26 @@
         "node_modules/async-neocities/node_modules/undici/lib/web/websocket/constants.js": {
           "bytesInOutput": 1148
         },
+        "node_modules/async-neocities/node_modules/undici/lib/web/websocket/util.js": {
+          "bytesInOutput": 5598
+        },
         "node_modules/async-neocities/node_modules/undici/lib/web/websocket/frame.js": {
           "bytesInOutput": 3512
         },
         "node_modules/async-neocities/node_modules/undici/lib/web/websocket/connection.js": {
-          "bytesInOutput": 6469
-        },
-        "node_modules/async-neocities/node_modules/undici/lib/web/websocket/util.js": {
-          "bytesInOutput": 6090
+          "bytesInOutput": 6823
         },
         "node_modules/async-neocities/node_modules/undici/lib/web/websocket/permessage-deflate.js": {
           "bytesInOutput": 2067
         },
         "node_modules/async-neocities/node_modules/undici/lib/web/websocket/receiver.js": {
-          "bytesInOutput": 11628
+          "bytesInOutput": 12378
         },
         "node_modules/async-neocities/node_modules/undici/lib/web/websocket/sender.js": {
           "bytesInOutput": 2608
         },
         "node_modules/async-neocities/node_modules/undici/lib/web/websocket/websocket.js": {
-          "bytesInOutput": 15411
+          "bytesInOutput": 15405
         },
         "node_modules/async-neocities/node_modules/undici/lib/web/websocket/stream/websocketerror.js": {
           "bytesInOutput": 2148
@@ -8222,7 +8800,7 @@
           "bytesInOutput": 9996
         },
         "node_modules/async-neocities/node_modules/undici/index.js": {
-          "bytesInOutput": 6311
+          "bytesInOutput": 6549
         },
         "node_modules/async-neocities/package.json": {
           "bytesInOutput": 2326
@@ -8275,11 +8853,119 @@
         "node_modules/asynckit/index.js": {
           "bytesInOutput": 244
         },
+        "node_modules/es-object-atoms/index.js": {
+          "bytesInOutput": 162
+        },
+        "node_modules/es-errors/index.js": {
+          "bytesInOutput": 149
+        },
+        "node_modules/es-errors/eval.js": {
+          "bytesInOutput": 147
+        },
+        "node_modules/es-errors/range.js": {
+          "bytesInOutput": 150
+        },
+        "node_modules/es-errors/ref.js": {
+          "bytesInOutput": 150
+        },
+        "node_modules/es-errors/syntax.js": {
+          "bytesInOutput": 153
+        },
+        "node_modules/es-errors/type.js": {
+          "bytesInOutput": 147
+        },
+        "node_modules/es-errors/uri.js": {
+          "bytesInOutput": 144
+        },
+        "node_modules/math-intrinsics/abs.js": {
+          "bytesInOutput": 150
+        },
+        "node_modules/math-intrinsics/floor.js": {
+          "bytesInOutput": 156
+        },
+        "node_modules/math-intrinsics/max.js": {
+          "bytesInOutput": 150
+        },
+        "node_modules/math-intrinsics/min.js": {
+          "bytesInOutput": 150
+        },
+        "node_modules/math-intrinsics/pow.js": {
+          "bytesInOutput": 150
+        },
+        "node_modules/math-intrinsics/round.js": {
+          "bytesInOutput": 156
+        },
+        "node_modules/math-intrinsics/isNaN.js": {
+          "bytesInOutput": 210
+        },
+        "node_modules/math-intrinsics/sign.js": {
+          "bytesInOutput": 316
+        },
+        "node_modules/gopd/gOPD.js": {
+          "bytesInOutput": 164
+        },
+        "node_modules/gopd/index.js": {
+          "bytesInOutput": 285
+        },
+        "node_modules/es-define-property/index.js": {
+          "bytesInOutput": 389
+        },
+        "node_modules/has-symbols/shams.js": {
+          "bytesInOutput": 1654
+        },
+        "node_modules/has-symbols/index.js": {
+          "bytesInOutput": 622
+        },
+        "node_modules/get-proto/Reflect.getPrototypeOf.js": {
+          "bytesInOutput": 238
+        },
+        "node_modules/get-proto/Object.getPrototypeOf.js": {
+          "bytesInOutput": 247
+        },
+        "node_modules/function-bind/implementation.js": {
+          "bytesInOutput": 2210
+        },
+        "node_modules/function-bind/index.js": {
+          "bytesInOutput": 244
+        },
+        "node_modules/call-bind-apply-helpers/functionCall.js": {
+          "bytesInOutput": 191
+        },
+        "node_modules/call-bind-apply-helpers/functionApply.js": {
+          "bytesInOutput": 194
+        },
+        "node_modules/call-bind-apply-helpers/reflectApply.js": {
+          "bytesInOutput": 226
+        },
+        "node_modules/call-bind-apply-helpers/actualApply.js": {
+          "bytesInOutput": 377
+        },
+        "node_modules/call-bind-apply-helpers/index.js": {
+          "bytesInOutput": 543
+        },
+        "node_modules/dunder-proto/get.js": {
+          "bytesInOutput": 1017
+        },
+        "node_modules/get-proto/index.js": {
+          "bytesInOutput": 686
+        },
+        "node_modules/hasown/index.js": {
+          "bytesInOutput": 293
+        },
+        "node_modules/get-intrinsic/index.js": {
+          "bytesInOutput": 15036
+        },
+        "node_modules/has-tostringtag/shams.js": {
+          "bytesInOutput": 274
+        },
+        "node_modules/es-set-tostringtag/index.js": {
+          "bytesInOutput": 1357
+        },
         "node_modules/form-data/lib/populate.js": {
           "bytesInOutput": 278
         },
         "node_modules/form-data/lib/form_data.js": {
-          "bytesInOutput": 11281
+          "bytesInOutput": 11584
         },
         "node_modules/balanced-match/index.js": {
           "bytesInOutput": 1529
@@ -8303,7 +8989,7 @@
           "bytesInOutput": 376
         },
         "node_modules/async-neocities/lib/folder-diff.js": {
-          "bytesInOutput": 4150
+          "bytesInOutput": 4172
         },
         "node_modules/async-neocities/lib/key-by.js": {
           "bytesInOutput": 749
@@ -8342,7 +9028,7 @@
           "bytesInOutput": 165
         }
       },
-      "bytes": 1998876
+      "bytes": 2063169
     }
   }
 }
