@@ -6487,12 +6487,12 @@
       "format": "cjs"
     },
     "node_modules/form-data/lib/populate.js": {
-      "bytes": 177,
+      "bytes": 232,
       "imports": [],
       "format": "cjs"
     },
     "node_modules/form-data/lib/form_data.js": {
-      "bytes": 14010,
+      "bytes": 14659,
       "imports": [
         {
           "path": "node_modules/combined-stream/lib/combined_stream.js",
@@ -6550,6 +6550,11 @@
           "original": "es-set-tostringtag"
         },
         {
+          "path": "node_modules/hasown/index.js",
+          "kind": "require-call",
+          "original": "hasown"
+        },
+        {
           "path": "node_modules/form-data/lib/populate.js",
           "kind": "require-call",
           "original": "./populate.js"
@@ -6589,7 +6594,7 @@
       "format": "esm"
     },
     "node_modules/async-neocities/lib/folder-diff.js": {
-      "bytes": 6337,
+      "bytes": 6399,
       "imports": [
         {
           "path": "node:crypto",
@@ -6717,21 +6722,21 @@
       ],
       "format": "esm"
     },
-    "node_modules/balanced-match/index.js": {
-      "bytes": 1219,
+    "node_modules/@isaacs/balanced-match/dist/esm/index.js": {
+      "bytes": 1608,
       "imports": [],
-      "format": "cjs"
+      "format": "esm"
     },
-    "node_modules/brace-expansion/index.js": {
-      "bytes": 4992,
+    "node_modules/@isaacs/brace-expansion/dist/esm/index.js": {
+      "bytes": 6496,
       "imports": [
         {
-          "path": "node_modules/balanced-match/index.js",
-          "kind": "require-call",
-          "original": "balanced-match"
+          "path": "node_modules/@isaacs/balanced-match/dist/esm/index.js",
+          "kind": "import-statement",
+          "original": "@isaacs/balanced-match"
         }
       ],
-      "format": "cjs"
+      "format": "esm"
     },
     "node_modules/minimatch/dist/esm/assert-valid-pattern.js": {
       "bytes": 336,
@@ -6770,12 +6775,12 @@
       "format": "esm"
     },
     "node_modules/minimatch/dist/esm/index.js": {
-      "bytes": 39098,
+      "bytes": 39110,
       "imports": [
         {
-          "path": "node_modules/brace-expansion/index.js",
+          "path": "node_modules/@isaacs/brace-expansion/dist/esm/index.js",
           "kind": "import-statement",
-          "original": "brace-expansion"
+          "original": "@isaacs/brace-expansion"
         },
         {
           "path": "node_modules/minimatch/dist/esm/assert-valid-pattern.js",
@@ -6857,7 +6862,7 @@
       "imports": [],
       "exports": [],
       "inputs": {},
-      "bytes": 3366608
+      "bytes": 3368571
     },
     "dist/index.cjs": {
       "imports": [
@@ -8203,7 +8208,7 @@
           "bytesInOutput": 2955
         },
         "node_modules/undici/lib/core/util.js": {
-          "bytesInOutput": 14345
+          "bytesInOutput": 14350
         },
         "node_modules/undici/lib/timers.js": {
           "bytesInOutput": 2128
@@ -8383,7 +8388,7 @@
           "bytesInOutput": 5686
         },
         "node_modules/undici/lib/handler/RetryHandler.js": {
-          "bytesInOutput": 8801
+          "bytesInOutput": 8804
         },
         "node_modules/undici/lib/global.js": {
           "bytesInOutput": 900
@@ -8503,7 +8508,7 @@
           "bytesInOutput": 9363
         },
         "node_modules/ignore/index.js": {
-          "bytesInOutput": 13558
+          "bytesInOutput": 13563
         },
         "node_modules/async-folder-walker/index.js": {
           "bytesInOutput": 2800
@@ -8524,7 +8529,7 @@
           "bytesInOutput": 3847
         },
         "node_modules/async-neocities/node_modules/undici/lib/core/util.js": {
-          "bytesInOutput": 19916
+          "bytesInOutput": 19921
         },
         "node_modules/async-neocities/node_modules/undici/lib/util/stats.js": {
           "bytesInOutput": 857
@@ -8617,7 +8622,7 @@
           "bytesInOutput": 4504
         },
         "node_modules/async-neocities/node_modules/undici/lib/handler/retry-handler.js": {
-          "bytesInOutput": 9374
+          "bytesInOutput": 9377
         },
         "node_modules/async-neocities/node_modules/undici/lib/dispatcher/retry-agent.js": {
           "bytesInOutput": 944
@@ -8962,16 +8967,10 @@
           "bytesInOutput": 1357
         },
         "node_modules/form-data/lib/populate.js": {
-          "bytesInOutput": 278
+          "bytesInOutput": 296
         },
         "node_modules/form-data/lib/form_data.js": {
-          "bytesInOutput": 11584
-        },
-        "node_modules/balanced-match/index.js": {
-          "bytesInOutput": 1529
-        },
-        "node_modules/brace-expansion/index.js": {
-          "bytesInOutput": 4770
+          "bytesInOutput": 11561
         },
         "index.js": {
           "bytesInOutput": 2882
@@ -8989,7 +8988,7 @@
           "bytesInOutput": 376
         },
         "node_modules/async-neocities/lib/folder-diff.js": {
-          "bytesInOutput": 4172
+          "bytesInOutput": 4243
         },
         "node_modules/async-neocities/lib/key-by.js": {
           "bytesInOutput": 749
@@ -9009,8 +9008,11 @@
         "node_modules/async-neocities/lib/timer.js": {
           "bytesInOutput": 731
         },
-        "node_modules/minimatch/dist/esm/index.js": {
-          "bytesInOutput": 23963
+        "node_modules/@isaacs/balanced-match/dist/esm/index.js": {
+          "bytesInOutput": 1300
+        },
+        "node_modules/@isaacs/brace-expansion/dist/esm/index.js": {
+          "bytesInOutput": 4545
         },
         "node_modules/minimatch/dist/esm/assert-valid-pattern.js": {
           "bytesInOutput": 261
@@ -9026,9 +9028,12 @@
         },
         "node_modules/minimatch/dist/esm/escape.js": {
           "bytesInOutput": 165
+        },
+        "node_modules/minimatch/dist/esm/index.js": {
+          "bytesInOutput": 23866
         }
       },
-      "bytes": 2063169
+      "bytes": 2062694
     }
   }
 }
