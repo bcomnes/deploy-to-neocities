@@ -12,7 +12,7 @@
     "minimatch": "10.0.3"
   },
   "devDependencies": {
-    "@voxpelli/tsconfig": "^15.0.0",
+    "@voxpelli/tsconfig": "^16.1.0",
     "top-bun": "^10.0.0",
     "auto-changelog": "^2.0.0",
     "gh-release": "^7.0.0",
