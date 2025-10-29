@@ -9,7 +9,7 @@
   "dependencies": {
     "@actions/core": "1.11.1",
     "async-neocities": "4.1.2",
-    "minimatch": "10.0.3"
+    "minimatch": "10.1.1"
   },
   "devDependencies": {
     "@voxpelli/tsconfig": "^16.1.0",
