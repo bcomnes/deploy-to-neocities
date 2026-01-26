@@ -157,6 +157,7 @@ None.
 - https://github.com/jefbecker/jefbecker.com ([jefbecker.com](https://jefbecker.com))
 - https://github.com/MymeType/personal-website ([mymetype.neocities.org](https://mymetype.neocities.org/))
 - https://github.com/oceanthunder/oceanthunder.github.io ([oceanthunder.dev](https://www.oceanthunder.dev))
+- https://github.com/fst0pped/neocities-solo-stories ([solostories.neocities.org](https://solostories.neocities.org/))
 - [See more!](https://github.com/bcomnes/deploy-to-neocities/network/dependents)
 - ...PR your site when you set it up!
 
