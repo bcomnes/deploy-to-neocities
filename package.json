@@ -12,14 +12,14 @@
     "minimatch": "10.1.1"
   },
   "devDependencies": {
+    "@domstack/static": "^11.0.2",
     "@voxpelli/tsconfig": "^16.1.0",
-    "top-bun": "^10.0.0",
     "auto-changelog": "^2.0.0",
-    "gh-release": "^7.0.0",
-    "npm-run-all2": "^8.0.1",
-    "neostandard": "^0.12.0",
     "c8": "^10.0.0",
     "esbuild": "~0.27.1",
+    "gh-release": "^7.0.0",
+    "neostandard": "^0.12.0",
+    "npm-run-all2": "^8.0.1",
     "typescript": "~5.9.3"
   },
   "homepage": "https://github.com/bcomnes/deploy-to-neocities#readme",
@@ -35,7 +35,7 @@
   "scripts": {
     "build": "npm run clean && run-p build:*",
     "build:action": "rm -rf dist && esbuild index.js --bundle --platform=node --sourcemap=external --outdir=dist --metafile=dist/meta.json --out-extension:.js=.cjs",
-    "build:site": "tb --src . --dest public --ignore dist,coverage",
+    "build:site": "domstack --src . --dest public --ignore dist,coverage",
     "dist-pkg": "echo \"{ \\\"type\\\": \\\"commonjs\\\" }\" > dist/package.json",
     "clean": "rm -rf public && mkdir -p public",
     "release": "git push --follow-tags && gh-release -y",
