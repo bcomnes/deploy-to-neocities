@@ -31,5 +31,5 @@ inputs:
     required: false
     deprecationMessage: 'api_token is deprecated, use api_key instead'
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'dist/index.cjs'
