@@ -20,7 +20,7 @@
     "gh-release": "^7.0.0",
     "neostandard": "^0.13.0",
     "npm-run-all2": "^8.0.1",
-    "typescript": "~5.9.3"
+    "typescript": "~6.0.2"
   },
   "homepage": "https://github.com/bcomnes/deploy-to-neocities#readme",
   "keywords": [],
