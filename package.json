@@ -19,7 +19,7 @@
     "esbuild": "~0.28.0",
     "gh-release": "^7.0.0",
     "neostandard": "^0.13.0",
-    "npm-run-all2": "^8.0.1",
+    "npm-run-all2": "^9.0.0",
     "typescript": "~6.0.3"
   },
   "homepage": "https://github.com/bcomnes/deploy-to-neocities#readme",
