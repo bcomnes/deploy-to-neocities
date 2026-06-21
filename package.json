@@ -17,7 +17,7 @@
     "auto-changelog": "^2.0.0",
     "c8": "^11.0.0",
     "esbuild": "~0.28.0",
-    "gh-release": "^7.0.0",
+    "gh-release": "^8.1.0",
     "neostandard": "^0.13.0",
     "npm-run-all2": "^9.0.0",
     "typescript": "~6.0.3"
