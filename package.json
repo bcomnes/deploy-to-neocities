@@ -15,7 +15,7 @@
     "@domstack/static": "^11.0.2",
     "@voxpelli/tsconfig": "^16.1.0",
     "auto-changelog": "^2.0.0",
-    "c8": "^11.0.0",
+    "c8": "^12.0.0",
     "esbuild": "~0.28.0",
     "gh-release": "^8.1.0",
     "neostandard": "^0.13.0",
