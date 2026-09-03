@@ -13,6 +13,7 @@ import { minimatch } from 'minimatch'
 
 async function run () {
   const key = core.getInput('api_key') || core.getInput('api_token')
+  core.setSecret(key)
   const distDir = path.join(process.cwd(), core.getInput('dist_dir'))
   const cleanup = JSON.parse(core.getInput('cleanup'))
   const neocitiesSupporter = JSON.parse(core.getInput('neocities_supporter'))
