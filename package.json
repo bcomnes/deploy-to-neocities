@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@actions/core": "3.0.1",
-    "async-neocities": "4.1.2",
+    "async-neocities": "^5.0.0",
     "minimatch": "10.2.6"
   },
   "devDependencies": {
