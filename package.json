@@ -2,24 +2,26 @@
   "name": "deploy-to-neocities",
   "description": "Github Action to deplpoy a folder to Neocities.org",
   "version": "3.0.5",
+  "engines": {
+    "node": ">=24",
+    "npm": ">=11"
+  },
   "author": "Bret Comnes <bcomnes@gmail.com> (https://bret.io/)",
   "bugs": {
     "url": "https://github.com/bcomnes/deploy-to-neocities/issues"
   },
   "dependencies": {
     "@actions/core": "3.0.1",
-    "async-neocities": "4.1.2",
+    "async-neocities": "^5.0.0",
     "minimatch": "10.2.6"
   },
   "devDependencies": {
-    "@domstack/static": "^11.0.2",
+    "@domstack/static": "12.0.0-beta.10",
     "@voxpelli/tsconfig": "^16.1.0",
-    "auto-changelog": "^2.0.0",
-    "c8": "^12.0.0",
     "esbuild": "~0.28.0",
-    "gh-release": "^8.1.0",
     "neostandard": "^0.13.0",
     "npm-run-all2": "^9.0.0",
+    "releasearoni": "^0.2.0",
     "typescript": "~6.0.3"
   },
   "homepage": "https://github.com/bcomnes/deploy-to-neocities#readme",
@@ -38,15 +40,15 @@
     "build:site": "domstack --src . --dest public --ignore dist,coverage",
     "dist-pkg": "echo \"{ \\\"type\\\": \\\"commonjs\\\" }\" > dist/package.json",
     "clean": "rm -rf public && mkdir -p public",
-    "release": "git push --follow-tags && gh-release -y",
+    "release": "releasearoni --no-npm-check --major-branch",
     "start": "npm run watch",
     "test": "run-s test:*",
     "test:lint": "eslint",
     "test:tsc": "tsc",
-    "test:node": "c8 node --test",
+    "test:node": "node --experimental-test-coverage --test-coverage-exclude 'test.js' --test",
     "version": "run-s version:*",
     "version:build": "npm run build:action && git add dist",
-    "version:changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md",
+    "version:changelog": "releasearoni version",
     "watch": "npm run clean && run-p watch:*",
     "watch:site": "npm run build:site -- -w"
   }
