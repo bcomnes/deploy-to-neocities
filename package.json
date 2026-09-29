@@ -1,7 +1,7 @@
 {
   "name": "deploy-to-neocities",
   "description": "Github Action to deplpoy a folder to Neocities.org",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "engines": {
     "node": ">=24",
     "npm": ">=11"
