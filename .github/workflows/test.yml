@@ -1,6 +1,14 @@
 name: tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+concurrency:
+  group: deploy-to-neocities-tests-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   FORCE_COLOR: 1
