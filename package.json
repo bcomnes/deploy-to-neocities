@@ -43,7 +43,7 @@
     "build:site": "domstack --src . --dest public --ignore dist,coverage",
     "dist-pkg": "echo \"{ \\\"type\\\": \\\"commonjs\\\" }\" > dist/package.json",
     "clean": "rm -rf public && mkdir -p public",
-    "release": "releasearoni --no-npm-check",
+    "release": "releasearoni --no-npm-check --major-branch",
     "start": "npm run watch",
     "test": "run-s test:*",
     "test:lint": "eslint",
