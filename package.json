@@ -18,7 +18,6 @@
   "devDependencies": {
     "@domstack/static": "12.0.0-beta.10",
     "@voxpelli/tsconfig": "^16.1.0",
-    "c8": "^12.0.0",
     "esbuild": "~0.28.0",
     "neostandard": "^0.13.0",
     "npm-run-all2": "^9.0.0",
@@ -46,7 +45,7 @@
     "test": "run-s test:*",
     "test:lint": "eslint",
     "test:tsc": "tsc",
-    "test:node": "c8 node --test",
+    "test:node": "node --experimental-test-coverage --test-coverage-exclude 'test.js' --test",
     "version": "run-s version:*",
     "version:build": "npm run build:action && git add dist",
     "version:changelog": "releasearoni version",
