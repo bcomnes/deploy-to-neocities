@@ -13,7 +13,7 @@
   "dependencies": {
     "@actions/core": "3.0.1",
     "async-neocities": "^5.0.0",
-    "minimatch": "11.0.3"
+    "minimatch": "11.0.5"
   },
   "devDependencies": {
     "@domstack/static": "12.0.0-beta.10",
