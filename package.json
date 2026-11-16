@@ -16,7 +16,7 @@
     "minimatch": "11.0.5"
   },
   "devDependencies": {
-    "@domstack/static": "12.0.0",
+    "@domstack/static": "12.0.1",
     "@voxpelli/tsconfig": "^17.0.0",
     "esbuild": "~0.28.0",
     "neostandard": "^0.14.1",
